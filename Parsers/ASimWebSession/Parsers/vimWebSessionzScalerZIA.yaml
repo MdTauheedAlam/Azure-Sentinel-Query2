@@ -104,6 +104,8 @@ ParserQuery: |
       "urlclass=" urlclass:string ";"
       "devicemodel=" * 
   // -- Post filtering
+  | extend EventResultOriginalDetails = coalesce(EventResultOriginalDetails, Reason), EventResultDetails = coalesce(EventResultDetails, EventOutcome),
+            DeviceCustomNumber1 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber1)
   | where
     ((array_length(eventresultdetails_in) == 0) or (EventResultDetails in (eventresultdetails_in)))
   | extend
@@ -175,7 +177,7 @@ ParserQuery: |
     Hostname = DstHostname,
     FileHashType = iff(FileMD5 == "", "", "MD5")
   | project-away 
-    DstFQDNparts, AdditionalExtensions, DeviceCustom*
+    DstFQDNparts, AdditionalExtensions, DeviceCustom*, FieldDeviceCustom*
   };
   parser (starttime, endtime
      , srcipaddr_has_any_prefix, ipaddr_has_any_prefix

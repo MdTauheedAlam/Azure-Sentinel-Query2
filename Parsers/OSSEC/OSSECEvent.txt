@@ -9,7 +9,7 @@ CommonSecurityLog
 | extend EventProductVersion = DeviceVersion
 | extend RuleName = Activity
 | extend RuleNumber = DeviceEventClassID
-| extend Classification = extract(@'(classification|cat)=(\s)?(.*?)(,$|;)', 3, AdditionalExtensions)
+| extend Classification = coalesce(extract(@'(classification|cat)=(\s)?(.*?)(,$|;)', 3, AdditionalExtensions), DeviceEventCategory)
 | extend DvcHostname = DeviceAddress
 | extend EventSeverity = LogSeverity
 | extend SrcIpAddr = SourceIP

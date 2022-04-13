@@ -5,7 +5,7 @@
 
 CommonSecurityLog
 | where DeviceVendor == 'Morphisec'
-| extend Start = extract("start=([^;]+)",1,AdditionalExtensions)
+| extend Start = coalesce(extract("start=([^;]+)",1,AdditionalExtensions),tostring(StartTime))
 , AttackedModule = extract("AttackedModule=([^;]+)",1,AdditionalExtensions)
 , MorphisecVersion = extract("MorphisecVersion=([^;]+)",1,AdditionalExtensions)
 , AttackName = extract("AttackName=([^;]+)",1,AdditionalExtensions)

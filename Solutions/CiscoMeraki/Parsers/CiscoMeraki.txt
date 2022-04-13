@@ -130,7 +130,7 @@ let EventLogs = LogHeader
         Attribute = toint(extract(@"attr=\'(\S+)?\'", 1, Substring)),
         ClientMacAddr = tostring(extract(@"client_mac=\'(\S+)\'", 1, Substring)),
         Channel = toint(extract(@"channel=\'(\S+)\'", 1, Substring)),
-        Reason = toint(extract(@"reason=\'(\S+)\'", 1, Substring)),
+        Reason = coalesce(toint(extract(@"reason=\'(\S+)\'", 1, Substring)),toint(Reason)),
         AppleDaReason = toint(extract(@"apple_da_reason=\'(\S+)\'", 1, Substring)),
         Instigator = toint(extract(@"instigator=\'(\S+)\'", 1, Substring)),
         Duration = tostring(extract(@"duration=\'(\S+)\'", 1, Substring)),

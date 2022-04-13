@@ -44,3 +44,44 @@
     }
   ]
 }
+
+/*
+
+  let Actions=datatable(DeviceAction:string,DvcAction:string)
+[ "reset client","Reset Source"
+, "reset server","Reset Destination"
+, "reset both", "Reset"
+, "allow","Allow"
+, "deny","Deny"
+, "drop", "Drop"
+, "drop ICMP", "Drop ICMP"];
+let NWParser=(starttime:datetime=datetime(null), endtime:datetime=datetime(null), srcipaddr_has_any_prefix:dynamic=dynamic([]), dstipaddr_has_any_prefix:dynamic=dynamic([]), dstportnumber:int=int(null), hostname_has_any:dynamic=dynamic([]), dvcaction:dynamic=dynamic([]), eventresult:string='*', disabled:bool=false){
+CommonSecurityLog | where not(disabled)
+| where DeviceVendor == "Palo Alto Networks" and DeviceProduct == "PAN-OS" and Activity == "TRAFFIC"
+  /// Prefilterring:
+    | where (isnull(starttime) or TimeGenerated>=starttime)
+      and     (isnull(endtime) or TimeGenerated<=endtime)
+        and (array_length(srcipaddr_has_any_prefix)==0 or has_any_ipv4_prefix(SourceIP,srcipaddr_has_any_prefix))
+          and (array_length(dstipaddr_has_any_prefix)==0 or has_any_ipv4_prefix(DestinationIP,dstipaddr_has_any_prefix))
+            and (isnull(dstportnumber) or DestinationPort==dstportnumber)
+              and (array_length(hostname_has_any)==0)
+                  // dvcaction - post filterring
+                      and (eventresult=="*" or (DeviceAction=="allow" and eventresult=="Success") or (eventresult=="Failure"))
+                      | parse AdditionalExtensions with "PanOSPacketsReceived=" DstPackets:long ",PanOSPacketsSent=" SrcPackets:long ",start="EventStartTime ",reason="*
+                      | project-rename 
+                        EventProductVersion=DeviceVersion, Dvc=DeviceName, NetworkApplicationProtocol=ApplicationProtocol, SrcZone=DeviceCustomString4, DstZone=DeviceCustomString5, NetworkRuleName=DeviceCustomString1, SrcUsername=SourceUserName, DstUsername=DestinationUserName,EventOriginalSeverity=LogSeverity, SrcNatIpAddr=SourceTranslatedAddress, DstNatIpAddr=DestinationTranslatedAddress, PaloAltoFlags=FlexString1
+                        | extend
+                        EventVendor="Palo Alto", EventProduct="PanOS", DstBytes=tolong(ReceivedBytes), SrcBytes=tolong(SentBytes), NetworkPackets=tolong(DeviceCustomNumber2), NetworkProtocol=toupper(Protocol), NetworkBytes=tolong(FlexNumber1), SrcUsernameType=case(isempty(SrcUsername), "", SrcUsername contains "@", "UPN", "Simple"), DstUsernameType=case(isempty(DstUsername), "", DstUsername contains "@", "UPN", "Simple"), EventType="NetworkSession", EventCount=toint(1), EventResult=case(DeviceAction=="allow","Success","Failure"), NetworkSessionId=coalesce(tostring(DeviceCustomNumber1),tostring(FieldDeviceCustomNumber1)), NetworkDuration=toint(1000*coalesce(DeviceCustomNumber3,FieldDeviceCustomNumber3)), EventSchemaVersion="0.2.1", EventSchema="NetworkSession", EventSeverity = "Informational", EventStartTime=coalesce(todatetime(EventStartTime), StartTime, TimeGenerated)
+                        | extend hostelements=split(Dvc,'.')
+                        | extend DvcHostname=tostring(hostelements[0]), DvcDomain=strcat_array( array_slice(hostelements,1,-1), '.')
+                        | extend DvcFQDN = iff(Dvc contains ".",Dvc,"" ), DvcDomainType=iff(Dvc contains ".","FQDN","" )
+                        | project-away hostelements
+                        | lookup Actions on DeviceAction
+                        // Action post filtering\n
+                        | where (array_length(dvcaction)==0 or DvcAction has_any (dvcaction))
+                        | project-rename DstMacAddr=DestinationMACAddress, SrcMacAddr=SourceMACAddress, DstIpAddr=DestinationIP, DstPortNumber=DestinationPort, DstNatPortNumber=DestinationTranslatedPort, SrcPortNumber=SourcePort, SrcIpAddr=SourceIP, SrcNatPortNumber=SourceTranslatedPort, DvcOutboundInterface=DeviceOutboundInterface, DvcInboundInterface=DeviceInboundInterface, EventMessage=Message, DvcOriginalAction=DeviceAction
+                        | extend  IpAddr = SrcIpAddr,  Rule=NetworkRuleName,  Dst=DstIpAddr, User=DstUsername,  Duration=NetworkDuration,  SessionId=NetworkSessionId,  EventEndTime =EventStartTime, Src=SrcIpAddr
+                        };
+                        NWParser(starttime, endtime, srcipaddr_has_any_prefix, dstipaddr_has_any_prefix, dstportnumber, hostname_has_any, dvcaction, eventresult, disabled)
+
+*/

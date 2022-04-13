@@ -55,7 +55,7 @@ ParserQuery: |
       ,EventProduct="PanOS" // Not Documented
       , SrcBytes=tolong(SentBytes)
       , DstBytes=tolong(ReceivedBytes) 
-      , NetworkPackets=tolong(DeviceCustomNumber2) 
+      , NetworkPackets=coalesce(tolong(DeviceCustomNumber2),tolong(FieldDeviceCustomNumber2)) 
       , NetworkProtocol=toupper(Protocol)
       , NetworkBytes=tolong(FlexNumber1)
       , SrcUsernameType=case(isempty(SrcUsername), "", SrcUsername contains "@", "UPN", "Simple")
@@ -63,12 +63,12 @@ ParserQuery: |
       , EventType="NetworkSession"
       , EventCount=toint(1)
       , EventResult=case(DeviceAction=="allow","Success","Failure")
-      , NetworkSessionId=tostring(DeviceCustomNumber1)
-      , NetworkDuration=toint(1000*DeviceCustomNumber3)
+      , NetworkSessionId=coalesce(tostring(DeviceCustomNumber1),tostring(FieldDeviceCustomNumber1))
+      , NetworkDuration=toint(1000*coalesce(DeviceCustomNumber3,FieldDeviceCustomNumber3))
       , EventSchemaVersion="0.2.1"
       , EventSchema="NetworkSession"
       , EventSeverity = "Informational"
-      , EventStartTime=coalesce(todatetime(EventStartTime), TimeGenerated)
+      , EventStartTime=coalesce(todatetime(EventStartTime), StartTime, TimeGenerated)
     | extend hostelements=split(Dvc,'.')
     | extend DvcHostname=tostring(hostelements[0])
            , DvcDomain=strcat_array( array_slice(hostelements,1,-1), '.')

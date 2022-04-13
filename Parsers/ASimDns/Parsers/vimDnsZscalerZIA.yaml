@@ -71,6 +71,7 @@ ParserQuery: |
     | where
         (responsecodename=='*' or EventResultDetails =~ responsecodename)
     // --
+    | extend DeviceCustomNumber1 = coalesce(DeviceCustomNumber1, FieldDeviceCustomNumber1)
     | project-rename
         Dvc=Computer , 
         SrcIpAddr = SourceIP, 
@@ -100,7 +101,7 @@ ParserQuery: |
         EventSubType = iff(resaction == 'None', 'request', 'response'), 
         DvcAction = iff(resaction == 'None', reqaction, resaction), 
         EventType = 'Query', 
-        UrlCategory = extract("cat=(.*)", 1, AdditionalExtensions), 
+        UrlCategory = coalesce(extract("cat=(.*)", 1, AdditionalExtensions),DeviceEventCategory),
         DnsRuleName = strcat (FlexString1, " / ", FlexString2)
       | extend 
         EventResult = case (

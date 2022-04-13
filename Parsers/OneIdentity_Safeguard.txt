@@ -36,23 +36,23 @@
 CommonSecurityLog
 | where DeviceVendor == "OneIdentity"
 | extend extensionData = split(AdditionalExtensions,";")
-| extend EventUserId = DeviceCustomNumber1
+| extend EventUserId = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber1)
 | extend EventUserDisplayName = DeviceCustomString1
 | extend EventUserDomainName = DeviceCustomString2
 | extend AccessRequestType = DeviceCustomString3
 | extend AccountDistinguishedName = DeviceCustomString4
 | extend AccountDomainName = DeviceCustomString5
-| extend AccountId = DeviceCustomNumber2
+| extend AccountId = coalesce(DeviceCustomNumber2,FieldDeviceCustomNumber2)
 | extend AccountName = DeviceCustomString6
 | extend ApproverAccessRequestUri = extract(@"(=)(\S*)",2,tostring(extensionData[9]))
-| extend AssetId = DeviceCustomNumber3
+| extend AssetId = coalesce(DeviceCustomNumber3,FieldDeviceCustomNumber3)
 | extend AssetName = extract(@"(=)(\S*)",2,tostring(extensionData[12]))
 | extend AssetNetworkAddress = extract(@"(=)(\S*)",2,tostring(extensionData[14]))
 | extend AssetPlatformType = extract(@"(=)(\S*)",2,tostring(extensionData[16]))
 | extend Comment = extract(@"(=)(\S*)",2,tostring(extensionData[18]))
 | extend DurationInMinutes = extract(@"(=)(\S*)",2,tostring(extensionData[20]))
 | extend OfflineWorkflowMode = extract(@"(=)(\S*)",2,tostring(extensionData[22]))
-| extend Reason =  extract(@"(=)(\S*)",2,tostring(extensionData[24]))
+| extend Reason =  coalesce(extract(@"(=)(\S*)",2,tostring(extensionData[24])),Reason)
 | extend ReasonCode = extract(@"(=)(\S*)",2,tostring(extensionData[26]))
 | extend Requester = extract(@"(=)(\S*)",2,tostring(extensionData[28]))
 | extend RequesterAccessRequestUri = extract(@"(=)(\S*)",2,tostring(extensionData[30]))
