@@ -62,9 +62,6 @@
         "size": 0,
         "title": "Events over time",
         "color": "greenDark",
-        "timeContext": {
-          "durationMs": 0
-        },
         "timeContextFromParameter": "TimeRange",
         "queryType": 0,
         "resourceType": "microsoft.operationalinsights/workspaces",
@@ -89,9 +86,6 @@
               "query": "PingFederateEvent\r\n| where isnotempty(DstGeoCountry)\r\n| summarize count() by DstGeoCountry",
               "size": 3,
               "title": "Geo distribution",
-              "timeContext": {
-                "durationMs": 0
-              },
               "timeContextFromParameter": "TimeRange",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
@@ -113,9 +107,6 @@
                     "query": "PingFederateEvent\r\n| where isnotempty(DstUserName)\r\n| summarize u_users = dcount(DstUserName)",
                     "size": 3,
                     "title": "Users",
-                    "timeContext": {
-                      "durationMs": 0
-                    },
                     "timeContextFromParameter": "TimeRange",
                     "queryType": 0,
                     "resourceType": "microsoft.operationalinsights/workspaces",
@@ -141,9 +132,6 @@
                     "query": "PingFederateEvent\r\n| where isnotempty(SrcIpAddr)\r\n| summarize IPs = dcount(SrcIpAddr)",
                     "size": 3,
                     "title": "IP Addresses",
-                    "timeContext": {
-                      "durationMs": 0
-                    },
                     "timeContextFromParameter": "TimeRange",
                     "queryType": 0,
                     "resourceType": "microsoft.operationalinsights/workspaces",
@@ -161,9 +149,6 @@
                     "query": "PingFederateEvent\r\n| where isnotempty(DstGeoCountry)\r\n| summarize u_country = dcount(DstGeoCountry)",
                     "size": 3,
                     "title": "Countries",
-                    "timeContext": {
-                      "durationMs": 0
-                    },
                     "timeContextFromParameter": "TimeRange",
                     "queryType": 0,
                     "resourceType": "microsoft.operationalinsights/workspaces",
@@ -197,9 +182,6 @@
               "query": "let data = PingFederateEvent\r\n| where isnotempty(EventType);\r\ndata\r\n| summarize Count = count() by EventType\r\n| join kind = inner (data\r\n    | make-series Trend = count() default = 0 on TimeGenerated from {TimeRange:start} to {TimeRange:end} step {TimeRange:grain} by EventType)\r\n    on EventType\r\n\r\n\r\n\r\n\r\n",
               "size": 3,
               "title": "Event Types",
-              "timeContext": {
-                "durationMs": 0
-              },
               "timeContextFromParameter": "TimeRange",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
@@ -228,9 +210,6 @@
               "query": "PingFederateEvent\r\n| where isnotempty(SrcIpAddr)\r\n| summarize count() by SrcIpAddr\r\n| top 5 by count_",
               "size": 3,
               "title": "Top Sources",
-              "timeContext": {
-                "durationMs": 0
-              },
               "timeContextFromParameter": "TimeRange",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
@@ -246,9 +225,6 @@
               "query": "PingFederateEvent\r\n| where isnotempty(DstUserName)\r\n| summarize ['Total Events'] = count() by DstUserName\r\n| top 10 by ['Total Events']",
               "size": 3,
               "title": "Top users",
-              "timeContext": {
-                "durationMs": 0
-              },
               "timeContextFromParameter": "TimeRange",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
@@ -283,12 +259,9 @@
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
-        "query": "CommonSecurityLog\r\n| where DeviceProduct =~ \"PingFederate\"\r\n| order by TimeGenerated desc\r\n| extend Reason = extract(@'description=;?(\\w+),.*', 1, AdditionalExtensions)\r\n| where isnotempty(Reason)\r\n| project TimeGenerated, EventType = DeviceEventClassID, Reason",
+        "query": "CommonSecurityLog\r\n| where DeviceProduct =~ \"PingFederate\"\r\n| order by TimeGenerated desc\r\n| extend Reason = coalesce(extract(@'description=;?(\\w+),.*', 1, AdditionalExtensions),Reason)\r\n| where isnotempty(Reason)\r\n| project TimeGenerated, EventType = DeviceEventClassID, Reason",
         "size": 0,
         "title": "Latest errors",
-        "timeContext": {
-          "durationMs": 0
-        },
         "timeContextFromParameter": "TimeRange",
         "queryType": 0,
         "resourceType": "microsoft.operationalinsights/workspaces",
@@ -300,6 +273,9 @@
       "name": "query - 5"
     }
   ],
-  "fromTemplateId": "sentinel-PingFederateWorkbook",
+  "fallbackResourceIds": [
+    "/subscriptions/da1d49de-3a74-4024-a9be-8c6a2921bea4/resourcegroups/rg-ado/providers/microsoft.operationalinsights/workspaces/adosample1808"
+  ],
+  "fromTemplateId": "sentinel-UserWorkbook",
   "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
 }

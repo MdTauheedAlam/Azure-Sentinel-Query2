@@ -197,11 +197,11 @@
   {
     "workbookKey": "ThreatIntelligenceWorkbook",
     "logoFileName": "",
-    "description": "Gain insights into threat indicators, including type and severity of threats, threat activity over time, and correlation with other data sources, including Office 365 and firewalls.",
-    "dataTypesDependencies": [ "ThreatIntelligenceIndicator", "SecurityAlert" ],
+    "description": "Gain insights into threat indicators ingestion and search for indicators at scale across Microsoft 1st Party, 3rd Party, On-Premises, Hybrid, and Multi-Cloud Workloads. Indicators Search facilitates a simple interface for finding IP, File, Hash, Sender and more across your data. Seamless pivots to correlate indicators with Microsoft Sentinel: Incidents to make your threat intelligence actionable.",
+    "dataTypesDependencies": [ "ThreatIntelligenceIndicator", "SecurityIncident" ],
     "dataConnectorsDependencies": [ "ThreatIntelligence", "ThreatIntelligenceTaxii" ],
     "previewImagesFileNames": [ "ThreatIntelligenceWhite.png", "ThreatIntelligenceBlack.png" ],
-    "version": "4.1",
+    "version": "5.0",
     "title": "Threat Intelligence",
     "templateRelativePath": "ThreatIntelligence.json",
     "subtitle": "",
@@ -1557,6 +1557,19 @@
         "version": "1.0",
         "title": "Archiving, Basic Logs, and Retention",
         "templateRelativePath": "ArchivingBasicLogsRetention.json",
+        "subtitle": "",
+        "provider": "Microsoft Sentinel Community"
+      },
+      {
+        "workbookKey": "MicrosoftDefenderForEndPoint",
+        "logoFileName": "",
+        "description": "A wokbook to provide details about Microsoft Defender for Endpoint Advance Hunting to Overview & Analyse data brought through M365 Defender Connector.",
+        "dataTypesDependencies": [],
+        "dataConnectorsDependencies": [],
+        "previewImagesFileNames": [ "microsoftdefenderforendpointwhite.png", "microsoftdefenderforendpointblack.png" ],
+        "version": "1.0",
+        "title": "MicrosoftDefenderForEndPoint",
+        "templateRelativePath": "MicrosoftDefenderForEndPoint.json",
         "subtitle": "",
         "provider": "Microsoft Sentinel Community"
       }
