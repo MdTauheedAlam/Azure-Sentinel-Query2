@@ -5,6 +5,9 @@
 
 CommonSecurityLog
 | where DeviceVendor has_any ("TrendMicro", "Trend Micro")
+| extend DeviceCustomNumber1 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber1),
+         DeviceCustomNumber2 = coalesce(DeviceCustomNumber2,FieldDeviceCustomNumber2),
+         DeviceCustomNumber3 = coalesce(DeviceCustomNumber3,FieldDeviceCustomNumber3)
 | extend DeepSecurityHostID = DeviceCustomNumber1
 | extend DeepSecurityModuleName =
 iff(toint(DeviceEventClassID) in (20,21,100,850,851,852,853,854),"Firewall",
@@ -28,4 +31,7 @@ iff(toint(DeviceEventClassID)>=6000000 and toint(DeviceEventClassID)<7000000,"Ap
 | extend DPIFlags = iff(DeepSecurityModuleName == "Intrusion Prevention", DeviceCustomString6, "")
 | extend DPIPacketPosition = iff(DeepSecurityModuleName == "Intrusion Prevention", DeviceCustomNumber3, 0)
 | where DeviceProduct startswith "Deep Security"
-| project-away DeviceCustomNumber1, DeviceCustomNumber1Label, DeviceCustomNumber2, DeviceCustomNumber2Label, DeviceCustomNumber3, DeviceCustomNumber3Label, DeviceCustomString1, DeviceCustomString1Label, DeviceCustomString2, DeviceCustomString2Label, DeviceCustomString3, DeviceCustomString3Label, DeviceCustomString4, DeviceCustomString4Label, DeviceCustomString5, DeviceCustomString5Label, DeviceCustomString6, DeviceCustomString6Label
+| project-away DeviceCustomNumber1, DeviceCustomNumber1Label, DeviceCustomNumber2, DeviceCustomNumber2Label, DeviceCustomNumber3, DeviceCustomNumber3Label, DeviceCustomString1, DeviceCustomString1Label, DeviceCustomString2, DeviceCustomString2Label, DeviceCustomString3, DeviceCustomString3Label, DeviceCustomString4, DeviceCustomString4Label, DeviceCustomString5, DeviceCustomString5Label, DeviceCustomString6, DeviceCustomString6Label,FieldDeviceCustomNumber1,FieldDeviceCustomNumber2,FieldDeviceCustomNumber3
+
+
+

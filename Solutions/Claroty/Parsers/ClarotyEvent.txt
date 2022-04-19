@@ -9,6 +9,9 @@ CommonSecurityLog
 | extend EventProduct = 'Claroty'
 | extend EventSchemaVersion = 0.2
 | extend EventCount = 1
+| extend DeviceCustomNumber1 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber1),
+         DeviceCustomNumber2 = coalesce(DeviceCustomNumber2,FieldDeviceCustomNumber2),
+         DeviceCustomNumber3 = coalesce(DeviceCustomNumber3,FieldDeviceCustomNumber3)
 | extend packed = pack(DeviceCustomNumber1Label, DeviceCustomNumber1
                      , DeviceCustomNumber2Label, DeviceCustomNumber2
                      , DeviceCustomNumber3Label, DeviceCustomNumber3
@@ -81,4 +84,5 @@ CommonSecurityLog
             , cs9Label
             , cs9
             , cs10Label
-            , cs10
+            , cs10,FieldDeviceCustomNumber1,FieldDeviceCustomNumber2,FieldDeviceCustomNumber3
+

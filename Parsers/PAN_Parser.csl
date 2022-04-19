@@ -12,9 +12,11 @@
 // Functions usually takes 10-15 minutes to activate. You can then use function alias from any other queries (e.g. PAN_CL | take 10).
 //
 //
-
 CommonSecurityLog
 | where DeviceVendor == "Palo Alto Networks" 
+| extend DeviceCustomNumber1 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber1),
+         DeviceCustomNumber2 = coalesce(DeviceCustomNumber2,FieldDeviceCustomNumber2),
+         DeviceCustomNumber3 = coalesce(DeviceCustomNumber3,FieldDeviceCustomNumber3)
 | extend AdditionalExtensions = replace(@"$", @";", AdditionalExtensions)
 | extend PanOSPacketsReceived = extract(@"PanOSPacketsReceived=(.*?);", 1, AdditionalExtensions),
     PanOSPacketsSent = extract(@"PanOSPacketsSent=(.*?);", 1, AdditionalExtensions),
@@ -47,6 +49,9 @@ CommonSecurityLog
     LogProfile = DeviceCustomString6,
     TotalBytes = FlexNumber1,
     Flags = FlexString1
+| extend start = coalesce(start,StartTime),
+         reason = coalesce(reason,Reason),
+         cat = coalesce(cat,DeviceEventCategory)
 | project-away FlexString1Label, 
     FlexString1, 
     FlexNumber1Label, 
@@ -69,4 +74,7 @@ CommonSecurityLog
     DeviceCustomNumber1, 
     DeviceCustomNumber2, 
     DeviceCustomNumber3, 
-    AdditionalExtensions
+    AdditionalExtensions,
+    FieldDeviceCustomNumber1,
+    FieldDeviceCustomNumber2,
+    FieldDeviceCustomNumber3

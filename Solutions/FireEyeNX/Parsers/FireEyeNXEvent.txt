@@ -5,6 +5,11 @@
 // Reference : Using functions in Azure monitor log queries : https://docs.microsoft.com/azure/azure-monitor/log-query/functions
 CommonSecurityLog
 | where DeviceVendor =~ 'FireEye'
+|extend DeviceCustomNumber1 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber1),
+        DeviceCustomNumber2 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber2),
+        DeviceCustomNumber3 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber3),
+        ExternalID = coalesce(ExternalID,ExtID)
+
 | extend packed = pack(DeviceCustomNumber1Label, DeviceCustomNumber1
                      , DeviceCustomNumber2Label, DeviceCustomNumber2
                      , DeviceCustomNumber3Label, DeviceCustomNumber3
@@ -60,3 +65,6 @@ CommonSecurityLog
             , DeviceCustomString5Label
             , DeviceCustomString6
             , DeviceCustomString6Label
+			, FieldDeviceCustomNumber1
+			, FieldDeviceCustomNumber2
+			, FieldDeviceCustomNumber3

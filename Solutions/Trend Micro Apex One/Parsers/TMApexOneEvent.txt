@@ -4,6 +4,9 @@
 // Reference : Using functions in Azure monitor log queries : https://docs.microsoft.com/azure/azure-monitor/log-query/functions
 CommonSecurityLog
 | where DeviceVendor == "Trend Micro"
+| extend DeviceCustomNumber1 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber1),
+         DeviceCustomNumber2 = coalesce(DeviceCustomNumber2,FieldDeviceCustomNumber2),
+         DeviceCustomNumber3 = coalesce(DeviceCustomNumber3,FieldDeviceCustomNumber3)
 | extend packed = pack (DeviceCustomNumber1Label, DeviceCustomNumber1,
     DeviceCustomNumber2Label, DeviceCustomNumber2,
     DeviceCustomString1Label, DeviceCustomString1,
@@ -60,4 +63,7 @@ CommonSecurityLog
     DeviceCustomDate1Label,
     DeviceCustomDate1,
     DeviceCustomDate2Label,
-    DeviceCustomDate2
+    DeviceCustomDate2,
+	FieldDeviceCustomNumber1,
+	FieldDeviceCustomNumber2,
+	FieldDeviceCustomNumber3

@@ -21,8 +21,15 @@
 // 
 CommonSecurityLog
 | where DeviceProduct == "UnityOne"
+| extend DeviceCustomNumber1 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber1),
+         DeviceCustomNumber2 = coalesce(DeviceCustomNumber2,FieldDeviceCustomNumber2),
+         DeviceCustomNumber3 = coalesce(DeviceCustomNumber3,FieldDeviceCustomNumber3)
 | extend DeviceVendor = iff(DeviceVendor == "TippingPoint", "Trend Micro", DeviceVendor)
 | extend DeviceProduct = iff(DeviceProduct == "UnityOne", "TippingPoint", DeviceProduct)
 | parse AdditionalExtensions with "cat=" cat
+| extend cat = coalesce(cat ,DeviceEventCategory)
 | project-rename TippingPointVLAN = DeviceCustomNumber1, TippingPointTaxonomy = DeviceCustomNumber2, TippingPointPacketTrace = DeviceCustomNumber3, TippingPointProfileName = DeviceCustomString1, TippingPointPolicyUUID = DeviceCustomString2, TippingPointSignatureUUID = DeviceCustomString3, TippingPointZoneNames = DeviceCustomString4, TippingPointSMSName = DeviceCustomString5, TippingPointFilterMessageParms = DeviceCustomString6
-| project-away DeviceCustomIPv6Address1Label, DeviceCustomIPv6Address2Label, DeviceCustomIPv6Address3Label, DeviceCustomNumber1Label, DeviceCustomNumber2Label, DeviceCustomNumber3Label, DeviceCustomString1Label, DeviceCustomString2Label, DeviceCustomString3Label, DeviceCustomString4Label, DeviceCustomString5Label, DeviceCustomString6Label
+| project-away DeviceCustomIPv6Address1Label, DeviceCustomIPv6Address2Label, DeviceCustomIPv6Address3Label, DeviceCustomNumber1Label, DeviceCustomNumber2Label, DeviceCustomNumber3Label, DeviceCustomString1Label, DeviceCustomString2Label, DeviceCustomString3Label, DeviceCustomString4Label, DeviceCustomString5Label, DeviceCustomString6Label,FieldDeviceCustomNumber1,FieldDeviceCustomNumber2,FieldDeviceCustomNumber3
+
+
+
