@@ -23,10 +23,10 @@
     	    "description" : "List of worst offenders",
     	    "query" : "\nCommonSecurityLog\n| where DeviceVendor == \"Vectra Networks\" and DeviceEventClassID == \"hsc\"\n| extend src = coalesce(SourceHostName, SourceIP)\n| summarize arg_max(TimeGenerated, *) by src\n| sort by FlexNumber1 desc, FlexNumber2 desc\n| limit 10\n| project row_number(), src, SourceIP, FlexNumber1 , FlexNumber2, TimeGenerated\n| project-rename Sr_No = Column1, Source = src, Source_IP = SourceIP, Threat = FlexNumber1, Certainty = FlexNumber2, Latest_Detection = TimeGenerated"
 	},
-	{
-            "description" : "Top 10 Detection Types",
-    	    "query" : "\nCommonSecurityLog\n| where DeviceVendor == \"Vectra Networks\" and DeviceEventClassID !in (\"health\", \"audit\", \"campaigns\", \"hsc\", \"asc\") and isnotnull(ExternalID)\n| summarize Count = count() by DeviceEventClassID\n| top 10 by Count desc"
-	}
+      {
+        "description": "Top 10 Detection Types",
+        "query": "\nCommonSecurityLog\n| extend ExternalID = coalesce(column_ifexists(\"ExtID\", \"\"), tostring(ExternalID))\n| where DeviceVendor == \"Vectra Networks\" and DeviceEventClassID !in (\"health\", \"audit\", \"campaigns\", \"hsc\", \"asc\") and isnotnull(ExternalID)\n| summarize Count = count() by DeviceEventClassID\n| top 10 by Count desc"
+      }
     ],
     "dataTypes": [
         {
