@@ -15,6 +15,7 @@ query: |
   TMApexOneEvent
   | where TimeGenerated > ago(24h)
   | where EventMessage has "Data Loss Prevention"
+  | extend DeviceCustomNumber3 = coalesce(DeviceCustomNumber3,FieldDeviceCustomNumber3)
   | where isnotempty(DeviceCustomNumber3)
   | extend DlpAction = case(
   DeviceCustomNumber3 == "65535", "Not available",
