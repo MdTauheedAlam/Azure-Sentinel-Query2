@@ -6,7 +6,7 @@
     "config": {
       "isWizard": false,
       "basics": {
-        "description": "<img src=\"https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Logos/cisco-logo-72px.svg\" width=\"75px\" height=\"75px\">\n\n**Note:** _There may be [known issues](https://aka.ms/sentinelsolutionsknownissues) pertaining to this Solution, please refer to them before installing._\n\nThe [Cisco Umbrella](https://umbrella.cisco.com/) solution for Microsoft Sentinel enables you to ingest [Cisco Umbrella events](https://docs.umbrella.com/deployment-umbrella/docs/log-formats-and-versioning) stored in Amazon S3 into Microsoft Sentinel using the Amazon S3 REST API.\n\n  **Underlying Microsoft Technologies used:**\n\nThis solution takes a dependency on the following technologies, and some of these dependencies either may be in [Preview](https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/) state or might result in additional ingestion or operational costs:\n  a. [Azure Monitor HTTP Data Collector API](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-collector-api)\n  b. [Azure Functions](https://azure.microsoft.com/en-us/services/functions/#overview)  \n\n**Playbooks:** 8\n\n[Learn more about Microsoft Sentinel](https://aka.ms/azuresentinel) | [Learn more about Solutions](https://aka.ms/azuresentinelsolutionsdoc)",
+        "description": "<img src=\"https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Logos/cisco-logo-72px.svg\" width=\"75px\" height=\"75px\">\n\n**Note:** _There may be [known issues](https://aka.ms/sentinelsolutionsknownissues) pertaining to this Solution, please refer to them before installing._\n\nThe [Cisco Umbrella](https://umbrella.cisco.com/) solution for Microsoft Sentinel enables you to ingest [Cisco Umbrella events](https://docs.umbrella.com/deployment-umbrella/docs/log-formats-and-versioning) stored in Amazon S3 into Microsoft Sentinel using the Amazon S3 REST API.\n\n  **Underlying Microsoft Technologies used:**\n\nThis solution takes a dependency on the following technologies, and some of these dependencies either may be in [Preview](https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/) state or might result in additional ingestion or operational costs:\n  a. [Azure Monitor HTTP Data Collector API](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-collector-api)\n  b. [Azure Functions](https://azure.microsoft.com/en-us/services/functions/#overview)  \n\n**Playbooks:** 9\n\n[Learn more about Microsoft Sentinel](https://aka.ms/azuresentinel) | [Learn more about Solutions](https://aka.ms/azuresentinelsolutionsdoc)",
         "subscription": {
           "resourceProviders": [
             "Microsoft.OperationsManagement/solutions",
@@ -281,6 +281,68 @@
                   "required": true,
                   "regex": "[a-z0-9A-Z]{1,256}$",
                   "validationMessage": "Please enter a playbook resource name"
+                }
+              }
+            ]
+          },
+          {
+            "name": "playbook9",
+            "type": "Microsoft.Common.Section",
+            "label": "SNOW-Teams-Integration",
+            "elements": [
+              {
+                "name": "playbook9-text",
+                "type": "Microsoft.Common.TextBlock",
+                "options": {
+                  "text": "This playbook ingests events from CiscoUmbrella into Log Analytics using the API."
+                }
+              },
+              {
+                "name": "PlaybookName",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Playbook Name",
+                "defaultValue": "SNOW-Teams-Integration",
+                "toolTip": "Resource name for the logic app playbook.  No spaces are allowed",
+                "constraints": {
+                  "required": true,
+                  "regex": "[a-z0-9A-Z]{1,256}$",
+                  "validationMessage": "Please enter a playbook resource name"
+                }
+              },
+              {
+                "name": "TeamsGroupId",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Teams Group Id",
+                "defaultValue": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
+                "toolTip": "Please enter Teams Group Id",
+                "constraints": {
+                  "required": true,
+                  "regex": "[a-z0-9A-Z]{1,256}$",
+                  "validationMessage": "Please enter the Teams Group Id"
+                }
+              },
+              {
+                "name": "AlertChannelId",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Alert Channel Id",
+                "defaultValue": "xx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@thread.skype",
+                "toolTip": "Please enter Alert Channel Id",
+                "constraints": {
+                  "required": true,
+                  "regex": "[a-z0-9A-Z]{1,256}$",
+                  "validationMessage": "Please enter the Alert Channel Id"
+                }
+              },
+              {
+                "name": "InvestigationChannelId",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Investigation Channel Id",
+                "defaultValue": "xx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@thread.skype",
+                "toolTip": "Please enter Investigation Channel Id",
+                "constraints": {
+                  "required": true,
+                  "regex": "[a-z0-9A-Z]{1,256}$",
+                  "validationMessage": "Please enter the Investigation Channel Id"
                 }
               }
             ]

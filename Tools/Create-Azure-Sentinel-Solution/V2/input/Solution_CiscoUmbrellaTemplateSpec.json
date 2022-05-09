@@ -19,7 +19,8 @@
     "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-GetDomainInfo/azuredeploy.json",
     "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-AddIpToDestinationList/azuredeploy.json",
     "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-AssignPolicyToIdentity/azuredeploy.json",
-    "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-BlockDomain/azuredeploy.json"
+    "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-BlockDomain/azuredeploy.json",
+    "Playbooks/Advanced-SNOW-Teams-Integration/azuredeploy.json"
   ],
   "BasePath": "C:\\users\\robencha\\Azure-Sentinel",
   "Version": "2.0.0",

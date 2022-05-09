@@ -783,6 +783,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
 
                         $playbookDependencies = @();
                         $playbookResources = @();
+                        $playbookVersion = '1.0';
                         foreach ($playbookResource in $playbookData.resources) {
                             if ($playbookResource.type -eq "Microsoft.Web/connections") {
                                 if ($playbookResource.properties -and $playbookResource.properties.api -and $playbookResource.properties.api.id) {
@@ -845,6 +846,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                     $playbookResource | Add-Member -NotePropertyName "tags" -NotePropertyValue ([PSCustomObject]@{});
                                 }
                                 $playbookResource.tags | Add-Member -NotePropertyName "hidden-SentinelWorkspaceId" -NotePropertyValue "[variables('workspaceResourceId')]";
+                                $playbookVersion = $playbookResource.tags.'hidden-SentinelTemplateVersion' ? $playbookResource.tags.'hidden-SentinelTemplateVersion' : $playbookVersion;
                             }
                             $playbookResource =  $playbookResource # $(replaceVarsRecursively $playbookResource)
                             $playbookResource = $(removePropertiesRecursively $playbookResource)
@@ -856,7 +858,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
 
                         if($contentToImport.TemplateSpec)
                         {
-                            $baseMainTemplate.variables | Add-Member -NotePropertyName "playbookVersion$playbookCounter" -NotePropertyValue "1.0"
+                            $baseMainTemplate.variables | Add-Member -NotePropertyName "playbookVersion$playbookCounter" -NotePropertyValue $playbookVersion
                             $baseMainTemplate.variables | Add-Member -NotePropertyName "playbookContentId$playbookCounter" -NotePropertyValue $fileName
                             $baseMainTemplate.variables | Add-Member -NotePropertyName "_playbookContentId$playbookCounter" -NotePropertyValue "[variables('playbookContentId$playbookCounter')]"
 
