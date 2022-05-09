@@ -32,347 +32,34 @@
   "variables": {
     "solutionId": "azuresentinel.azure-sentinel-solution-ciscoumbrella",
     "_solutionId": "[variables('solutionId')]",
-    "playbook1-CiscoUmbrella-GetDomainInfo": "playbook1-CiscoUmbrella-GetDomainInfo",
-    "_playbook1-CiscoUmbrella-GetDomainInfo": "[variables('playbook1-CiscoUmbrella-GetDomainInfo')]",
-    "playbook1-customApis_ciscoumbrellainvestigate_name": "CiscoUmbrellaInvestigateAPI",
-    "_playbook1-customApis_ciscoumbrellainvestigate_name": "[variables('playbook1-customApis_ciscoumbrellainvestigate_name')]",
+    "CiscoUmbrellaNetworkDeviceManagementAPIConnector": "CiscoUmbrellaNetworkDeviceManagementAPIConnector",
+    "_CiscoUmbrellaNetworkDeviceManagementAPIConnector": "[variables('CiscoUmbrellaNetworkDeviceManagementAPIConnector')]",
     "playbookVersion1": "1.0",
-    "playbookContentId1": "playbook1-CiscoUmbrella-GetDomainInfo",
+    "playbookContentId1": "CiscoUmbrellaNetworkDeviceManagementAPIConnector",
     "_playbookContentId1": "[variables('playbookContentId1')]",
-    "playbookId1": "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId1'))]",
-    "playbookTemplateSpecName1": "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId1'))]",
+    "playbookId1": "[resourceId('Microsoft.Web/customApis', variables('playbookContentId1'))]",
+    "playbookTemplateSpecName1": "[concat(parameters('workspace'),'-LogicAppsCustomConnector-',variables('_playbookContentId1'))]",
     "workspaceResourceId": "[resourceId('microsoft.OperationalInsights/Workspaces', parameters('workspace'))]",
-    "playbook2-CiscoUmbrellaNetworkDeviceManagementAPIConnector": "playbook2-CiscoUmbrellaNetworkDeviceManagementAPIConnector",
-    "_playbook2-CiscoUmbrellaNetworkDeviceManagementAPIConnector": "[variables('playbook2-CiscoUmbrellaNetworkDeviceManagementAPIConnector')]",
+    "CiscoUmbrellaInvestigateAPIConnector": "CiscoUmbrellaInvestigateAPIConnector",
+    "_CiscoUmbrellaInvestigateAPIConnector": "[variables('CiscoUmbrellaInvestigateAPIConnector')]",
     "playbookVersion2": "1.0",
-    "playbookContentId2": "playbook2-CiscoUmbrellaNetworkDeviceManagementAPIConnector",
+    "playbookContentId2": "CiscoUmbrellaInvestigateAPIConnector",
     "_playbookContentId2": "[variables('playbookContentId2')]",
     "playbookId2": "[resourceId('Microsoft.Web/customApis', variables('playbookContentId2'))]",
-    "playbookTemplateSpecName2": "[concat(parameters('workspace'),'-LogicAppsCustomConnector-',variables('_playbookContentId2'))]"
+    "playbookTemplateSpecName2": "[concat(parameters('workspace'),'-LogicAppsCustomConnector-',variables('_playbookContentId2'))]",
+    "CiscoUmbrella-GetDomainInfo": "CiscoUmbrella-GetDomainInfo",
+    "_CiscoUmbrella-GetDomainInfo": "[variables('CiscoUmbrella-GetDomainInfo')]",
+    "playbookVersion3": "1.0",
+    "playbookContentId3": "CiscoUmbrella-GetDomainInfo",
+    "_playbookContentId3": "[variables('playbookContentId3')]",
+    "playbookId3": "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId3'))]",
+    "playbookTemplateSpecName3": "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId3'))]"
   },
   "resources": [
     {
       "type": "Microsoft.Resources/templateSpecs",
       "apiVersion": "2021-05-01",
       "name": "[variables('playbookTemplateSpecName1')]",
-      "location": "[parameters('workspace-location')]",
-      "tags": {
-        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
-        "hidden-sentinelContentType": "Playbook"
-      },
-      "properties": {
-        "description": "CiscoUmbrella-GetDomainInfo playbook",
-        "displayName": "CiscoUmbrella-GetDomainInfo playbook"
-      }
-    },
-    {
-      "type": "Microsoft.Resources/templateSpecs/versions",
-      "apiVersion": "2021-05-01",
-      "name": "[concat(variables('playbookTemplateSpecName1'),'/',variables('playbookVersion1'))]",
-      "location": "[parameters('workspace-location')]",
-      "tags": {
-        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
-        "hidden-sentinelContentType": "Playbook"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName1'))]"
-      ],
-      "properties": {
-        "description": "CiscoUmbrella-GetDomainInfo Playbook with template version 2.0.0",
-        "mainTemplate": {
-          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-          "contentVersion": "[variables('playbookVersion1')]",
-          "metadata": null,
-          "parameters": {
-            "PlaybookName": {
-              "defaultValue": "CiscoUmbrella-GetDomainInfo",
-              "type": "String"
-            }
-          },
-          "variables": {
-            "AzureSentinelConnectionName": "[[concat('azuresentinel-', parameters('PlaybookName'))]",
-            "CiscoUmbrellaInvestigateAPIConnectionName": "[[concat('ciscoumbrellainvestigate-connection-', parameters('PlaybookName'))]",
-            "customApis_ciscoumbrellainvestigate_name": "CiscoUmbrellaInvestigateAPI",
-            "connection-1": "[[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', variables('workspace-location-inline'), '/managedApis/azuresentinel')]",
-            "_connection-1": "[[variables('connection-1')]",
-            "connection-2": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', variables('customApis_ciscoumbrellainvestigate_name'))]",
-            "_connection-2": "[[variables('connection-2')]",
-            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]"
-          },
-          "resources": [
-            {
-              "type": "Microsoft.Web/connections",
-              "apiVersion": "2016-06-01",
-              "name": "[[variables('AzureSentinelConnectionName')]",
-              "location": "[[variables('workspace-location-inline')]",
-              "properties": {
-                "displayName": "[[variables('AzureSentinelConnectionName')]",
-                "api": {
-                  "id": "[[variables('_connection-1')]"
-                }
-              }
-            },
-            {
-              "type": "Microsoft.Web/connections",
-              "apiVersion": "2016-06-01",
-              "name": "[[variables('CiscoUmbrellaInvestigateAPIConnectionName')]",
-              "location": "[[variables('workspace-location-inline')]",
-              "kind": "V1",
-              "properties": {
-                "displayName": "[[variables('CiscoUmbrellaInvestigateAPIConnectionName')]",
-                "api": {
-                  "id": "[[variables('_connection-2')]"
-                }
-              }
-            },
-            {
-              "type": "Microsoft.Logic/workflows",
-              "apiVersion": "2017-07-01",
-              "name": "[[parameters('PlaybookName')]",
-              "location": "[[variables('workspace-location-inline')]",
-              "dependsOn": [
-                "[[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
-                "[[resourceId('Microsoft.Web/connections', variables('CiscoUmbrellaInvestigateAPIConnectionName'))]"
-              ],
-              "properties": {
-                "state": "Enabled",
-                "definition": {
-                  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-                  "actions": {
-                    "Entities_-_Get_URLs": {
-                      "inputs": {
-                        "body": "@triggerBody()?['object']?['properties']?['relatedEntities']",
-                        "host": {
-                          "connection": {
-                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
-                          }
-                        },
-                        "method": "post",
-                        "path": "/entities/url"
-                      },
-                      "type": "ApiConnection"
-                    },
-                    "For_each_URL": {
-                      "actions": {
-                        "Add_comment_to_incident_(V3)": {
-                          "inputs": {
-                            "body": {
-                              "incidentArmId": "@triggerBody()?['object']?['id']",
-                              "message": "<p><strong></strong><strong>@{outputs('Get_logo')}</strong><strong> </strong><span style=\"font-size: 14px\"><strong>CiscoUmbrella-GetDomainInfo</strong></span><br>\nRisk score for domain @{outputs('Get_domain_from_URL')} is &nbsp;@{body('Get_Risk_score_for_a_domain')?['risk_score']}.<br>\n<span style=\"font-size: 12px\"><strong>Risk score indicators:</strong></span><br>\n@{body('Create_HTML_table_with_security_indicators')}<br>\n<br>\n</p>"
-                            },
-                            "host": {
-                              "connection": {
-                                "name": "@parameters('$connections')['azuresentinel']['connectionId']"
-                              }
-                            },
-                            "method": "post",
-                            "path": "/Incidents/Comment"
-                          },
-                          "runAfter": {
-                            "Create_HTML_table_with_security_indicators": [
-                              "Succeeded"
-                            ]
-                          },
-                          "type": "ApiConnection"
-                        },
-                        "Add_comment_to_incident_(V3)_2": {
-                          "inputs": {
-                            "body": {
-                              "incidentArmId": "@triggerBody()?['object']?['id']",
-                              "message": "<p>@{outputs('Get_logo')}<span style=\"font-size: 14px\"><strong> CiscoUmbrella-GetDomainInfo<br>\n</strong></span><span style=\"font-size: 12px\">Security data for </span><span style=\"font-size: 12px\">@{outputs('Get_domain_from_URL')}</span><span style=\"font-size: 12px\"> (part 1) :<br>\n</span><span style=\"font-size: 12px\"><strong>dga_score:</strong></span><span style=\"font-size: 12px\"> </span><span style=\"font-size: 12px\">@{body('Get_domain_security_data')?['dga_score']}</span><span style=\"font-size: 12px\"><br>\nDomain Generation Algorithm. This score is generated based on the likeliness of the domain name being generated by an algorithm rather than a human. This algorithm is designed to identify domains which have been created using an automated randomization strategy, which is a common evasion technique in malware kits or botnets. This score ranges from -100 (suspicious) to 0 (benign).<br>\n</span><span style=\"font-size: 12px\"><strong>perplexity:</strong></span><span style=\"font-size: 12px\"> </span><span style=\"font-size: 12px\">@{body('Get_domain_security_data')?['perplexity']}</span><span style=\"font-size: 12px\"><br>\nA second score on the likeliness of the name to be algorithmically generated, on a scale from 0 to 100. This score is to be used in conjunction with DGA.<br>\n</span><span style=\"font-size: 12px\"><strong>entropy:</strong></span><span style=\"font-size: 12px\"> </span><span style=\"font-size: 12px\">@{body('Get_domain_security_data')?['entropy']}</span><span style=\"font-size: 12px\"><br>\nThe number of bits required to encode the domain name, as a score. This score is to be used in conjunction with DGA and Perplexity.<br>\n</span><span style=\"font-size: 12px\"><strong>securerank2:</strong></span><span style=\"font-size: 12px\"> </span><span style=\"font-size: 12px\">@{body('Get_domain_security_data')?['securerank2']}</span><span style=\"font-size: 12px\"><br>\nSuspicious rank for a domain that reviews based on the lookup behavior of client IP for the domain. Securerank is designed to identify hostnames requested by known infected clients but never requested by clean clients, assuming these domains are more likely to be bad. Scores returned range from -100 (suspicious) to 100 (benign).<br>\n</span></p>"
-                            },
-                            "host": {
-                              "connection": {
-                                "name": "@parameters('$connections')['azuresentinel']['connectionId']"
-                              }
-                            },
-                            "method": "post",
-                            "path": "/Incidents/Comment"
-                          },
-                          "runAfter": {
-                            "Add_comment_to_incident_(V3)": [
-                              "Succeeded"
-                            ]
-                          },
-                          "type": "ApiConnection"
-                        },
-                        "Add_comment_to_incident_(V3)_3": {
-                          "inputs": {
-                            "body": {
-                              "incidentArmId": "@triggerBody()?['object']?['id']",
-                              "message": "<p>@{outputs('Get_logo')} CiscoUmbrella-GetDomainInfo<br>\nSecurity data for @{outputs('Get_domain_from_URL')} (part 2):<br>\n<strong>pagerank: </strong>@{body('Get_domain_security_data')?['pagerank']}<br>\nPopularity according to Google's pagerank algorithm.<br>\n<strong>asn_score: </strong>@{body('Get_domain_security_data')?['asn_score']}<br>\nASN reputation score, ranges from -100 to 0 with -100 being very suspicious.<br>\n<strong>prefix_score:</strong> @{body('Get_domain_security_data')?['prefix_score']}<br>\nPrefix ranks domains given their IP prefixes (first three octets in IP) and the reputation score of these prefixes. Ranges from -100 to 0, -100 being very suspicious.<br>\n<strong>rip_score: </strong>@{body('Get_domain_security_data')?['rip_score']}<br>\nRIP ranks domains given their IP addresses and the reputation score of these IP addresses. Ranges from -100 to 0, -100 being very suspicious.<br>\n<strong>popularity:</strong> @{body('Get_domain_security_data')?['popularity']}<br>\nThe number of unique client IPs visiting this site, relative to the all requests to all sites.<br>\n<strong>geoscore:</strong> @{body('Get_domain_security_data')?['geoscore']}<br>\nA score that represents how far the different physical locations serving this name are from each other.<br>\n<strong>ks_test:</strong> @{body('Get_domain_security_data')?['ks_test']}<br>\nKolmogorov–Smirnov test on geodiversity. 0 means that the client traffic matches what is expected for this TLD.<br>\n<strong>attack:</strong> @{body('Get_domain_security_data')?['attack']}<br>\nThe name of any known attacks associated with this domain.<br>\n<strong>threat_type: </strong>@{body('Get_domain_security_data')?['threat_type']}<br>\nThe type of the known attack.</p>"
-                            },
-                            "host": {
-                              "connection": {
-                                "name": "@parameters('$connections')['azuresentinel']['connectionId']"
-                              }
-                            },
-                            "method": "post",
-                            "path": "/Incidents/Comment"
-                          },
-                          "runAfter": {
-                            "Add_comment_to_incident_(V3)_2": [
-                              "Succeeded"
-                            ]
-                          },
-                          "type": "ApiConnection"
-                        },
-                        "Create_HTML_table_with_security_indicators": {
-                          "inputs": {
-                            "format": "HTML",
-                            "from": "@body('Get_Risk_score_for_a_domain')?['indicators']"
-                          },
-                          "runAfter": {
-                            "Get_logo": [
-                              "Succeeded"
-                            ]
-                          },
-                          "type": "Table"
-                        },
-                        "Get_Risk_score_for_a_domain": {
-                          "inputs": {
-                            "host": {
-                              "connection": {
-                                "name": "@parameters('$connections')['ciscoumbrellainvestigate']['connectionId']"
-                              }
-                            },
-                            "method": "get",
-                            "path": "/domains/risk-score/@{encodeURIComponent(outputs('Get_domain_from_URL'))}"
-                          },
-                          "runAfter": {
-                            "Get_domain_security_data": [
-                              "Succeeded"
-                            ]
-                          },
-                          "type": "ApiConnection"
-                        },
-                        "Get_domain_from_URL": {
-                          "inputs": "@split(replace(replace(item()?['Url'],'http://',''), 'https://', ''), '/')[0]",
-                          "type": "Compose"
-                        },
-                        "Get_domain_security_data": {
-                          "inputs": {
-                            "host": {
-                              "connection": {
-                                "name": "@parameters('$connections')['ciscoumbrellainvestigate']['connectionId']"
-                              }
-                            },
-                            "method": "get",
-                            "path": "/security/name/@{encodeURIComponent(outputs('Get_domain_from_URL'))}"
-                          },
-                          "runAfter": {
-                            "Get_domain_from_URL": [
-                              "Succeeded"
-                            ]
-                          },
-                          "type": "ApiConnection"
-                        },
-                        "Get_logo": {
-                          "inputs": "<img src=\"https://github.com/Azure/Azure-Sentinel/raw/master/Solutions/CiscoUmbrella/Playbooks/cisco-logo.png\"  width=\"32\" height=\"32\">",
-                          "runAfter": {
-                            "Get_Risk_score_for_a_domain": [
-                              "Succeeded"
-                            ]
-                          },
-                          "type": "Compose"
-                        }
-                      },
-                      "foreach": "@body('Entities_-_Get_URLs')?['URLs']",
-                      "runAfter": {
-                        "Entities_-_Get_URLs": [
-                          "Succeeded"
-                        ]
-                      },
-                      "type": "Foreach"
-                    }
-                  },
-                  "contentVersion": "1.0.0.0",
-                  "parameters": {
-                    "$connections": {
-                      "type": "Object"
-                    }
-                  },
-                  "triggers": {
-                    "When_Azure_Sentinel_incident_creation_rule_was_triggered": {
-                      "inputs": {
-                        "body": {
-                          "callback_url": "@{listCallbackUrl()}"
-                        },
-                        "host": {
-                          "connection": {
-                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
-                          }
-                        },
-                        "path": "/incident-creation"
-                      },
-                      "type": "ApiConnectionWebhook"
-                    }
-                  }
-                },
-                "parameters": {
-                  "$connections": {
-                    "value": {
-                      "azuresentinel": {
-                        "connectionName": "[[variables('AzureSentinelConnectionName')]",
-                        "connectionId": "[[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
-                        "id": "[[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Web/locations/',variables('workspace-location-inline'),'/managedApis/azuresentinel')]"
-                      },
-                      "ciscoumbrellainvestigate": {
-                        "connectionId": "[[resourceId('Microsoft.Web/connections', variables('CiscoUmbrellaInvestigateAPIConnectionName'))]",
-                        "connectionName": "[[variables('CiscoUmbrellaInvestigateAPIConnectionName')]",
-                        "id": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', variables('customApis_ciscoumbrellainvestigate_name'))]"
-                      }
-                    }
-                  }
-                }
-              },
-              "tags": {
-                "hidden-SentinelWorkspaceId": "[[variables('workspaceResourceId')]"
-              }
-            },
-            {
-              "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
-              "apiVersion": "2022-01-01-preview",
-              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId1'),'/'))))]",
-              "properties": {
-                "parentId": "[variables('playbookId1')]",
-                "contentId": "[variables('_playbookContentId1')]",
-                "kind": "Playbook",
-                "version": "[variables('playbookVersion1')]",
-                "source": {
-                  "kind": "Solution",
-                  "name": "CiscoUmbrella",
-                  "sourceId": "[variables('_solutionId')]"
-                },
-                "author": {
-                  "name": "Microsoft",
-                  "email": "support@microsoft.com"
-                },
-                "support": {
-                  "tier": "Microsoft",
-                  "name": "Microsoft Corporation",
-                  "email": "support@microsoft.com",
-                  "link": "https://support.microsoft.com/"
-                }
-              },
-              "dependencies": {
-                "criteria": [
-                  {
-                    "kind": "LogicAppsCustomConnector",
-                    "contentId": "[variables('_playbook1-customApis_ciscoumbrellainvestigate_name')]",
-                    "version": "[variables('playbookVersion2')]"
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Resources/templateSpecs",
-      "apiVersion": "2021-05-01",
-      "name": "[variables('playbookTemplateSpecName2')]",
       "location": "[parameters('workspace-location')]",
       "tags": {
         "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
@@ -386,20 +73,20 @@
     {
       "type": "Microsoft.Resources/templateSpecs/versions",
       "apiVersion": "2021-05-01",
-      "name": "[concat(variables('playbookTemplateSpecName2'),'/',variables('playbookVersion2'))]",
+      "name": "[concat(variables('playbookTemplateSpecName1'),'/',variables('playbookVersion1'))]",
       "location": "[parameters('workspace-location')]",
       "tags": {
         "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
         "hidden-sentinelContentType": "LogicAppsCustomConnector"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName2'))]"
+        "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName1'))]"
       ],
       "properties": {
         "description": " Playbook with template version 2.0.0",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-          "contentVersion": "[variables('playbookVersion2')]",
+          "contentVersion": "[variables('playbookVersion1')]",
           "metadata": null,
           "parameters": {},
           "variables": {
@@ -652,7 +339,460 @@
             {
               "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
               "apiVersion": "2022-01-01-preview",
-              "name": "[[concat(variables('workspace-location-inline'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookId2'),'/'))))]",
+              "name": "[[concat(variables('workspace-location-inline'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookId1')),'/'))))]",
+              "properties": {
+                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookId1'))]",
+                "contentId": "[variables('_playbookContentId1')]",
+                "kind": "LogicAppsCustomConnector",
+                "version": "[variables('playbookVersion1')]",
+                "source": {
+                  "kind": "Solution",
+                  "name": "CiscoUmbrella",
+                  "sourceId": "[variables('_solutionId')]"
+                },
+                "author": {
+                  "name": "Microsoft",
+                  "email": "support@microsoft.com"
+                },
+                "support": {
+                  "tier": "Microsoft",
+                  "name": "Microsoft Corporation",
+                  "email": "support@microsoft.com",
+                  "link": "https://support.microsoft.com/"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs",
+      "apiVersion": "2021-05-01",
+      "name": "[variables('playbookTemplateSpecName2')]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "LogicAppsCustomConnector"
+      },
+      "properties": {
+        "description": " Logic Apps Custom Connector",
+        "displayName": " Logic Apps Custom Connector"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs/versions",
+      "apiVersion": "2021-05-01",
+      "name": "[concat(variables('playbookTemplateSpecName2'),'/',variables('playbookVersion2'))]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "LogicAppsCustomConnector"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName2'))]"
+      ],
+      "properties": {
+        "description": " Playbook with template version 2.0.0",
+        "mainTemplate": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "[variables('playbookVersion2')]",
+          "metadata": null,
+          "parameters": {},
+          "variables": {
+            "customApis_CiscoUmbrellaInvestigateAPIConnector_name": "CiscoUmbrellaInvestigateAPI",
+            "operationId-GetDomainSecurityData": "GetDomainSecurityData",
+            "_operationId-GetDomainSecurityData": "[[variables('operationId-GetDomainSecurityData')]",
+            "operationId-GetDomainRiskScore": "GetDomainRiskScore",
+            "_operationId-GetDomainRiskScore": "[[variables('operationId-GetDomainRiskScore')]",
+            "operationId-GetDomainStatusAndCategorization": "GetDomainStatusAndCategorization",
+            "_operationId-GetDomainStatusAndCategorization": "[[variables('operationId-GetDomainStatusAndCategorization')]",
+            "operationId-GetCoOccurrencesForDomain": "GetCoOccurrencesForDomain",
+            "_operationId-GetCoOccurrencesForDomain": "[[variables('operationId-GetCoOccurrencesForDomain')]",
+            "operationId-GetRelatedDomains": "GetRelatedDomains",
+            "_operationId-GetRelatedDomains": "[[variables('operationId-GetRelatedDomains')]",
+            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/customApis",
+              "apiVersion": "2016-06-01",
+              "name": "[[variables('customApis_CiscoUmbrellaInvestigateAPIConnector_name')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "properties": {
+                "connectionParameters": {
+                  "api_key": {
+                    "type": "securestring",
+                    "uiDefinition": {
+                      "displayName": "API Key",
+                      "description": "The API Key for this api",
+                      "tooltip": "Provide your API Key in format: Bearer YOUR_API_KEY",
+                      "constraints": {
+                        "tabIndex": 2,
+                        "clearText": false,
+                        "required": "true"
+                      }
+                    }
+                  }
+                },
+                "brandColor": "#FFFFFF",
+                "description": "Connector for Cisco Umbrella Investigate API",
+                "displayName": "[[variables('customApis_CiscoUmbrellaInvestigateAPIConnector_name')]",
+                "iconUri": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAABdFBMVEUAAAAA//8AgP8Aqv8AgL8AmcwAmeYAotEAldUAn98AntsAodkAnNYAn9cIotgIntoHoNsHnNwHodcHndgGotoGoNsGnNYGn9cFn9sEoNgEndkEoNoEntsEntgEoNsEn9gDn9kDoNoDn9gDoNgDn9kFn9gFntgFn9kFn9oFoNoFn9gEn9kEoNkEn9oEoNgEn9kEntkEoNoEoNkEn9kEn9kEntkEoNgEntgEn9kEn9oEntoEn9gEoNgEntkEn9kEoNkEn9oEn9oEntgDn9kDn9gDoNkDn9kFn9oFn9gFn9kFntkFn9oEn9kEntoEn9gEoNkEn9kEoNkEn9oEn9gEn9kEn9kEn9kEn9kEn9kEn9kEn9kEn9kEn9kEntkEn9kEn9kEn9kEn9oDn9kFn9kEoNkEn9kEn9kEn9kEn9kEn9oEn9kEn9kEn9kEn9kEoNkEn9kEn9gEn9kEn9kEn9kEn9kEn9kEoNkEn9kEn9kEn9kEn9n///940Z2XAAAAenRSTlMAAQIDBAUKCwwQFRsfICEiIyQmJykrLC04Ozw+P0JGSEpTVVtdaGlqbW5wcnN1dnh5e35/gIGDhIeIiYqLjI2Oj5CRkpibnKSlp6mqsLGys7q7v8DCxMfKz9DS1NXW19jZ2t7g4+To6u3u7/Dx8vP09fb3+Pn6+/z9/h6/P2sAAAABYktHRHtP0rX8AAACB0lEQVRYw+2WaVPTYBRGb9SK4oI7dd+tAiqCra1FqKIoKu4bUFQQtJY2SUna2vPr/VCSafKmpONkHMfJ86m5OXOmN3Pfm4jEiRMnTtQZKadCkfWRHkTrlMKRcg8iIALkvxRlKsM+yq10RTLVW6qohuETuZWuSA1zi7+r/uiKBLb4z4jyxt0wUd5Ih4jyRlps7DCRjRUisrG26khpoOsdIDqR5bRmUvPhTsVFan7EKdjYMq5n2zdHK/5H6lRcJF31IU4hZ2TjNfJHolL4Qi71tLMv/xyOAInzV3LgftE0vjz1zMnRZz/qa28GAgg5PrtmrTw8onqG6oBvPQzqAJxQCe1eC4C68jExBKroOWA2NkUe4rZzwVWvZ78NzGeuZJc6RWW4qCUG+xXicBMac4X3gLXXI5oCHu0QkW2dogpcCCSmYeOkiKSACY+oCN93KofyHbReJgOIJWi/e17DgkdkwJx6uk83AWa2K4QJZ9rLE99rXQ8UyblvADcUwoCzIiJyB6pKa30B+yZx/iMsK0QR8iIi2gdY9IgKwEzC/7BFRPp+saEQD8A6JSLXgYJ3rG1g/mZq4mun6NKx/j2jsKIQh5rQfJF/CzQO9jCQm6VJlRh3B3LMP9rX7G6ihd0qoeXaR6SV05TDtm9y0dQ/z3aKXi1X9U9ju4IIST5ZtVYfJ+NlFydOnKjyG0KNPhWovN8UAAAAAElFTkSuQmCC",
+                "backendService": {
+                  "serviceUrl": "https://investigate.api.umbrella.com"
+                },
+                "apiType": "Rest",
+                "swagger": {
+                  "swagger": "2.0",
+                  "info": {
+                    "title": "Default title",
+                    "description": "Connector for Cisco Umbrella Investigate API",
+                    "version": "1.0"
+                  },
+                  "host": "investigate.api.umbrella.com",
+                  "basePath": "/",
+                  "schemes": [
+                    "https"
+                  ],
+                  "paths": {
+                    "/security/name/{Domain}": {
+                      "get": {
+                        "responses": {
+                          "default": {
+                            "description": "default",
+                            "schema": {
+                              "type": "object",
+                              "properties": {
+                                "dga_score": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "Domain Generation Algorithm. This score is generated based on the likeliness of the domain name being generated by an algorithm rather than a human. This algorithm is designed to identify domains which have been created using an automated randomization strategy, which is a common evasion technique in malware kits or botnets. This score ranges from -100 (suspicious) to 0 (benign)."
+                                },
+                                "perplexity": {
+                                  "type": "number",
+                                  "format": "float",
+                                  "description": "A second score on the likeliness of the name to be algorithmically generated, on a scale from 0 to 100. This score is to be used in conjunction with DGA."
+                                },
+                                "entropy": {
+                                  "type": "number",
+                                  "format": "float",
+                                  "description": "The number of bits required to encode the domain name, as a score. This score is to be used in conjunction with DGA and Perplexity."
+                                },
+                                "securerank2": {
+                                  "type": "number",
+                                  "format": "float",
+                                  "description": "Suspicious rank for a domain that reviews based on the lookup behavior of client IP for the domain. Securerank is designed to identify hostnames requested by known infected clients but never requested by clean clients, assuming these domains are more likely to be bad. Scores returned range from -100 (suspicious) to 100 (benign)."
+                                },
+                                "pagerank": {
+                                  "type": "number",
+                                  "format": "float",
+                                  "description": "Popularity according to Google's pagerank algorithm"
+                                },
+                                "asn_score": {
+                                  "type": "number",
+                                  "format": "float",
+                                  "description": "ASN reputation score, ranges from -100 to 0 with -100 being very suspicious."
+                                },
+                                "prefix_score": {
+                                  "type": "number",
+                                  "format": "float",
+                                  "description": "Prefix ranks domains given their IP prefixes (an IP prefix is the first three octets in an IP address) and the reputation score of these prefixes. Ranges from -100 to 0, -100 being very suspicious."
+                                },
+                                "rip_score": {
+                                  "type": "number",
+                                  "format": "float",
+                                  "description": "RIP ranks domains given their IP addresses and the reputation score of these IP addresses. Ranges from -100 to 0, -100 being very suspicious."
+                                },
+                                "popularity": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "The number of unique client IPs visiting this site, relative to the all requests to all sites. A score of how many different client/unique IPs go to this domain compared to others."
+                                },
+                                "fastflux": {
+                                  "type": "boolean",
+                                  "description": "fastflux",
+                                  "x-ms-visibility": "internal"
+                                },
+                                "geodiversity": {
+                                  "type": "array",
+                                  "description": "array of geodiversity tuples",
+                                  "x-ms-summary": "geodiversity array",
+                                  "items": {
+                                    "x-ms-summary": "geodiversity tuple",
+                                    "description": "Tuple [\"country code\", \"score\"]. A score representing the number of queries from clients visiting the domain, broken down by country. Score is a non-normalized ratio between 0 and 1.",
+                                    "type": "array"
+                                  }
+                                },
+                                "geodiversity_normalized": {
+                                  "type": "array",
+                                  "description": "array of geodiversity_normalized tuples",
+                                  "x-ms-summary": "geodiversity_normalized array",
+                                  "items": {
+                                    "x-ms-summary": "geodiversity_normalized tuple",
+                                    "description": "Tuple [\"country code\", \"score\"]. A score representing the amount of queries for clients visiting the domain, broken down by country. Score is a normalized ratio between 0 and 1.",
+                                    "type": "array"
+                                  }
+                                },
+                                "tld_geodiversity": {
+                                  "type": "array",
+                                  "description": "array of tld_geodiversity tuples",
+                                  "x-ms-summary": "tld_geodiversity array",
+                                  "items": {
+                                    "x-ms-summary": "tld_geodiversity tuple",
+                                    "description": "Tuple [\"country code\", \"score\"]. A score that represents the TLD country code geodiversity as a percentage of clients visiting the domain. Occurs most often with domains that have a ccTLD. Score is normalized ratio between 0 and 1.",
+                                    "type": "array"
+                                  }
+                                },
+                                "geoscore": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "A score that represents how far the different physical locations serving this name are from each other."
+                                },
+                                "ks_test": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "Kolmogorov–Smirnov test on geodiversity. 0 means that the client traffic matches what is expected for this TLD."
+                                },
+                                "attack": {
+                                  "type": "string",
+                                  "description": "The name of any known attacks associated with this domain. Returns blank if no known threat associated with domain."
+                                },
+                                "threat_type": {
+                                  "type": "string",
+                                  "description": "The type of the known attack, such as botnet or APT. Returns blank if no known threat associated with domain."
+                                },
+                                "found": {
+                                  "type": "boolean",
+                                  "description": "Returns true if results available. Returns blank if no known threat associated with domain."
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "summary": "Get domain security data",
+                        "description": "Security Information for a Domain",
+                        "operationId": "[[variables('_operationId-GetDomainSecurityData')]",
+                        "parameters": [
+                          {
+                            "name": "Domain",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    },
+                    "/domains/risk-score/{DomainName}": {
+                      "get": {
+                        "responses": {
+                          "default": {
+                            "description": "default",
+                            "schema": {
+                              "type": "object",
+                              "properties": {
+                                "indicators": {
+                                  "type": "array",
+                                  "x-ms-summary": "indicators",
+                                  "description": "array of indicator objects",
+                                  "items": {
+                                    "x-ms-summary": "indicator",
+                                    "description": "indicator object",
+                                    "type": "object",
+                                    "properties": {
+                                      "indicator": {
+                                        "type": "string",
+                                        "description": "indicator name",
+                                        "title": "name"
+                                      },
+                                      "normalized_score": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "description": "indicator normalized score"
+                                      },
+                                      "score": {
+                                        "type": "boolean",
+                                        "description": "indicator score"
+                                      }
+                                    }
+                                  }
+                                },
+                                "risk_score": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "risk score"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "summary": "Get Risk score for a domain",
+                        "description": "Get Risk score for a domain",
+                        "operationId": "[[variables('_operationId-GetDomainRiskScore')]",
+                        "parameters": [
+                          {
+                            "name": "DomainName",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    },
+                    "/domains/categorization/{Domain}": {
+                      "get": {
+                        "responses": {
+                          "default": {
+                            "description": "default",
+                            "schema": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "object",
+                                "description": "Domain object",
+                                "title": "Domain object",
+                                "x-ms-summary": "Domain object",
+                                "properties": {
+                                  "status": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "The status will be \"-1\" if the domain is believed to be malicious, \"1\" if the domain is believed to be benign, \"0\" if it hasn't been classified yet."
+                                  },
+                                  "security_categories": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "description": "The Umbrella security category, or categories, that match this domain or that this domain is associated with. If none match, the return will be blank."
+                                  },
+                                  "content_categories": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "description": "The Umbrella content category or categories that match this domain. If none match, the return will be blank."
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "summary": "Get Domain Status and Categorization",
+                        "description": "Get Domain Status and Categorization",
+                        "operationId": "[[variables('_operationId-GetDomainStatusAndCategorization')]",
+                        "parameters": [
+                          {
+                            "name": "Domain",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          },
+                          {
+                            "name": "showLabels",
+                            "in": "query",
+                            "required": true,
+                            "type": "string",
+                            "default": 1,
+                            "x-ms-visibility": "internal"
+                          }
+                        ]
+                      }
+                    },
+                    "/recommendations/name/{Domain}": {
+                      "get": {
+                        "responses": {
+                          "default": {
+                            "description": "default",
+                            "schema": {
+                              "type": "object",
+                              "properties": {
+                                "pfs2": {
+                                  "type": "array",
+                                  "x-ms-summary": "pfs2 array",
+                                  "description": "Array of [domain name, scores] tuples. The values range between 0 and 1 and should not exceed 1. All co-occurences of requests from client IPs are returned for the previous seven days whether the co-occurence is suspicious or not.",
+                                  "items": {
+                                    "x-ms-summary": "pfs2 tuple",
+                                    "description": "[[domain name, scores] tuple. The values range between 0 and 1 and should not exceed 1. All co-occurences of requests from client IPs are returned for the previous seven days whether the co-occurence is suspicious or not.",
+                                    "type": "array"
+                                  }
+                                },
+                                "found": {
+                                  "type": "boolean",
+                                  "description": "Returns true if results available. Nothing is returned if no results available."
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "summary": "Get Co-Occurrences for a Domain",
+                        "description": "Get Co-Occurrences for a Domain",
+                        "operationId": "[[variables('_operationId-GetCoOccurrencesForDomain')]",
+                        "parameters": [
+                          {
+                            "name": "Domain",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    },
+                    "/links/name/{Domain}": {
+                      "get": {
+                        "responses": {
+                          "default": {
+                            "description": "default",
+                            "schema": {
+                              "type": "object",
+                              "properties": {
+                                "tb1": {
+                                  "type": "array",
+                                  "x-ms-summary": "tb1 array",
+                                  "description": "Array of [domain name, scores] tuples where score is the number of client IP requests to the site around the same time as the site being looked up. This is a score reflecting the number of client IPs looking up related sites within 60 seconds of the original request.",
+                                  "items": {
+                                    "x-ms-summary": "tb1 tuple",
+                                    "description": "[[domain name, scores] tuples where score is the number of client IP requests to the site around the same time as the site being looked up. This is a score reflecting the number of client IPs looking up related sites within 60 seconds of the original request.",
+                                    "type": "array"
+                                  }
+                                },
+                                "found": {
+                                  "type": "boolean",
+                                  "description": "Returns true if results available. Nothing is returned if no results available."
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "summary": "Get a list of domain names requested the same time as a specified domain",
+                        "description": "Get a list of domain names requested the same time as a specified domain",
+                        "operationId": "[[variables('_operationId-GetRelatedDomains')]",
+                        "parameters": [
+                          {
+                            "name": "Domain",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "securityDefinitions": {
+                    "API Key": {
+                      "type": "apiKey",
+                      "in": "header",
+                      "name": "Authorization"
+                    }
+                  },
+                  "security": [
+                    {}
+                  ]
+                }
+              }
+            },
+            {
+              "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
+              "apiVersion": "2022-01-01-preview",
+              "name": "[[concat(variables('workspace-location-inline'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookId2')),'/'))))]",
               "properties": {
                 "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookId2'))]",
                 "contentId": "[variables('_playbookContentId2')]",
@@ -673,6 +813,324 @@
                   "email": "support@microsoft.com",
                   "link": "https://support.microsoft.com/"
                 }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs",
+      "apiVersion": "2021-05-01",
+      "name": "[variables('playbookTemplateSpecName3')]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "Playbook"
+      },
+      "properties": {
+        "description": "CiscoUmbrella-GetDomainInfo playbook",
+        "displayName": "CiscoUmbrella-GetDomainInfo playbook"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs/versions",
+      "apiVersion": "2021-05-01",
+      "name": "[concat(variables('playbookTemplateSpecName3'),'/',variables('playbookVersion3'))]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "Playbook"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName3'))]"
+      ],
+      "properties": {
+        "description": "CiscoUmbrella-GetDomainInfo Playbook with template version 2.0.0",
+        "mainTemplate": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "[variables('playbookVersion3')]",
+          "metadata": null,
+          "parameters": {
+            "PlaybookName": {
+              "defaultValue": "CiscoUmbrella-GetDomainInfo",
+              "type": "String"
+            }
+          },
+          "variables": {
+            "AzureSentinelConnectionName": "[[concat('azuresentinel-', parameters('PlaybookName'))]",
+            "CiscoUmbrellaInvestigateAPIConnectionName": "[[concat('ciscoumbrellainvestigate-connection-', parameters('PlaybookName'))]",
+            "customApis_ciscoumbrellainvestigate_name": "CiscoUmbrellaInvestigateAPI",
+            "connection-1": "[[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', variables('workspace-location-inline'), '/managedApis/azuresentinel')]",
+            "_connection-1": "[[variables('connection-1')]",
+            "connection-2": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', variables('customApis_ciscoumbrellainvestigate_name'))]",
+            "_connection-2": "[[variables('connection-2')]",
+            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/connections",
+              "apiVersion": "2016-06-01",
+              "name": "[[variables('AzureSentinelConnectionName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "properties": {
+                "displayName": "[[variables('AzureSentinelConnectionName')]",
+                "api": {
+                  "id": "[[variables('_connection-1')]"
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Web/connections",
+              "apiVersion": "2016-06-01",
+              "name": "[[variables('CiscoUmbrellaInvestigateAPIConnectionName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "kind": "V1",
+              "properties": {
+                "displayName": "[[variables('CiscoUmbrellaInvestigateAPIConnectionName')]",
+                "api": {
+                  "id": "[[variables('_connection-2')]"
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Logic/workflows",
+              "apiVersion": "2017-07-01",
+              "name": "[[parameters('PlaybookName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "dependsOn": [
+                "[[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
+                "[[resourceId('Microsoft.Web/connections', variables('CiscoUmbrellaInvestigateAPIConnectionName'))]"
+              ],
+              "properties": {
+                "state": "Enabled",
+                "definition": {
+                  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                  "actions": {
+                    "Entities_-_Get_URLs": {
+                      "inputs": {
+                        "body": "@triggerBody()?['object']?['properties']?['relatedEntities']",
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                          }
+                        },
+                        "method": "post",
+                        "path": "/entities/url"
+                      },
+                      "type": "ApiConnection"
+                    },
+                    "For_each_URL": {
+                      "actions": {
+                        "Add_comment_to_incident_(V3)": {
+                          "inputs": {
+                            "body": {
+                              "incidentArmId": "@triggerBody()?['object']?['id']",
+                              "message": "<p><strong></strong><strong>@{outputs('Get_logo')}</strong><strong> </strong><span style=\"font-size: 14px\"><strong>CiscoUmbrella-GetDomainInfo</strong></span><br>\nRisk score for domain @{outputs('Get_domain_from_URL')} is &nbsp;@{body('Get_Risk_score_for_a_domain')?['risk_score']}.<br>\n<span style=\"font-size: 12px\"><strong>Risk score indicators:</strong></span><br>\n@{body('Create_HTML_table_with_security_indicators')}<br>\n<br>\n</p>"
+                            },
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                              }
+                            },
+                            "method": "post",
+                            "path": "/Incidents/Comment"
+                          },
+                          "runAfter": {
+                            "Create_HTML_table_with_security_indicators": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "ApiConnection"
+                        },
+                        "Add_comment_to_incident_(V3)_2": {
+                          "inputs": {
+                            "body": {
+                              "incidentArmId": "@triggerBody()?['object']?['id']",
+                              "message": "<p>@{outputs('Get_logo')}<span style=\"font-size: 14px\"><strong> CiscoUmbrella-GetDomainInfo<br>\n</strong></span><span style=\"font-size: 12px\">Security data for </span><span style=\"font-size: 12px\">@{outputs('Get_domain_from_URL')}</span><span style=\"font-size: 12px\"> (part 1) :<br>\n</span><span style=\"font-size: 12px\"><strong>dga_score:</strong></span><span style=\"font-size: 12px\"> </span><span style=\"font-size: 12px\">@{body('Get_domain_security_data')?['dga_score']}</span><span style=\"font-size: 12px\"><br>\nDomain Generation Algorithm. This score is generated based on the likeliness of the domain name being generated by an algorithm rather than a human. This algorithm is designed to identify domains which have been created using an automated randomization strategy, which is a common evasion technique in malware kits or botnets. This score ranges from -100 (suspicious) to 0 (benign).<br>\n</span><span style=\"font-size: 12px\"><strong>perplexity:</strong></span><span style=\"font-size: 12px\"> </span><span style=\"font-size: 12px\">@{body('Get_domain_security_data')?['perplexity']}</span><span style=\"font-size: 12px\"><br>\nA second score on the likeliness of the name to be algorithmically generated, on a scale from 0 to 100. This score is to be used in conjunction with DGA.<br>\n</span><span style=\"font-size: 12px\"><strong>entropy:</strong></span><span style=\"font-size: 12px\"> </span><span style=\"font-size: 12px\">@{body('Get_domain_security_data')?['entropy']}</span><span style=\"font-size: 12px\"><br>\nThe number of bits required to encode the domain name, as a score. This score is to be used in conjunction with DGA and Perplexity.<br>\n</span><span style=\"font-size: 12px\"><strong>securerank2:</strong></span><span style=\"font-size: 12px\"> </span><span style=\"font-size: 12px\">@{body('Get_domain_security_data')?['securerank2']}</span><span style=\"font-size: 12px\"><br>\nSuspicious rank for a domain that reviews based on the lookup behavior of client IP for the domain. Securerank is designed to identify hostnames requested by known infected clients but never requested by clean clients, assuming these domains are more likely to be bad. Scores returned range from -100 (suspicious) to 100 (benign).<br>\n</span></p>"
+                            },
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                              }
+                            },
+                            "method": "post",
+                            "path": "/Incidents/Comment"
+                          },
+                          "runAfter": {
+                            "Add_comment_to_incident_(V3)": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "ApiConnection"
+                        },
+                        "Add_comment_to_incident_(V3)_3": {
+                          "inputs": {
+                            "body": {
+                              "incidentArmId": "@triggerBody()?['object']?['id']",
+                              "message": "<p>@{outputs('Get_logo')} CiscoUmbrella-GetDomainInfo<br>\nSecurity data for @{outputs('Get_domain_from_URL')} (part 2):<br>\n<strong>pagerank: </strong>@{body('Get_domain_security_data')?['pagerank']}<br>\nPopularity according to Google's pagerank algorithm.<br>\n<strong>asn_score: </strong>@{body('Get_domain_security_data')?['asn_score']}<br>\nASN reputation score, ranges from -100 to 0 with -100 being very suspicious.<br>\n<strong>prefix_score:</strong> @{body('Get_domain_security_data')?['prefix_score']}<br>\nPrefix ranks domains given their IP prefixes (first three octets in IP) and the reputation score of these prefixes. Ranges from -100 to 0, -100 being very suspicious.<br>\n<strong>rip_score: </strong>@{body('Get_domain_security_data')?['rip_score']}<br>\nRIP ranks domains given their IP addresses and the reputation score of these IP addresses. Ranges from -100 to 0, -100 being very suspicious.<br>\n<strong>popularity:</strong> @{body('Get_domain_security_data')?['popularity']}<br>\nThe number of unique client IPs visiting this site, relative to the all requests to all sites.<br>\n<strong>geoscore:</strong> @{body('Get_domain_security_data')?['geoscore']}<br>\nA score that represents how far the different physical locations serving this name are from each other.<br>\n<strong>ks_test:</strong> @{body('Get_domain_security_data')?['ks_test']}<br>\nKolmogorov–Smirnov test on geodiversity. 0 means that the client traffic matches what is expected for this TLD.<br>\n<strong>attack:</strong> @{body('Get_domain_security_data')?['attack']}<br>\nThe name of any known attacks associated with this domain.<br>\n<strong>threat_type: </strong>@{body('Get_domain_security_data')?['threat_type']}<br>\nThe type of the known attack.</p>"
+                            },
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                              }
+                            },
+                            "method": "post",
+                            "path": "/Incidents/Comment"
+                          },
+                          "runAfter": {
+                            "Add_comment_to_incident_(V3)_2": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "ApiConnection"
+                        },
+                        "Create_HTML_table_with_security_indicators": {
+                          "inputs": {
+                            "format": "HTML",
+                            "from": "@body('Get_Risk_score_for_a_domain')?['indicators']"
+                          },
+                          "runAfter": {
+                            "Get_logo": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "Table"
+                        },
+                        "Get_Risk_score_for_a_domain": {
+                          "inputs": {
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['ciscoumbrellainvestigate']['connectionId']"
+                              }
+                            },
+                            "method": "get",
+                            "path": "/domains/risk-score/@{encodeURIComponent(outputs('Get_domain_from_URL'))}"
+                          },
+                          "runAfter": {
+                            "Get_domain_security_data": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "ApiConnection"
+                        },
+                        "Get_domain_from_URL": {
+                          "inputs": "@split(replace(replace(item()?['Url'],'http://',''), 'https://', ''), '/')[0]",
+                          "type": "Compose"
+                        },
+                        "Get_domain_security_data": {
+                          "inputs": {
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['ciscoumbrellainvestigate']['connectionId']"
+                              }
+                            },
+                            "method": "get",
+                            "path": "/security/name/@{encodeURIComponent(outputs('Get_domain_from_URL'))}"
+                          },
+                          "runAfter": {
+                            "Get_domain_from_URL": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "ApiConnection"
+                        },
+                        "Get_logo": {
+                          "inputs": "<img src=\"https://github.com/Azure/Azure-Sentinel/raw/master/Solutions/CiscoUmbrella/Playbooks/cisco-logo.png\"  width=\"32\" height=\"32\">",
+                          "runAfter": {
+                            "Get_Risk_score_for_a_domain": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "Compose"
+                        }
+                      },
+                      "foreach": "@body('Entities_-_Get_URLs')?['URLs']",
+                      "runAfter": {
+                        "Entities_-_Get_URLs": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "Foreach"
+                    }
+                  },
+                  "contentVersion": "1.0.0.0",
+                  "parameters": {
+                    "$connections": {
+                      "type": "Object"
+                    }
+                  },
+                  "triggers": {
+                    "When_Azure_Sentinel_incident_creation_rule_was_triggered": {
+                      "inputs": {
+                        "body": {
+                          "callback_url": "@{listCallbackUrl()}"
+                        },
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                          }
+                        },
+                        "path": "/incident-creation"
+                      },
+                      "type": "ApiConnectionWebhook"
+                    }
+                  }
+                },
+                "parameters": {
+                  "$connections": {
+                    "value": {
+                      "azuresentinel": {
+                        "connectionName": "[[variables('AzureSentinelConnectionName')]",
+                        "connectionId": "[[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
+                        "id": "[[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Web/locations/',variables('workspace-location-inline'),'/managedApis/azuresentinel')]"
+                      },
+                      "ciscoumbrellainvestigate": {
+                        "connectionId": "[[resourceId('Microsoft.Web/connections', variables('CiscoUmbrellaInvestigateAPIConnectionName'))]",
+                        "connectionName": "[[variables('CiscoUmbrellaInvestigateAPIConnectionName')]",
+                        "id": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', variables('customApis_ciscoumbrellainvestigate_name'))]"
+                      }
+                    }
+                  }
+                }
+              },
+              "tags": {
+                "hidden-SentinelWorkspaceId": "[[variables('workspaceResourceId')]"
+              }
+            },
+            {
+              "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
+              "apiVersion": "2022-01-01-preview",
+              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId3'),'/'))))]",
+              "properties": {
+                "parentId": "[variables('playbookId3')]",
+                "contentId": "[variables('_playbookContentId3')]",
+                "kind": "Playbook",
+                "version": "[variables('playbookVersion3')]",
+                "source": {
+                  "kind": "Solution",
+                  "name": "CiscoUmbrella",
+                  "sourceId": "[variables('_solutionId')]"
+                },
+                "author": {
+                  "name": "Microsoft",
+                  "email": "support@microsoft.com"
+                },
+                "support": {
+                  "tier": "Microsoft",
+                  "name": "Microsoft Corporation",
+                  "email": "support@microsoft.com",
+                  "link": "https://support.microsoft.com/"
+                }
+              },
+              "dependencies": {
+                "criteria": [
+                  {
+                    "kind": "LogicAppsCustomConnector",
+                    "contentId": "[variables('_CiscoUmbrellaInvestigateAPIConnector')]",
+                    "version": "[variables('playbookVersion2')]"
+                  }
+                ]
               }
             }
           ]
@@ -707,14 +1165,19 @@
           "operator": "AND",
           "criteria": [
             {
-              "kind": "Playbook",
-              "contentId": "[variables('_playbook1-CiscoUmbrella-GetDomainInfo')]",
+              "kind": "LogicAppsCustomConnector",
+              "contentId": "[variables('_CiscoUmbrellaNetworkDeviceManagementAPIConnector')]",
               "version": "[variables('playbookVersion1')]"
             },
             {
               "kind": "LogicAppsCustomConnector",
-              "contentId": "[variables('_playbook2-CiscoUmbrellaNetworkDeviceManagementAPIConnector')]",
+              "contentId": "[variables('_CiscoUmbrellaInvestigateAPIConnector')]",
               "version": "[variables('playbookVersion2')]"
+            },
+            {
+              "kind": "Playbook",
+              "contentId": "[variables('_CiscoUmbrella-GetDomainInfo')]",
+              "version": "[variables('playbookVersion3')]"
             }
           ]
         },

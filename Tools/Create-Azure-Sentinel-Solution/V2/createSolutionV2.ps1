@@ -100,6 +100,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
     $baseMetadata = Get-Content -Raw $metadataPath | Out-String | ConvertFrom-Json
 
     $DependencyCriteria = @();
+    $customConnectorsList = @{};
     $solutionId = $baseMetadata.publisherId + "." + $baseMetadata.offerId
                 $baseMainTemplate.variables | Add-Member -NotePropertyName "solutionId" -NotePropertyValue $solutionId
                 $baseMainTemplate.variables | Add-Member -NotePropertyName "_solutionId" -NotePropertyValue "[variables('solutionId')]"
@@ -429,7 +430,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                         $playbookName = $(if ($playbookData.parameters.PlaybookName) { $playbookData.parameters.PlaybookName.defaultValue }elseif ($playbookData.parameters."Playbook Name") { $playbookData.parameters."Playbook Name".defaultValue })
 
                         $fileName = Split-path -Parent $file | Split-Path -leaf
-                        $fileName = "playbook$playbookCounter-$fileName";
+                        #$fileName = "playbook$playbookCounter-$fileName";
                         if ($contentToImport.Metadata) {
                             $baseMainTemplate.variables | Add-Member -NotePropertyName $fileName -NotePropertyValue $fileName
                             $baseMainTemplate.variables | Add-Member -NotePropertyName "_$fileName" -NotePropertyValue "[variables('$fileName')]"
@@ -789,11 +790,12 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                             if ($templateVar.Name -eq $connectionKey) {
                                                 $temaplteName = $templateVar.Name
                                                 $varName = "playbook$playbookCounter-$temaplteName"
-                                                $baseMainTemplate.variables | Add-Member -NotePropertyName $varName -NotePropertyValue $templateVar.Value
-                                                $baseMainTemplate.variables | Add-Member -NotePropertyName "_$varName" -NotePropertyValue "[variables('$varName')]"
+                                                # $baseMainTemplate.variables | Add-Member -NotePropertyName $varName -NotePropertyValue $templateVar.Value
+                                                # $baseMainTemplate.variables | Add-Member -NotePropertyName "_$varName" -NotePropertyValue "[variables('$varName')]"
                                                 $playbookDependencies += [PSCustomObject] @{
                                                     kind = "LogicAppsCustomConnector";
-                                                    contentId = "[variables('_$varName')]"#$templateVar.Value;
+                                                    contentId = "[variables('_"+$templateVar.Value+"Connector')]" #"[variables('_$varName')]"#$templateVar.Value;
+                                                    version = $customConnectorsList[$templateVar.Value+'Connector']
                                                 }
                                             }
                                         }
@@ -882,10 +884,15 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                 email = $author[1];
                             };
 
+                            if ($IsLogicAppsCustomConnector) {
+                                # $customApi = $fileName.Replace("Connector", "")
+                                $customConnectorsList.add($fileName, "[variables('playbookVersion$playbookCounter')]");
+                            }
+
                             $playbookMetadata = [PSCustomObject]@{
                                 type       = "Microsoft.OperationalInsights/workspaces/providers/metadata";
                                 apiVersion = "2022-01-01-preview";
-                                name       = $IsLogicAppsCustomConnector ? "[[concat(variables('workspace-location-inline'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookId$playbookCounter'),'/'))))]" : "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId$playbookCounter'),'/'))))]";
+                                name       = $IsLogicAppsCustomConnector ? "[[concat(variables('workspace-location-inline'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookId$playbookCounter')),'/'))))]" : "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId$playbookCounter'),'/'))))]";
                                 properties = [PSCustomObject]@{
                                     parentId  = $IsLogicAppsCustomConnector ? "[[resourceId('Microsoft.Web/customApis', variables('playbookId$playbookCounter'))]" : "[variables('playbookId$playbookCounter')]"
                                     contentId = "[variables('_playbookContentId$playbookCounter')]";

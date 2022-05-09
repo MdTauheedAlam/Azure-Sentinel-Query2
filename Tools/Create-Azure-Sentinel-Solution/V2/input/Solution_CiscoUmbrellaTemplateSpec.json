@@ -12,8 +12,9 @@
   "HuntingQueryBladeDescription": "This solution installs the following hunting queries. After installing the solution, run these hunting queries to hunt for threats in Manage solution view",
   "PlaybooksBladeDescription": "This solution installs the following Playbook templates. After installing the solution, playbooks can be managed in the Manage solution view. ",
   "Playbooks": [
-    "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-GetDomainInfo/azuredeploy.json",
     "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaNetworkDeviceManagementAPIConnector/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaInvestigateAPIConnector/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-GetDomainInfo/azuredeploy.json",
   ],
   "BasePath": "C:\\users\\robencha\\Azure-Sentinel",
   "Version": "2.0.0",
