@@ -859,7 +859,11 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                             $baseMainTemplate.variables | Add-Member -NotePropertyName "playbookVersion$playbookCounter" -NotePropertyValue "1.0"
                             $baseMainTemplate.variables | Add-Member -NotePropertyName "playbookContentId$playbookCounter" -NotePropertyValue $fileName
                             $baseMainTemplate.variables | Add-Member -NotePropertyName "_playbookContentId$playbookCounter" -NotePropertyValue "[variables('playbookContentId$playbookCounter')]"
-                            $baseMainTemplate.variables | Add-Member -NotePropertyName "playbookId$playbookCounter" -NotePropertyValue ($IsLogicAppsCustomConnector ? "[resourceId('Microsoft.Web/customApis', variables('playbookContentId$playbookCounter'))]" : "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId$playbookCounter'))]")
+
+                            if (!$IsLogicAppsCustomConnector) {
+                                $baseMainTemplate.variables | Add-Member -NotePropertyName "playbookId$playbookCounter" -NotePropertyValue "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId$playbookCounter'))]"
+                            }
+                            
                             $baseMainTemplate.variables | Add-Member -NotePropertyName "playbookTemplateSpecName$playbookCounter" -NotePropertyValue ($IsLogicAppsCustomConnector ? "[concat(parameters('workspace'),'-LogicAppsCustomConnector-',variables('_playbookContentId$playbookCounter'))]" : "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId$playbookCounter'))]")
                             # Add workspace resource ID if not available
                             if (!$baseMainTemplate.variables.workspaceResourceId) {
@@ -876,8 +880,8 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                     "hidden-sentinelContentType" = $IsLogicAppsCustomConnector ? "LogicAppsCustomConnector" : "Playbook";
                                 };
                                 properties = [PSCustomObject]@{
-                                    description = $IsLogicAppsCustomConnector ? "$($playbookName) Logic Apps Custom Connector" : "$($playbookName) playbook";
-                                    displayName = $IsLogicAppsCustomConnector ? "$($playbookName) Logic Apps Custom Connector" : "$($playbookName) playbook";
+                                    description = $IsLogicAppsCustomConnector ? $playbookName : "$($playbookName) playbook";
+                                    displayName = $IsLogicAppsCustomConnector ? $playbookName : "$($playbookName) playbook";
                                 }
                             }
 
@@ -896,9 +900,9 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                             $playbookMetadata = [PSCustomObject]@{
                                 type       = "Microsoft.OperationalInsights/workspaces/providers/metadata";
                                 apiVersion = "2022-01-01-preview";
-                                name       = $IsLogicAppsCustomConnector ? "[[concat(variables('workspace-location-inline'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookId$playbookCounter')),'/'))))]" : "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId$playbookCounter'),'/'))))]";
+                                name       = $IsLogicAppsCustomConnector ? "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookContentId')),'/'))))]" : "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId$playbookCounter'),'/'))))]";
                                 properties = [PSCustomObject]@{
-                                    parentId  = $IsLogicAppsCustomConnector ? "[[resourceId('Microsoft.Web/customApis', variables('playbookId'))]" : "[variables('playbookId$playbookCounter')]"
+                                    parentId  = $IsLogicAppsCustomConnector ? "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]" : "[variables('playbookId$playbookCounter')]"
                                     contentId = "[variables('_playbookContentId$playbookCounter')]";
                                     kind      = $IsLogicAppsCustomConnector ? "LogicAppsCustomConnector" : "Playbook";
                                     version   = "[variables('playbookVersion$playbookCounter')]";
@@ -926,7 +930,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                 $criteria = [PSCustomObject]@{
                                     criteria = $playbookDependencies
                                 };
-                                $playbookMetadata | Add-Member -NotePropertyName "dependencies" -NotePropertyValue $criteria
+                                $playbookMetadata.properties | Add-Member -NotePropertyName "dependencies" -NotePropertyValue $criteria
                             }
 
                             $playbookVariables = [PSCustomObject]@{};
@@ -940,6 +944,8 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                 $playbookVariables | Add-Member -NotePropertyName "playbookContentId" -NotePropertyValue $fileName;
                                 $playbookVariables | Add-Member -NotePropertyName "playbookId" -NotePropertyValue "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]"
                             }
+                            $playbookVariables | Add-Member -NotePropertyName "workspace-name" -NotePropertyValue "[parameters('workspace')]"
+                            $playbookVariables | Add-Member -NotePropertyName "workspaceResourceId" -NotePropertyValue "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
                             $playbookResources = $playbookResources + $playbookMetadata;
 
                             # Add templateSpecs/versions resource to hold actual content

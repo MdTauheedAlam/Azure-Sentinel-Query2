@@ -37,7 +37,6 @@
     "playbookVersion1": "1.0",
     "playbookContentId1": "CiscoUmbrellaNetworkDeviceManagementAPIConnector",
     "_playbookContentId1": "[variables('playbookContentId1')]",
-    "playbookId1": "[resourceId('Microsoft.Web/customApis', variables('playbookContentId1'))]",
     "playbookTemplateSpecName1": "[concat(parameters('workspace'),'-LogicAppsCustomConnector-',variables('_playbookContentId1'))]",
     "workspaceResourceId": "[resourceId('microsoft.OperationalInsights/Workspaces', parameters('workspace'))]",
     "CiscoUmbrellaInvestigateAPIConnector": "CiscoUmbrellaInvestigateAPIConnector",
@@ -45,7 +44,6 @@
     "playbookVersion2": "1.0",
     "playbookContentId2": "CiscoUmbrellaInvestigateAPIConnector",
     "_playbookContentId2": "[variables('playbookContentId2')]",
-    "playbookId2": "[resourceId('Microsoft.Web/customApis', variables('playbookContentId2'))]",
     "playbookTemplateSpecName2": "[concat(parameters('workspace'),'-LogicAppsCustomConnector-',variables('_playbookContentId2'))]",
     "CiscoUmbrella-GetDomainInfo": "CiscoUmbrella-GetDomainInfo",
     "_CiscoUmbrella-GetDomainInfo": "[variables('CiscoUmbrella-GetDomainInfo')]",
@@ -66,8 +64,8 @@
         "hidden-sentinelContentType": "LogicAppsCustomConnector"
       },
       "properties": {
-        "description": "CiscoUmbrellaNetworkDeviceManagementAPIConnector Logic Apps Custom Connector",
-        "displayName": "CiscoUmbrellaNetworkDeviceManagementAPIConnector Logic Apps Custom Connector"
+        "description": "CiscoUmbrellaNetworkDeviceManagementAPIConnector",
+        "displayName": "CiscoUmbrellaNetworkDeviceManagementAPIConnector"
       }
     },
     {
@@ -87,7 +85,20 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion1')]",
-          "metadata": null,
+          "metadata":{
+              "title": "CiscoUmbrellaNetworkDeviceManagementAPIConnector", 
+              "description": "Run this playbook on incidents which contains suspiciouse AAD identities. When a new incident is created, this playbook iterates over the Accounts. It then posts an adaptive card in the SOC Microsoft Teams channel, including the potential risky user information given by Azure AD Identity Protection. The card offers to confirm the user as compromised or dismiss the compromised user in AADIP. It also allows to configure the Azure Sentinel incident. A summary comment will be posted to document the action taken and user information.",
+              "prerequisites": "1. Using the riskyUsers API requires an Azure AD Premium P2 license. 2. Have a user which has permissions on Identity Protection API. [Learn more](https://docs.microsoft.com/graph/api/riskyuser-confirmcompromised?view=graph-rest-1.0#permissions)  3. (optional) Create policies in Azure AD Identity protection to run when users are confirmed as compromised. [Learn more](https://docs.microsoft.com/azure/active-directory/identity-protection/concept-identity-protection-policies)",
+              "lastUpdateTime": "2021-05-18T10:00:15.123Z", 
+              "entities": ["Account"], 
+              "tags": ["Identity protection", "Teams bot"], 
+              "support": {
+                  "tier": "microsoft"
+              },
+              "author": {
+                  "name": "Lior Tamir"
+              }
+          },
           "parameters": {},
           "variables": {
             "customApis_CiscoUmbrellaNetworkDeviceManagementAPI_name": "CiscoUmbrellaNetworkDeviceManagementAPI",
@@ -101,7 +112,9 @@
             "_operationId-AssignPolicyToIdentity": "[[variables('operationId-AssignPolicyToIdentity')]",
             "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
             "playbookContentId": "CiscoUmbrellaNetworkDeviceManagementAPIConnector",
-            "playbookId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]"
+            "playbookId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+            "workspace-name": "[parameters('workspace')]",
+            "workspaceResourceId": "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
           },
           "resources": [
             {
@@ -341,9 +354,9 @@
             {
               "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
               "apiVersion": "2022-01-01-preview",
-              "name": "[[concat(variables('workspace-location-inline'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookId1')),'/'))))]",
+              "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookContentId')),'/'))))]",
               "properties": {
-                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookId'))]",
+                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
                 "contentId": "[variables('_playbookContentId1')]",
                 "kind": "LogicAppsCustomConnector",
                 "version": "[variables('playbookVersion1')]",
@@ -378,8 +391,8 @@
         "hidden-sentinelContentType": "LogicAppsCustomConnector"
       },
       "properties": {
-        "description": "CiscoUmbrellaInvestigateAPIConnector Logic Apps Custom Connector",
-        "displayName": "CiscoUmbrellaInvestigateAPIConnector Logic Apps Custom Connector"
+        "description": "CiscoUmbrellaInvestigateAPIConnector",
+        "displayName": "CiscoUmbrellaInvestigateAPIConnector"
       }
     },
     {
@@ -399,7 +412,20 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion2')]",
-          "metadata": null,
+          "metadata":{
+              "title": "CiscoUmbrellaInvestigateAPIConnector", 
+              "description": "Run this playbook on incidents which contains suspiciouse AAD identities. When a new incident is created, this playbook iterates over the Accounts. It then posts an adaptive card in the SOC Microsoft Teams channel, including the potential risky user information given by Azure AD Identity Protection. The card offers to confirm the user as compromised or dismiss the compromised user in AADIP. It also allows to configure the Azure Sentinel incident. A summary comment will be posted to document the action taken and user information.",
+              "prerequisites": "1. Using the riskyUsers API requires an Azure AD Premium P2 license. 2. Have a user which has permissions on Identity Protection API. [Learn more](https://docs.microsoft.com/graph/api/riskyuser-confirmcompromised?view=graph-rest-1.0#permissions)  3. (optional) Create policies in Azure AD Identity protection to run when users are confirmed as compromised. [Learn more](https://docs.microsoft.com/azure/active-directory/identity-protection/concept-identity-protection-policies)",
+              "lastUpdateTime": "2021-05-18T10:00:15.123Z", 
+              "entities": ["Account"], 
+              "tags": ["Identity protection", "Teams bot"], 
+              "support": {
+                  "tier": "microsoft"
+              },
+              "author": {
+                  "name": "Lior Tamir"
+              }
+          },
           "parameters": {},
           "variables": {
             "customApis_CiscoUmbrellaInvestigateAPIConnector_name": "CiscoUmbrellaInvestigateAPI",
@@ -415,7 +441,9 @@
             "_operationId-GetRelatedDomains": "[[variables('operationId-GetRelatedDomains')]",
             "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
             "playbookContentId": "CiscoUmbrellaInvestigateAPIConnector",
-            "playbookId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]"
+            "playbookId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+            "workspace-name": "[parameters('workspace')]",
+            "workspaceResourceId": "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
           },
           "resources": [
             {
@@ -796,9 +824,9 @@
             {
               "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
               "apiVersion": "2022-01-01-preview",
-              "name": "[[concat(variables('workspace-location-inline'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookId2')),'/'))))]",
+              "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookContentId')),'/'))))]",
               "properties": {
-                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookId'))]",
+                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
                 "contentId": "[variables('_playbookContentId2')]",
                 "kind": "LogicAppsCustomConnector",
                 "version": "[variables('playbookVersion2')]",
@@ -854,7 +882,20 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion3')]",
-          "metadata": null,
+          "metadata":{
+              "title": "CiscoUmbrella-GetDomainInfo", 
+              "description": "Run this playbook on incidents which contains suspiciouse AAD identities. When a new incident is created, this playbook iterates over the Accounts. It then posts an adaptive card in the SOC Microsoft Teams channel, including the potential risky user information given by Azure AD Identity Protection. The card offers to confirm the user as compromised or dismiss the compromised user in AADIP. It also allows to configure the Azure Sentinel incident. A summary comment will be posted to document the action taken and user information.",
+              "prerequisites": "1. Using the riskyUsers API requires an Azure AD Premium P2 license. 2. Have a user which has permissions on Identity Protection API. [Learn more](https://docs.microsoft.com/graph/api/riskyuser-confirmcompromised?view=graph-rest-1.0#permissions)  3. (optional) Create policies in Azure AD Identity protection to run when users are confirmed as compromised. [Learn more](https://docs.microsoft.com/azure/active-directory/identity-protection/concept-identity-protection-policies)",
+              "lastUpdateTime": "2021-05-18T10:00:15.123Z", 
+              "entities": ["Account"], 
+              "tags": ["Identity protection", "Teams bot"], 
+              "support": {
+                  "tier": "microsoft"
+              },
+              "author": {
+                  "name": "Lior Tamir"
+              }
+          },
           "parameters": {
             "PlaybookName": {
               "defaultValue": "CiscoUmbrella-GetDomainInfo",
@@ -869,7 +910,9 @@
             "_connection-1": "[[variables('connection-1')]",
             "connection-2": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', variables('customApis_ciscoumbrellainvestigate_name'))]",
             "_connection-2": "[[variables('connection-2')]",
-            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]"
+            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
+            "workspace-name": "[parameters('workspace')]",
+            "workspaceResourceId": "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
           },
           "resources": [
             {
@@ -1125,16 +1168,16 @@
                   "name": "Microsoft Corporation",
                   "email": "support@microsoft.com",
                   "link": "https://support.microsoft.com/"
+                },
+                "dependencies": {
+                  "criteria": [
+                    {
+                      "kind": "LogicAppsCustomConnector",
+                      "contentId": "[variables('_CiscoUmbrellaInvestigateAPIConnector')]",
+                      "version": "[variables('playbookVersion2')]"
+                    }
+                  ]
                 }
-              },
-              "dependencies": {
-                "criteria": [
-                  {
-                    "kind": "LogicAppsCustomConnector",
-                    "contentId": "[variables('_CiscoUmbrellaInvestigateAPIConnector')]",
-                    "version": "[variables('playbookVersion2')]"
-                  }
-                ]
               }
             }
           ]
