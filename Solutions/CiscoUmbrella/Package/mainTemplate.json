@@ -66,8 +66,8 @@
         "hidden-sentinelContentType": "LogicAppsCustomConnector"
       },
       "properties": {
-        "description": " Logic Apps Custom Connector",
-        "displayName": " Logic Apps Custom Connector"
+        "description": "CiscoUmbrellaNetworkDeviceManagementAPIConnector Logic Apps Custom Connector",
+        "displayName": "CiscoUmbrellaNetworkDeviceManagementAPIConnector Logic Apps Custom Connector"
       }
     },
     {
@@ -83,7 +83,7 @@
         "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName1'))]"
       ],
       "properties": {
-        "description": " Playbook with template version 2.0.0",
+        "description": "CiscoUmbrellaNetworkDeviceManagementAPIConnector Playbook with template version 2.0.0",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion1')]",
@@ -99,7 +99,9 @@
             "_operationId-DeleteIdentityFromPolicy": "[[variables('operationId-DeleteIdentityFromPolicy')]",
             "operationId-AssignPolicyToIdentity": "AssignPolicyToIdentity",
             "_operationId-AssignPolicyToIdentity": "[[variables('operationId-AssignPolicyToIdentity')]",
-            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]"
+            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
+            "playbookContentId": "CiscoUmbrellaNetworkDeviceManagementAPIConnector",
+            "playbookId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]"
           },
           "resources": [
             {
@@ -341,7 +343,7 @@
               "apiVersion": "2022-01-01-preview",
               "name": "[[concat(variables('workspace-location-inline'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookId1')),'/'))))]",
               "properties": {
-                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookId1'))]",
+                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookId'))]",
                 "contentId": "[variables('_playbookContentId1')]",
                 "kind": "LogicAppsCustomConnector",
                 "version": "[variables('playbookVersion1')]",
@@ -376,8 +378,8 @@
         "hidden-sentinelContentType": "LogicAppsCustomConnector"
       },
       "properties": {
-        "description": " Logic Apps Custom Connector",
-        "displayName": " Logic Apps Custom Connector"
+        "description": "CiscoUmbrellaInvestigateAPIConnector Logic Apps Custom Connector",
+        "displayName": "CiscoUmbrellaInvestigateAPIConnector Logic Apps Custom Connector"
       }
     },
     {
@@ -393,7 +395,7 @@
         "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName2'))]"
       ],
       "properties": {
-        "description": " Playbook with template version 2.0.0",
+        "description": "CiscoUmbrellaInvestigateAPIConnector Playbook with template version 2.0.0",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion2')]",
@@ -411,7 +413,9 @@
             "_operationId-GetCoOccurrencesForDomain": "[[variables('operationId-GetCoOccurrencesForDomain')]",
             "operationId-GetRelatedDomains": "GetRelatedDomains",
             "_operationId-GetRelatedDomains": "[[variables('operationId-GetRelatedDomains')]",
-            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]"
+            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
+            "playbookContentId": "CiscoUmbrellaInvestigateAPIConnector",
+            "playbookId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]"
           },
           "resources": [
             {
@@ -794,7 +798,7 @@
               "apiVersion": "2022-01-01-preview",
               "name": "[[concat(variables('workspace-location-inline'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookId2')),'/'))))]",
               "properties": {
-                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookId2'))]",
+                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookId'))]",
                 "contentId": "[variables('_playbookContentId2')]",
                 "kind": "LogicAppsCustomConnector",
                 "version": "[variables('playbookVersion2')]",

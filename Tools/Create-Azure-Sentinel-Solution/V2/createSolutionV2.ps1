@@ -444,6 +444,10 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                             version   = "[variables('playbookVersion$playbookCounter')]";
                         };
 
+                        if (!$playbookName) {
+                            $playbookName = $fileName;
+                        }
+
                         if ($playbookCounter -eq 1) {
                             # If a playbook exists, add CreateUIDefinition step before playbook elements while handling first playbook.
                             $playbookStep = [PSCustomObject] @{
@@ -894,7 +898,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                 apiVersion = "2022-01-01-preview";
                                 name       = $IsLogicAppsCustomConnector ? "[[concat(variables('workspace-location-inline'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookId$playbookCounter')),'/'))))]" : "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId$playbookCounter'),'/'))))]";
                                 properties = [PSCustomObject]@{
-                                    parentId  = $IsLogicAppsCustomConnector ? "[[resourceId('Microsoft.Web/customApis', variables('playbookId$playbookCounter'))]" : "[variables('playbookId$playbookCounter')]"
+                                    parentId  = $IsLogicAppsCustomConnector ? "[[resourceId('Microsoft.Web/customApis', variables('playbookId'))]" : "[variables('playbookId$playbookCounter')]"
                                     contentId = "[variables('_playbookContentId$playbookCounter')]";
                                     kind      = $IsLogicAppsCustomConnector ? "LogicAppsCustomConnector" : "Playbook";
                                     version   = "[variables('playbookVersion$playbookCounter')]";
@@ -932,6 +936,10 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                             }
 
                             $playbookVariables | Add-Member -NotePropertyName "workspace-location-inline" -NotePropertyValue "[concat('[resourceGroup().locatio', 'n]')]";
+                            if ($IsLogicAppsCustomConnector) {
+                                $playbookVariables | Add-Member -NotePropertyName "playbookContentId" -NotePropertyValue $fileName;
+                                $playbookVariables | Add-Member -NotePropertyName "playbookId" -NotePropertyValue "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]"
+                            }
                             $playbookResources = $playbookResources + $playbookMetadata;
 
                             # Add templateSpecs/versions resource to hold actual content
