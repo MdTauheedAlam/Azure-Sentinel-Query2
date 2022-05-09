@@ -694,7 +694,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                             if ($null -ne $itemIndex) {
                                                 if ($item -is [System.String]) {
                                                     $item = $item.Replace("resourceGroup().location", "variables('workspace-location-inline')")
-                                                    if($contentToImport.TemplateSpec -and ($resourceObj.$key.StartsWith("[")))
+                                                    if($contentToImport.TemplateSpec -and ($item.StartsWith("[")))
                                                     {
                                                         $item = "[" + $item;
                                                     }

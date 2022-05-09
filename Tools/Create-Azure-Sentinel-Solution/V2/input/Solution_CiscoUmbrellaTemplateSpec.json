@@ -13,8 +13,13 @@
   "PlaybooksBladeDescription": "This solution installs the following Playbook templates. After installing the solution, playbooks can be managed in the Manage solution view. ",
   "Playbooks": [
     "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaNetworkDeviceManagementAPIConnector/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaManagementAPIConnector/azuredeploy.json",
     "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaInvestigateAPIConnector/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaEnforcementAPIConnector/azuredeploy.json",
     "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-GetDomainInfo/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-AddIpToDestinationList/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-AssignPolicyToIdentity/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-BlockDomain/azuredeploy.json"
   ],
   "BasePath": "C:\\users\\robencha\\Azure-Sentinel",
   "Version": "2.0.0",

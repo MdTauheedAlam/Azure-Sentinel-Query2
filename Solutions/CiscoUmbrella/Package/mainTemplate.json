@@ -39,19 +39,52 @@
     "_playbookContentId1": "[variables('playbookContentId1')]",
     "playbookTemplateSpecName1": "[concat(parameters('workspace'),'-LogicAppsCustomConnector-',variables('_playbookContentId1'))]",
     "workspaceResourceId": "[resourceId('microsoft.OperationalInsights/Workspaces', parameters('workspace'))]",
-    "CiscoUmbrellaInvestigateAPIConnector": "CiscoUmbrellaInvestigateAPIConnector",
-    "_CiscoUmbrellaInvestigateAPIConnector": "[variables('CiscoUmbrellaInvestigateAPIConnector')]",
+    "CiscoUmbrellaManagementAPIConnector": "CiscoUmbrellaManagementAPIConnector",
+    "_CiscoUmbrellaManagementAPIConnector": "[variables('CiscoUmbrellaManagementAPIConnector')]",
     "playbookVersion2": "1.0",
-    "playbookContentId2": "CiscoUmbrellaInvestigateAPIConnector",
+    "playbookContentId2": "CiscoUmbrellaManagementAPIConnector",
     "_playbookContentId2": "[variables('playbookContentId2')]",
     "playbookTemplateSpecName2": "[concat(parameters('workspace'),'-LogicAppsCustomConnector-',variables('_playbookContentId2'))]",
+    "CiscoUmbrellaInvestigateAPIConnector": "CiscoUmbrellaInvestigateAPIConnector",
+    "_CiscoUmbrellaInvestigateAPIConnector": "[variables('CiscoUmbrellaInvestigateAPIConnector')]",
+    "playbookVersion3": "1.0",
+    "playbookContentId3": "CiscoUmbrellaInvestigateAPIConnector",
+    "_playbookContentId3": "[variables('playbookContentId3')]",
+    "playbookTemplateSpecName3": "[concat(parameters('workspace'),'-LogicAppsCustomConnector-',variables('_playbookContentId3'))]",
+    "CiscoUmbrellaEnforcementAPIConnector": "CiscoUmbrellaEnforcementAPIConnector",
+    "_CiscoUmbrellaEnforcementAPIConnector": "[variables('CiscoUmbrellaEnforcementAPIConnector')]",
+    "playbookVersion4": "1.0",
+    "playbookContentId4": "CiscoUmbrellaEnforcementAPIConnector",
+    "_playbookContentId4": "[variables('playbookContentId4')]",
+    "playbookTemplateSpecName4": "[concat(parameters('workspace'),'-LogicAppsCustomConnector-',variables('_playbookContentId4'))]",
     "CiscoUmbrella-GetDomainInfo": "CiscoUmbrella-GetDomainInfo",
     "_CiscoUmbrella-GetDomainInfo": "[variables('CiscoUmbrella-GetDomainInfo')]",
-    "playbookVersion3": "1.0",
-    "playbookContentId3": "CiscoUmbrella-GetDomainInfo",
-    "_playbookContentId3": "[variables('playbookContentId3')]",
-    "playbookId3": "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId3'))]",
-    "playbookTemplateSpecName3": "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId3'))]"
+    "playbookVersion5": "1.0",
+    "playbookContentId5": "CiscoUmbrella-GetDomainInfo",
+    "_playbookContentId5": "[variables('playbookContentId5')]",
+    "playbookId5": "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId5'))]",
+    "playbookTemplateSpecName5": "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId5'))]",
+    "CiscoUmbrella-AddIpToDestinationList": "CiscoUmbrella-AddIpToDestinationList",
+    "_CiscoUmbrella-AddIpToDestinationList": "[variables('CiscoUmbrella-AddIpToDestinationList')]",
+    "playbookVersion6": "1.0",
+    "playbookContentId6": "CiscoUmbrella-AddIpToDestinationList",
+    "_playbookContentId6": "[variables('playbookContentId6')]",
+    "playbookId6": "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId6'))]",
+    "playbookTemplateSpecName6": "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId6'))]",
+    "CiscoUmbrella-AssignPolicyToIdentity": "CiscoUmbrella-AssignPolicyToIdentity",
+    "_CiscoUmbrella-AssignPolicyToIdentity": "[variables('CiscoUmbrella-AssignPolicyToIdentity')]",
+    "playbookVersion7": "1.0",
+    "playbookContentId7": "CiscoUmbrella-AssignPolicyToIdentity",
+    "_playbookContentId7": "[variables('playbookContentId7')]",
+    "playbookId7": "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId7'))]",
+    "playbookTemplateSpecName7": "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId7'))]",
+    "CiscoUmbrella-BlockDomain": "CiscoUmbrella-BlockDomain",
+    "_CiscoUmbrella-BlockDomain": "[variables('CiscoUmbrella-BlockDomain')]",
+    "playbookVersion8": "1.0",
+    "playbookContentId8": "CiscoUmbrella-BlockDomain",
+    "_playbookContentId8": "[variables('playbookContentId8')]",
+    "playbookId8": "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId8'))]",
+    "playbookTemplateSpecName8": "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId8'))]"
   },
   "resources": [
     {
@@ -85,20 +118,7 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion1')]",
-          "metadata":{
-              "title": "CiscoUmbrellaNetworkDeviceManagementAPIConnector", 
-              "description": "Run this playbook on incidents which contains suspiciouse AAD identities. When a new incident is created, this playbook iterates over the Accounts. It then posts an adaptive card in the SOC Microsoft Teams channel, including the potential risky user information given by Azure AD Identity Protection. The card offers to confirm the user as compromised or dismiss the compromised user in AADIP. It also allows to configure the Azure Sentinel incident. A summary comment will be posted to document the action taken and user information.",
-              "prerequisites": "1. Using the riskyUsers API requires an Azure AD Premium P2 license. 2. Have a user which has permissions on Identity Protection API. [Learn more](https://docs.microsoft.com/graph/api/riskyuser-confirmcompromised?view=graph-rest-1.0#permissions)  3. (optional) Create policies in Azure AD Identity protection to run when users are confirmed as compromised. [Learn more](https://docs.microsoft.com/azure/active-directory/identity-protection/concept-identity-protection-policies)",
-              "lastUpdateTime": "2021-05-18T10:00:15.123Z", 
-              "entities": ["Account"], 
-              "tags": ["Identity protection", "Teams bot"], 
-              "support": {
-                  "tier": "microsoft"
-              },
-              "author": {
-                  "name": "Lior Tamir"
-              }
-          },
+          "metadata": null,
           "parameters": {},
           "variables": {
             "customApis_CiscoUmbrellaNetworkDeviceManagementAPI_name": "CiscoUmbrellaNetworkDeviceManagementAPI",
@@ -391,8 +411,8 @@
         "hidden-sentinelContentType": "LogicAppsCustomConnector"
       },
       "properties": {
-        "description": "CiscoUmbrellaInvestigateAPIConnector",
-        "displayName": "CiscoUmbrellaInvestigateAPIConnector"
+        "description": "CiscoUmbrellaManagementAPIConnector",
+        "displayName": "CiscoUmbrellaManagementAPIConnector"
       }
     },
     {
@@ -408,24 +428,819 @@
         "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName2'))]"
       ],
       "properties": {
-        "description": "CiscoUmbrellaInvestigateAPIConnector Playbook with template version 2.0.0",
+        "description": "CiscoUmbrellaManagementAPIConnector Playbook with template version 2.0.0",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion2')]",
-          "metadata":{
-              "title": "CiscoUmbrellaInvestigateAPIConnector", 
-              "description": "Run this playbook on incidents which contains suspiciouse AAD identities. When a new incident is created, this playbook iterates over the Accounts. It then posts an adaptive card in the SOC Microsoft Teams channel, including the potential risky user information given by Azure AD Identity Protection. The card offers to confirm the user as compromised or dismiss the compromised user in AADIP. It also allows to configure the Azure Sentinel incident. A summary comment will be posted to document the action taken and user information.",
-              "prerequisites": "1. Using the riskyUsers API requires an Azure AD Premium P2 license. 2. Have a user which has permissions on Identity Protection API. [Learn more](https://docs.microsoft.com/graph/api/riskyuser-confirmcompromised?view=graph-rest-1.0#permissions)  3. (optional) Create policies in Azure AD Identity protection to run when users are confirmed as compromised. [Learn more](https://docs.microsoft.com/azure/active-directory/identity-protection/concept-identity-protection-policies)",
-              "lastUpdateTime": "2021-05-18T10:00:15.123Z", 
-              "entities": ["Account"], 
-              "tags": ["Identity protection", "Teams bot"], 
-              "support": {
-                  "tier": "microsoft"
-              },
-              "author": {
-                  "name": "Lior Tamir"
-              }
+          "metadata": null,
+          "parameters": {},
+          "variables": {
+            "customApis_CiscoUmbrellaManagementAPI_name": "CiscoUmbrellaManagementAPI",
+            "operationId-RetrieveAllDestinationLists": "RetrieveAllDestinationLists",
+            "_operationId-RetrieveAllDestinationLists": "[[variables('operationId-RetrieveAllDestinationLists')]",
+            "operationId-CreateDestinationList": "CreateDestinationList",
+            "_operationId-CreateDestinationList": "[[variables('operationId-CreateDestinationList')]",
+            "operationId-GetDestinationList": "GetDestinationList",
+            "_operationId-GetDestinationList": "[[variables('operationId-GetDestinationList')]",
+            "operationId-GetDestinationsList": "GetDestinationsList",
+            "_operationId-GetDestinationsList": "[[variables('operationId-GetDestinationsList')]",
+            "operationId-AddDestinations": "AddDestinations",
+            "_operationId-AddDestinations": "[[variables('operationId-AddDestinations')]",
+            "operationId-DeleteDestinations": "DeleteDestinations",
+            "_operationId-DeleteDestinations": "[[variables('operationId-DeleteDestinations')]",
+            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
+            "playbookContentId": "CiscoUmbrellaManagementAPIConnector",
+            "playbookId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+            "workspace-name": "[parameters('workspace')]",
+            "workspaceResourceId": "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
           },
+          "resources": [
+            {
+              "type": "Microsoft.Web/customApis",
+              "apiVersion": "2016-06-01",
+              "name": "[[variables('customApis_CiscoUmbrellaManagementAPI_name')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "properties": {
+                "connectionParameters": {
+                  "username": {
+                    "type": "securestring",
+                    "uiDefinition": {
+                      "displayName": "Key",
+                      "description": "The Key for this api",
+                      "tooltip": "Provide the Key",
+                      "constraints": {
+                        "tabIndex": 2,
+                        "clearText": true,
+                        "required": "true"
+                      }
+                    }
+                  },
+                  "password": {
+                    "type": "securestring",
+                    "uiDefinition": {
+                      "displayName": "Secret",
+                      "description": "The Secret for this api",
+                      "tooltip": "Provide the Secret",
+                      "constraints": {
+                        "tabIndex": 3,
+                        "clearText": false,
+                        "required": "true"
+                      }
+                    }
+                  }
+                },
+                "brandColor": "#FFFFFF",
+                "description": "Connector for Cisco Umbrella Management API",
+                "displayName": "[[variables('customApis_CiscoUmbrellaManagementAPI_name')]",
+                "iconUri": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAABdFBMVEUAAAAA//8AgP8Aqv8AgL8AmcwAmeYAotEAldUAn98AntsAodkAnNYAn9cIotgIntoHoNsHnNwHodcHndgGotoGoNsGnNYGn9cFn9sEoNgEndkEoNoEntsEntgEoNsEn9gDn9kDoNoDn9gDoNgDn9kFn9gFntgFn9kFn9oFoNoFn9gEn9kEoNkEn9oEoNgEn9kEntkEoNoEoNkEn9kEn9kEntkEoNgEntgEn9kEn9oEntoEn9gEoNgEntkEn9kEoNkEn9oEn9oEntgDn9kDn9gDoNkDn9kFn9oFn9gFn9kFntkFn9oEn9kEntoEn9gEoNkEn9kEoNkEn9oEn9gEn9kEn9kEn9kEn9kEn9kEn9kEn9kEn9kEn9kEntkEn9kEn9kEn9kEn9oDn9kFn9kEoNkEn9kEn9kEn9kEn9kEn9oEn9kEn9kEn9kEn9kEoNkEn9kEn9gEn9kEn9kEn9kEn9kEn9kEoNkEn9kEn9kEn9kEn9n///940Z2XAAAAenRSTlMAAQIDBAUKCwwQFRsfICEiIyQmJykrLC04Ozw+P0JGSEpTVVtdaGlqbW5wcnN1dnh5e35/gIGDhIeIiYqLjI2Oj5CRkpibnKSlp6mqsLGys7q7v8DCxMfKz9DS1NXW19jZ2t7g4+To6u3u7/Dx8vP09fb3+Pn6+/z9/h6/P2sAAAABYktHRHtP0rX8AAACB0lEQVRYw+2WaVPTYBRGb9SK4oI7dd+tAiqCra1FqKIoKu4bUFQQtJY2SUna2vPr/VCSafKmpONkHMfJ86m5OXOmN3Pfm4jEiRMnTtQZKadCkfWRHkTrlMKRcg8iIALkvxRlKsM+yq10RTLVW6qohuETuZWuSA1zi7+r/uiKBLb4z4jyxt0wUd5Ih4jyRlps7DCRjRUisrG26khpoOsdIDqR5bRmUvPhTsVFan7EKdjYMq5n2zdHK/5H6lRcJF31IU4hZ2TjNfJHolL4Qi71tLMv/xyOAInzV3LgftE0vjz1zMnRZz/qa28GAgg5PrtmrTw8onqG6oBvPQzqAJxQCe1eC4C68jExBKroOWA2NkUe4rZzwVWvZ78NzGeuZJc6RWW4qCUG+xXicBMac4X3gLXXI5oCHu0QkW2dogpcCCSmYeOkiKSACY+oCN93KofyHbReJgOIJWi/e17DgkdkwJx6uk83AWa2K4QJZ9rLE99rXQ8UyblvADcUwoCzIiJyB6pKa30B+yZx/iMsK0QR8iIi2gdY9IgKwEzC/7BFRPp+saEQD8A6JSLXgYJ3rG1g/mZq4mun6NKx/j2jsKIQh5rQfJF/CzQO9jCQm6VJlRh3B3LMP9rX7G6ihd0qoeXaR6SV05TDtm9y0dQ/z3aKXi1X9U9ju4IIST5ZtVYfJ+NlFydOnKjyG0KNPhWovN8UAAAAAElFTkSuQmCC",
+                "backendService": {
+                  "serviceUrl": "https://management.api.umbrella.com"
+                },
+                "apiType": "Rest",
+                "swagger": {
+                  "swagger": "2.0",
+                  "info": {
+                    "title": "Default title",
+                    "description": "Connector for Cisco Umbrella Management API",
+                    "version": "1.0"
+                  },
+                  "host": "management.api.umbrella.com",
+                  "basePath": "/",
+                  "schemes": [
+                    "https"
+                  ],
+                  "paths": {
+                    "/v1/organizations/{organizationId}/destinationlists": {
+                      "get": {
+                        "responses": {
+                          "default": {
+                            "description": "default",
+                            "schema": {
+                              "type": "object",
+                              "properties": {
+                                "status": {
+                                  "type": "object",
+                                  "x-ms-summary": "Response status",
+                                  "x-ms-visibility": "internal",
+                                  "description": "Response status object",
+                                  "properties": {
+                                    "code": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "code"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "description": "text"
+                                    }
+                                  }
+                                },
+                                "meta": {
+                                  "type": "object",
+                                  "x-ms-visibility": "internal",
+                                  "properties": {
+                                    "page": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "page"
+                                    },
+                                    "limit": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "limit"
+                                    },
+                                    "total": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "total"
+                                    }
+                                  },
+                                  "description": "meta"
+                                },
+                                "data": {
+                                  "x-ms-summary": "Array of Destionation list objects",
+                                  "description": "Array of Destionation list objects",
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "x-ms-summary": "Destionation list",
+                                    "description": "Destionation list object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "description": "Unique id of the destination list."
+                                      },
+                                      "organizationId": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "description": "organizationId"
+                                      },
+                                      "access": {
+                                        "type": "string",
+                                        "description": "Access can be allow or block. It defines destinationlist type."
+                                      },
+                                      "isGlobal": {
+                                        "type": "boolean",
+                                        "description": "isGlobal can be true or false. There will be only one default destination list of type allow or block for an organization."
+                                      },
+                                      "name": {
+                                        "type": "string",
+                                        "description": "Name of the destination list."
+                                      },
+                                      "thirdpartyCategoryId": {
+                                        "type": "string",
+                                        "description": "Destionation list thirdpartyCategoryId"
+                                      },
+                                      "createdAt": {
+                                        "type": "string",
+                                        "description": "Creation date."
+                                      },
+                                      "modifiedAt": {
+                                        "type": "string",
+                                        "description": "Last modified date."
+                                      },
+                                      "isMspDefault": {
+                                        "type": "boolean",
+                                        "description": "Destionation list isMspDefault"
+                                      },
+                                      "markedForDeletion": {
+                                        "type": "boolean",
+                                        "description": "Destionation list markedForDeletion"
+                                      },
+                                      "bundleTypeId": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "description": "Destionation list bundleTypeId"
+                                      },
+                                      "meta": {
+                                        "type": "object",
+                                        "description": "Destionation list meta info object",
+                                        "properties": {
+                                          "destinationCount": {
+                                            "type": "integer",
+                                            "format": "int32",
+                                            "description": "Total number of destinations in a destination list."
+                                          },
+                                          "domainCount": {
+                                            "type": "integer",
+                                            "format": "int32",
+                                            "description": "Total number of domains in a destination list. Domains are part of total destinations in a destination lists."
+                                          },
+                                          "urlCount": {
+                                            "type": "integer",
+                                            "format": "int32",
+                                            "description": "Total number of Urls in a destination list. Urls are part of total destinations in a destination lists."
+                                          },
+                                          "ipv4Count": {
+                                            "type": "integer",
+                                            "format": "int32",
+                                            "description": "Total number of Ip's in a destination list. Ip's are part of total destinations in a destination lists."
+                                          },
+                                          "applicationCount": {
+                                            "type": "integer",
+                                            "format": "int32",
+                                            "description": "Total number of applications in a destination list."
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "summary": "Retrieve all destination lists",
+                        "operationId": "[[variables('_operationId-RetrieveAllDestinationLists')]",
+                        "description": "Retrieve all destination lists of organization",
+                        "parameters": [
+                          {
+                            "name": "organizationId",
+                            "in": "path",
+                            "required": true,
+                            "type": "integer",
+                            "description": "",
+                            "format": "int32"
+                          }
+                        ]
+                      },
+                      "post": {
+                        "responses": {
+                          "default": {
+                            "description": "default",
+                            "schema": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "Unique id of the destination list."
+                                },
+                                "organizationId": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "organizationId"
+                                },
+                                "access": {
+                                  "type": "string",
+                                  "description": "Access can be allow or block. It defines destinationlist type."
+                                },
+                                "isGlobal": {
+                                  "type": "boolean",
+                                  "description": "isGlobal can be true or false. There will be only one default destination list of type allow or block for an organization."
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "Name of the destination list."
+                                },
+                                "thirdpartyCategoryId": {
+                                  "type": "string",
+                                  "description": "Destionation list thirdpartyCategoryId"
+                                },
+                                "createdAt": {
+                                  "type": "string",
+                                  "description": "Creation date."
+                                },
+                                "modifiedAt": {
+                                  "type": "string",
+                                  "description": "Last modified date."
+                                },
+                                "isMspDefault": {
+                                  "type": "boolean",
+                                  "description": "Destionation list isMspDefault"
+                                },
+                                "markedForDeletion": {
+                                  "type": "boolean",
+                                  "description": "Destionation list markedForDeletion"
+                                },
+                                "bundleTypeId": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "Destionation list bundleTypeId"
+                                },
+                                "meta": {
+                                  "type": "object",
+                                  "description": "Destionation list meta info object",
+                                  "properties": {
+                                    "destinationCount": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "Total number of destinations in a destination list."
+                                    },
+                                    "domainCount": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "Total number of domains in a destination list. Domains are part of total destinations in a destination lists."
+                                    },
+                                    "urlCount": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "Total number of Urls in a destination list. Urls are part of total destinations in a destination lists."
+                                    },
+                                    "ipv4Count": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "Total number of Ip's in a destination list. Ip's are part of total destinations in a destination lists."
+                                    },
+                                    "applicationCount": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "Total number of applications in a destination list."
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "summary": "Create destination list",
+                        "operationId": "[[variables('_operationId-CreateDestinationList')]",
+                        "description": "Create destination list",
+                        "parameters": [
+                          {
+                            "name": "organizationId",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          },
+                          {
+                            "name": "body",
+                            "in": "body",
+                            "required": true,
+                            "schema": {
+                              "type": "object",
+                              "properties": {
+                                "destinations": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "description": "Type can be DOMAIN, URL, IPV4",
+                                        "title": "type",
+                                        "enum": [
+                                          "DOMAIN",
+                                          "URL",
+                                          "IPV4"
+                                        ]
+                                      },
+                                      "destination": {
+                                        "type": "string",
+                                        "description": "Destination can be domain, url, ip",
+                                        "title": "destination"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "",
+                                        "title": "comment"
+                                      }
+                                    },
+                                    "required": [
+                                      "destination",
+                                      "type"
+                                    ]
+                                  },
+                                  "description": "destinations"
+                                },
+                                "access": {
+                                  "type": "string",
+                                  "description": "Access can be allow or block. It defines destinationlist type.",
+                                  "title": "access",
+                                  "enum": [
+                                    "allow",
+                                    "block"
+                                  ]
+                                },
+                                "isGlobal": {
+                                  "type": "boolean",
+                                  "description": "isGlobal can be true or false. There will be only one default destination list of type allow or block for an organization.",
+                                  "title": "isGlobal",
+                                  "enum": [
+                                    "",
+                                    true,
+                                    false
+                                  ]
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "",
+                                  "title": "name"
+                                }
+                              },
+                              "required": [
+                                "access",
+                                "destinations",
+                                "isGlobal",
+                                "name"
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "/v1/organizations/{organizationId}/destinationlists/{destinationListId}": {
+                      "get": {
+                        "responses": {
+                          "default": {
+                            "description": "default",
+                            "schema": {
+                              "type": "object",
+                              "properties": {
+                                "status": {
+                                  "type": "object",
+                                  "x-ms-summary": "Response status",
+                                  "x-ms-visibility": "internal",
+                                  "description": "Response status object",
+                                  "properties": {
+                                    "code": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "code"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "description": "text"
+                                    }
+                                  }
+                                },
+                                "data": {
+                                  "type": "object",
+                                  "x-ms-summary": "Destionation list",
+                                  "description": "Destionation list object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "Unique id of the destination list."
+                                    },
+                                    "organizationId": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "organizationId"
+                                    },
+                                    "access": {
+                                      "type": "string",
+                                      "description": "Access can be allow or block. It defines destinationlist type."
+                                    },
+                                    "isGlobal": {
+                                      "type": "boolean",
+                                      "description": "isGlobal can be true or false. There will be only one default destination list of type allow or block for an organization."
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "description": "Name of the destination list."
+                                    },
+                                    "thirdpartyCategoryId": {
+                                      "type": "string",
+                                      "description": "Destionation list thirdpartyCategoryId"
+                                    },
+                                    "createdAt": {
+                                      "type": "string",
+                                      "description": "Creation date."
+                                    },
+                                    "modifiedAt": {
+                                      "type": "string",
+                                      "description": "Last modified date."
+                                    },
+                                    "isMspDefault": {
+                                      "type": "boolean",
+                                      "description": "Destionation list isMspDefault"
+                                    },
+                                    "markedForDeletion": {
+                                      "type": "boolean",
+                                      "description": "Destionation list markedForDeletion"
+                                    },
+                                    "bundleTypeId": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "Destionation list bundleTypeId"
+                                    },
+                                    "meta": {
+                                      "type": "object",
+                                      "description": "Destionation list meta info object",
+                                      "properties": {
+                                        "destinationCount": {
+                                          "type": "integer",
+                                          "format": "int32",
+                                          "description": "Total number of destinations in a destination list."
+                                        },
+                                        "domainCount": {
+                                          "type": "integer",
+                                          "format": "int32",
+                                          "description": "Total number of domains in a destination list. Domains are part of total destinations in a destination lists."
+                                        },
+                                        "urlCount": {
+                                          "type": "integer",
+                                          "format": "int32",
+                                          "description": "Total number of Urls in a destination list. Urls are part of total destinations in a destination lists."
+                                        },
+                                        "ipv4Count": {
+                                          "type": "integer",
+                                          "format": "int32",
+                                          "description": "Total number of Ip's in a destination list. Ip's are part of total destinations in a destination lists."
+                                        },
+                                        "applicationCount": {
+                                          "type": "integer",
+                                          "format": "int32",
+                                          "description": "Total number of applications in a destination list."
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "summary": "Get a destination list",
+                        "operationId": "[[variables('_operationId-GetDestinationList')]",
+                        "description": "Get a destination list by id",
+                        "parameters": [
+                          {
+                            "name": "organizationId",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          },
+                          {
+                            "name": "destinationListId",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    },
+                    "/v1/organizations/{organizationId}/destinationlists/{destinationListId}/destinations": {
+                      "get": {
+                        "responses": {
+                          "default": {
+                            "description": "default",
+                            "schema": {
+                              "type": "object",
+                              "properties": {
+                                "status": {
+                                  "x-ms-visibility": "internal",
+                                  "type": "object",
+                                  "properties": {
+                                    "code": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "code"
+                                    },
+                                    "text": {
+                                      "type": "string",
+                                      "description": "text"
+                                    }
+                                  },
+                                  "description": "status"
+                                },
+                                "meta": {
+                                  "type": "object",
+                                  "x-ms-visibility": "internal",
+                                  "properties": {
+                                    "page": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "page"
+                                    },
+                                    "limit": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "limit"
+                                    },
+                                    "total": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "total"
+                                    }
+                                  },
+                                  "description": "meta"
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "x-ms-summary": "Destinations",
+                                  "description": "array of Destination objects",
+                                  "items": {
+                                    "type": "object",
+                                    "x-ms-summary": "Destination",
+                                    "description": "Destination object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "description": "Unique id of the destination"
+                                      },
+                                      "destination": {
+                                        "type": "string",
+                                        "x-ms-summary": "value",
+                                        "description": "Destination value"
+                                      },
+                                      "type": {
+                                        "type": "string",
+                                        "description": "Type can be DOMAIN, URL, IPV4"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Destination comment"
+                                      },
+                                      "createdAt": {
+                                        "type": "string",
+                                        "description": "Creation date of destination"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "summary": "Get list of destinations related to destination list",
+                        "operationId": "[[variables('_operationId-GetDestinationsList')]",
+                        "parameters": [
+                          {
+                            "name": "organizationId",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          },
+                          {
+                            "name": "destinationListId",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          }
+                        ],
+                        "description": "Get list of destinations related to destination list"
+                      },
+                      "post": {
+                        "responses": {
+                          "default": {
+                            "description": "default"
+                          }
+                        },
+                        "summary": "Add list of destinations to destination list",
+                        "description": "Add list of destinations to destination list",
+                        "operationId": "[[variables('_operationId-AddDestinations')]",
+                        "parameters": [
+                          {
+                            "name": "organizationId",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          },
+                          {
+                            "name": "destinationListId",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          },
+                          {
+                            "name": "body",
+                            "in": "body",
+                            "required": true,
+                            "schema": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "destination": {
+                                    "type": "string",
+                                    "description": "name of the destination",
+                                    "title": "destination"
+                                  },
+                                  "comment": {
+                                    "type": "string",
+                                    "description": "comment for destination",
+                                    "title": "comment"
+                                  }
+                                },
+                                "required": [
+                                  "destination"
+                                ]
+                              },
+                              "required": [
+                                "items"
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "/v1/organizations/{organizationId}/destinationlists/{destinationListId}/destinations/remove": {
+                      "delete": {
+                        "responses": {
+                          "default": {
+                            "description": "default"
+                          }
+                        },
+                        "summary": "Delete list of destinations from destination list",
+                        "operationId": "[[variables('_operationId-DeleteDestinations')]",
+                        "parameters": [
+                          {
+                            "name": "organizationId",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          },
+                          {
+                            "name": "destinationListId",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          },
+                          {
+                            "name": "body",
+                            "in": "body",
+                            "required": true,
+                            "schema": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "Destination id"
+                              }
+                            }
+                          }
+                        ],
+                        "description": "Delete list of destinations from destination list"
+                      }
+                    }
+                  },
+                  "securityDefinitions": {
+                    "basic_auth": {
+                      "type": "basic"
+                    }
+                  },
+                  "security": [
+                    {}
+                  ]
+                }
+              }
+            },
+            {
+              "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
+              "apiVersion": "2022-01-01-preview",
+              "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookContentId')),'/'))))]",
+              "properties": {
+                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+                "contentId": "[variables('_playbookContentId2')]",
+                "kind": "LogicAppsCustomConnector",
+                "version": "[variables('playbookVersion2')]",
+                "source": {
+                  "kind": "Solution",
+                  "name": "CiscoUmbrella",
+                  "sourceId": "[variables('_solutionId')]"
+                },
+                "author": {
+                  "name": "Microsoft",
+                  "email": "support@microsoft.com"
+                },
+                "support": {
+                  "tier": "Microsoft",
+                  "name": "Microsoft Corporation",
+                  "email": "support@microsoft.com",
+                  "link": "https://support.microsoft.com/"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs",
+      "apiVersion": "2021-05-01",
+      "name": "[variables('playbookTemplateSpecName3')]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "LogicAppsCustomConnector"
+      },
+      "properties": {
+        "description": "CiscoUmbrellaInvestigateAPIConnector",
+        "displayName": "CiscoUmbrellaInvestigateAPIConnector"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs/versions",
+      "apiVersion": "2021-05-01",
+      "name": "[concat(variables('playbookTemplateSpecName3'),'/',variables('playbookVersion3'))]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "LogicAppsCustomConnector"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName3'))]"
+      ],
+      "properties": {
+        "description": "CiscoUmbrellaInvestigateAPIConnector Playbook with template version 2.0.0",
+        "mainTemplate": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "[variables('playbookVersion3')]",
+          "metadata": null,
           "parameters": {},
           "variables": {
             "customApis_CiscoUmbrellaInvestigateAPIConnector_name": "CiscoUmbrellaInvestigateAPI",
@@ -827,9 +1642,9 @@
               "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookContentId')),'/'))))]",
               "properties": {
                 "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
-                "contentId": "[variables('_playbookContentId2')]",
+                "contentId": "[variables('_playbookContentId3')]",
                 "kind": "LogicAppsCustomConnector",
-                "version": "[variables('playbookVersion2')]",
+                "version": "[variables('playbookVersion3')]",
                 "source": {
                   "kind": "Solution",
                   "name": "CiscoUmbrella",
@@ -854,7 +1669,370 @@
     {
       "type": "Microsoft.Resources/templateSpecs",
       "apiVersion": "2021-05-01",
-      "name": "[variables('playbookTemplateSpecName3')]",
+      "name": "[variables('playbookTemplateSpecName4')]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "LogicAppsCustomConnector"
+      },
+      "properties": {
+        "description": "CiscoUmbrellaEnforcementAPIConnector",
+        "displayName": "CiscoUmbrellaEnforcementAPIConnector"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs/versions",
+      "apiVersion": "2021-05-01",
+      "name": "[concat(variables('playbookTemplateSpecName4'),'/',variables('playbookVersion4'))]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "LogicAppsCustomConnector"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName4'))]"
+      ],
+      "properties": {
+        "description": "CiscoUmbrellaEnforcementAPIConnector Playbook with template version 2.0.0",
+        "mainTemplate": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "[variables('playbookVersion4')]",
+          "metadata": null,
+          "parameters": {},
+          "variables": {
+            "customApis_CiscoUmbrellaEnforcementAPI_name": "CiscoUmbrellaEnforcementAPI",
+            "operationId-BlockDomains": "BlockDomains",
+            "_operationId-BlockDomains": "[[variables('operationId-BlockDomains')]",
+            "operationId-GetDomains": "GetDomains",
+            "_operationId-GetDomains": "[[variables('operationId-GetDomains')]",
+            "operationId-DeleteDomainByName": "DeleteDomainByName",
+            "_operationId-DeleteDomainByName": "[[variables('operationId-DeleteDomainByName')]",
+            "operationId-DeleteDomainById": "DeleteDomainById",
+            "_operationId-DeleteDomainById": "[[variables('operationId-DeleteDomainById')]",
+            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
+            "playbookContentId": "CiscoUmbrellaEnforcementAPIConnector",
+            "playbookId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+            "workspace-name": "[parameters('workspace')]",
+            "workspaceResourceId": "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/customApis",
+              "apiVersion": "2016-06-01",
+              "name": "[[variables('customApis_CiscoUmbrellaEnforcementAPI_name')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "properties": {
+                "connectionParameters": {
+                  "api_key": {
+                    "type": "securestring",
+                    "uiDefinition": {
+                      "displayName": "Cisco Umbrella Enforcement API customerKey",
+                      "description": "Cisco Umbrella Enforcement API customerKey",
+                      "tooltip": "Provide your Cisco Umbrella Enforcement API customerKey",
+                      "constraints": {
+                        "tabIndex": 2,
+                        "clearText": false,
+                        "required": "true"
+                      }
+                    }
+                  }
+                },
+                "brandColor": "#FFFFFF",
+                "description": "Connector for Cisco Umbrella Enforcment API",
+                "displayName": "[[variables('customApis_CiscoUmbrellaEnforcementAPI_name')]",
+                "iconUri": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAABdFBMVEUAAAAA//8AgP8Aqv8AgL8AmcwAmeYAotEAldUAn98AntsAodkAnNYAn9cIotgIntoHoNsHnNwHodcHndgGotoGoNsGnNYGn9cFn9sEoNgEndkEoNoEntsEntgEoNsEn9gDn9kDoNoDn9gDoNgDn9kFn9gFntgFn9kFn9oFoNoFn9gEn9kEoNkEn9oEoNgEn9kEntkEoNoEoNkEn9kEn9kEntkEoNgEntgEn9kEn9oEntoEn9gEoNgEntkEn9kEoNkEn9oEn9oEntgDn9kDn9gDoNkDn9kFn9oFn9gFn9kFntkFn9oEn9kEntoEn9gEoNkEn9kEoNkEn9oEn9gEn9kEn9kEn9kEn9kEn9kEn9kEn9kEn9kEn9kEntkEn9kEn9kEn9kEn9oDn9kFn9kEoNkEn9kEn9kEn9kEn9kEn9oEn9kEn9kEn9kEn9kEoNkEn9kEn9gEn9kEn9kEn9kEn9kEn9kEoNkEn9kEn9kEn9kEn9n///940Z2XAAAAenRSTlMAAQIDBAUKCwwQFRsfICEiIyQmJykrLC04Ozw+P0JGSEpTVVtdaGlqbW5wcnN1dnh5e35/gIGDhIeIiYqLjI2Oj5CRkpibnKSlp6mqsLGys7q7v8DCxMfKz9DS1NXW19jZ2t7g4+To6u3u7/Dx8vP09fb3+Pn6+/z9/h6/P2sAAAABYktHRHtP0rX8AAACB0lEQVRYw+2WaVPTYBRGb9SK4oI7dd+tAiqCra1FqKIoKu4bUFQQtJY2SUna2vPr/VCSafKmpONkHMfJ86m5OXOmN3Pfm4jEiRMnTtQZKadCkfWRHkTrlMKRcg8iIALkvxRlKsM+yq10RTLVW6qohuETuZWuSA1zi7+r/uiKBLb4z4jyxt0wUd5Ih4jyRlps7DCRjRUisrG26khpoOsdIDqR5bRmUvPhTsVFan7EKdjYMq5n2zdHK/5H6lRcJF31IU4hZ2TjNfJHolL4Qi71tLMv/xyOAInzV3LgftE0vjz1zMnRZz/qa28GAgg5PrtmrTw8onqG6oBvPQzqAJxQCe1eC4C68jExBKroOWA2NkUe4rZzwVWvZ78NzGeuZJc6RWW4qCUG+xXicBMac4X3gLXXI5oCHu0QkW2dogpcCCSmYeOkiKSACY+oCN93KofyHbReJgOIJWi/e17DgkdkwJx6uk83AWa2K4QJZ9rLE99rXQ8UyblvADcUwoCzIiJyB6pKa30B+yZx/iMsK0QR8iIi2gdY9IgKwEzC/7BFRPp+saEQD8A6JSLXgYJ3rG1g/mZq4mun6NKx/j2jsKIQh5rQfJF/CzQO9jCQm6VJlRh3B3LMP9rX7G6ihd0qoeXaR6SV05TDtm9y0dQ/z3aKXi1X9U9ju4IIST5ZtVYfJ+NlFydOnKjyG0KNPhWovN8UAAAAAElFTkSuQmCC",
+                "backendService": {
+                  "serviceUrl": "https://s-platform.api.opendns.com"
+                },
+                "apiType": "Rest",
+                "swagger": {
+                  "swagger": "2.0",
+                  "info": {
+                    "title": "CiscoUmbrellaEnforcementAPIConnector",
+                    "version": "1.0",
+                    "description": "Connector for Cisco Umbrella Enforcment API"
+                  },
+                  "host": "s-platform.api.opendns.com",
+                  "basePath": "/",
+                  "schemes": [
+                    "https"
+                  ],
+                  "paths": {
+                    "/1.0/events": {
+                      "post": {
+                        "summary": "Block domains",
+                        "parameters": [
+                          {
+                            "name": "Accept",
+                            "in": "header",
+                            "required": true,
+                            "type": "string",
+                            "default": "application/json",
+                            "x-ms-visibility": "internal"
+                          },
+                          {
+                            "name": "body",
+                            "in": "body",
+                            "schema": {
+                              "$ref": "#/definitions/events_array"
+                            }
+                          }
+                        ],
+                        "responses": {
+                          "default": {
+                            "description": "default",
+                            "schema": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "description": "id"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "operationId": "[[variables('_operationId-BlockDomains')]",
+                        "description": "Posts a Malware event to the API for processing and optionally adding to a customer's domain lists"
+                      }
+                    },
+                    "/1.0/domains": {
+                      "get": {
+                        "responses": {
+                          "default": {
+                            "description": "default",
+                            "schema": {
+                              "type": "object",
+                              "properties": {
+                                "meta": {
+                                  "type": "object",
+                                  "properties": {
+                                    "page": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "page"
+                                    },
+                                    "limit": {
+                                      "type": "integer",
+                                      "format": "int32",
+                                      "description": "limit"
+                                    },
+                                    "prev": {
+                                      "type": "string",
+                                      "description": "prev"
+                                    },
+                                    "next": {
+                                      "type": "string",
+                                      "description": "next"
+                                    }
+                                  },
+                                  "description": "meta"
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "integer",
+                                        "format": "int32",
+                                        "description": "domain id",
+                                        "title": "id"
+                                      },
+                                      "name": {
+                                        "type": "string",
+                                        "description": "domain name",
+                                        "title": "name"
+                                      }
+                                    }
+                                  },
+                                  "description": "data"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "summary": "Get domains",
+                        "operationId": "[[variables('_operationId-GetDomains')]",
+                        "description": "Get the list of domains added to the shared customer’s domain list.",
+                        "parameters": [
+                          {
+                            "name": "page",
+                            "in": "query",
+                            "required": false,
+                            "type": "integer",
+                            "default": 1
+                          },
+                          {
+                            "name": "limit",
+                            "in": "query",
+                            "required": false,
+                            "type": "integer",
+                            "default": 200,
+                            "description": ""
+                          }
+                        ]
+                      },
+                      "delete": {
+                        "responses": {
+                          "default": {
+                            "description": "default"
+                          }
+                        },
+                        "summary": "Delete domain by name",
+                        "description": "Delete a domain from the shared customer’s domain list by domain name.",
+                        "operationId": "[[variables('_operationId-DeleteDomainByName')]",
+                        "parameters": [
+                          {
+                            "name": "where[name]",
+                            "in": "query",
+                            "required": true,
+                            "type": "string",
+                            "x-ms-summary": "Domain name"
+                          },
+                          {
+                            "name": "Content-Type",
+                            "in": "header",
+                            "required": true,
+                            "type": "string",
+                            "default": "application/json",
+                            "x-ms-visibility": "internal"
+                          }
+                        ]
+                      }
+                    },
+                    "/1.0/domains/{DomainId}": {
+                      "delete": {
+                        "responses": {
+                          "default": {
+                            "description": "default"
+                          }
+                        },
+                        "summary": "Delete domain by id",
+                        "operationId": "[[variables('_operationId-DeleteDomainById')]",
+                        "parameters": [
+                          {
+                            "name": "DomainId",
+                            "in": "path",
+                            "required": true,
+                            "type": "string"
+                          },
+                          {
+                            "name": "Content-Type",
+                            "in": "header",
+                            "required": true,
+                            "type": "string",
+                            "default": "application/json",
+                            "x-ms-visibility": "internal"
+                          }
+                        ],
+                        "description": "Delete a domain from the shared customer’s domain list by Id."
+                      }
+                    }
+                  },
+                  "definitions": {
+                    "events_array": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "alertTime",
+                          "deviceId",
+                          "deviceVersion",
+                          "dstDomain",
+                          "dstUrl",
+                          "eventTime",
+                          "protocolVersion",
+                          "providerName"
+                        ],
+                        "properties": {
+                          "alertTime": {
+                            "type": "string"
+                          },
+                          "deviceId": {
+                            "type": "string",
+                            "title": "deviceId",
+                            "x-ms-visibility": "internal",
+                            "default": "azuresentinel"
+                          },
+                          "deviceVersion": {
+                            "type": "string",
+                            "title": "deviceVersion",
+                            "x-ms-visibility": "internal",
+                            "default": "13.7a"
+                          },
+                          "dstDomain": {
+                            "type": "string"
+                          },
+                          "dstUrl": {
+                            "type": "string"
+                          },
+                          "eventTime": {
+                            "type": "string"
+                          },
+                          "protocolVersion": {
+                            "type": "string",
+                            "default": "1.0a",
+                            "title": "protocolVersion",
+                            "x-ms-visibility": "internal"
+                          },
+                          "providerName": {
+                            "type": "string",
+                            "default": "Security Platform",
+                            "title": "providerName",
+                            "x-ms-visibility": "internal"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "securityDefinitions": {
+                    "API Key": {
+                      "type": "apiKey",
+                      "in": "query",
+                      "name": "customerKey"
+                    }
+                  },
+                  "security": [
+                    {}
+                  ]
+                }
+              }
+            },
+            {
+              "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
+              "apiVersion": "2022-01-01-preview",
+              "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookContentId')),'/'))))]",
+              "properties": {
+                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+                "contentId": "[variables('_playbookContentId4')]",
+                "kind": "LogicAppsCustomConnector",
+                "version": "[variables('playbookVersion4')]",
+                "source": {
+                  "kind": "Solution",
+                  "name": "CiscoUmbrella",
+                  "sourceId": "[variables('_solutionId')]"
+                },
+                "author": {
+                  "name": "Microsoft",
+                  "email": "support@microsoft.com"
+                },
+                "support": {
+                  "tier": "Microsoft",
+                  "name": "Microsoft Corporation",
+                  "email": "support@microsoft.com",
+                  "link": "https://support.microsoft.com/"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs",
+      "apiVersion": "2021-05-01",
+      "name": "[variables('playbookTemplateSpecName5')]",
       "location": "[parameters('workspace-location')]",
       "tags": {
         "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
@@ -868,34 +2046,21 @@
     {
       "type": "Microsoft.Resources/templateSpecs/versions",
       "apiVersion": "2021-05-01",
-      "name": "[concat(variables('playbookTemplateSpecName3'),'/',variables('playbookVersion3'))]",
+      "name": "[concat(variables('playbookTemplateSpecName5'),'/',variables('playbookVersion5'))]",
       "location": "[parameters('workspace-location')]",
       "tags": {
         "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
         "hidden-sentinelContentType": "Playbook"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName3'))]"
+        "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName5'))]"
       ],
       "properties": {
         "description": "CiscoUmbrella-GetDomainInfo Playbook with template version 2.0.0",
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-          "contentVersion": "[variables('playbookVersion3')]",
-          "metadata":{
-              "title": "CiscoUmbrella-GetDomainInfo", 
-              "description": "Run this playbook on incidents which contains suspiciouse AAD identities. When a new incident is created, this playbook iterates over the Accounts. It then posts an adaptive card in the SOC Microsoft Teams channel, including the potential risky user information given by Azure AD Identity Protection. The card offers to confirm the user as compromised or dismiss the compromised user in AADIP. It also allows to configure the Azure Sentinel incident. A summary comment will be posted to document the action taken and user information.",
-              "prerequisites": "1. Using the riskyUsers API requires an Azure AD Premium P2 license. 2. Have a user which has permissions on Identity Protection API. [Learn more](https://docs.microsoft.com/graph/api/riskyuser-confirmcompromised?view=graph-rest-1.0#permissions)  3. (optional) Create policies in Azure AD Identity protection to run when users are confirmed as compromised. [Learn more](https://docs.microsoft.com/azure/active-directory/identity-protection/concept-identity-protection-policies)",
-              "lastUpdateTime": "2021-05-18T10:00:15.123Z", 
-              "entities": ["Account"], 
-              "tags": ["Identity protection", "Teams bot"], 
-              "support": {
-                  "tier": "microsoft"
-              },
-              "author": {
-                  "name": "Lior Tamir"
-              }
-          },
+          "contentVersion": "[variables('playbookVersion5')]",
+          "metadata": null,
           "parameters": {
             "PlaybookName": {
               "defaultValue": "CiscoUmbrella-GetDomainInfo",
@@ -1148,12 +2313,12 @@
             {
               "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
               "apiVersion": "2022-01-01-preview",
-              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId3'),'/'))))]",
+              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId5'),'/'))))]",
               "properties": {
-                "parentId": "[variables('playbookId3')]",
-                "contentId": "[variables('_playbookContentId3')]",
+                "parentId": "[variables('playbookId5')]",
+                "contentId": "[variables('_playbookContentId5')]",
                 "kind": "Playbook",
-                "version": "[variables('playbookVersion3')]",
+                "version": "[variables('playbookVersion5')]",
                 "source": {
                   "kind": "Solution",
                   "name": "CiscoUmbrella",
@@ -1174,7 +2339,1962 @@
                     {
                       "kind": "LogicAppsCustomConnector",
                       "contentId": "[variables('_CiscoUmbrellaInvestigateAPIConnector')]",
+                      "version": "[variables('playbookVersion3')]"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs",
+      "apiVersion": "2021-05-01",
+      "name": "[variables('playbookTemplateSpecName6')]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "Playbook"
+      },
+      "properties": {
+        "description": "CiscoUmbrella-AddIpToDestinationList playbook",
+        "displayName": "CiscoUmbrella-AddIpToDestinationList playbook"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs/versions",
+      "apiVersion": "2021-05-01",
+      "name": "[concat(variables('playbookTemplateSpecName6'),'/',variables('playbookVersion6'))]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "Playbook"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName6'))]"
+      ],
+      "properties": {
+        "description": "CiscoUmbrella-AddIpToDestinationList Playbook with template version 2.0.0",
+        "mainTemplate": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "[variables('playbookVersion6')]",
+          "metadata": null,
+          "parameters": {
+            "PlaybookName": {
+              "defaultValue": "CiscoUmbrella-AddIpToDestinationList",
+              "type": "String"
+            },
+            "CiscoUmbrellaOrganizationId": {
+              "type": "Int",
+              "defaultValue": 0,
+              "metadata": {
+                "description": "Organization id in Cisco Umbrella."
+              }
+            },
+            "TeamsGroupId": {
+              "defaultValue": "TeamsGroupIds",
+              "type": "String",
+              "metadata": {
+                "description": "Id of the Teams Group where the adaptive card will be posted."
+              }
+            },
+            "TeamsChannelId": {
+              "defaultValue": "TeamsChannelId",
+              "type": "String",
+              "metadata": {
+                "description": "Id of the Teams Channel where the adaptive card will be posted."
+              }
+            }
+          },
+          "variables": {
+            "AzureSentinelConnectionName": "[[concat('azuresentinel-', parameters('PlaybookName'))]",
+            "TeamsConnectionName": "[[concat('teams-', parameters('PlaybookName'))]",
+            "CiscoUmbrellaManagementAPIConnectionName": "[[concat('ciscoumbrellamanagement-connection-', parameters('PlaybookName'))]",
+            "customApis_ciscoumbrellamanagement_name": "CiscoUmbrellaManagementAPI",
+            "connection-1": "[[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', variables('workspace-location-inline'), '/managedApis/azuresentinel')]",
+            "_connection-1": "[[variables('connection-1')]",
+            "connection-2": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', variables('customApis_ciscoumbrellamanagement_name'))]",
+            "_connection-2": "[[variables('connection-2')]",
+            "connection-3": "[[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', variables('workspace-location-inline'), '/managedApis/teams')]",
+            "_connection-3": "[[variables('connection-3')]",
+            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
+            "workspace-name": "[parameters('workspace')]",
+            "workspaceResourceId": "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/connections",
+              "apiVersion": "2016-06-01",
+              "name": "[[variables('AzureSentinelConnectionName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "properties": {
+                "displayName": "[[variables('AzureSentinelConnectionName')]",
+                "api": {
+                  "id": "[[variables('_connection-1')]"
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Web/connections",
+              "apiVersion": "2016-06-01",
+              "name": "[[variables('CiscoUmbrellaManagementAPIConnectionName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "kind": "V1",
+              "properties": {
+                "displayName": "[[variables('CiscoUmbrellaManagementAPIConnectionName')]",
+                "api": {
+                  "id": "[[variables('_connection-2')]"
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Web/connections",
+              "apiVersion": "2016-06-01",
+              "name": "[[variables('TeamsConnectionName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "properties": {
+                "displayName": "[[variables('TeamsConnectionName')]",
+                "api": {
+                  "id": "[[variables('_connection-3')]"
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Logic/workflows",
+              "apiVersion": "2017-07-01",
+              "name": "[[parameters('PlaybookName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "dependsOn": [
+                "[[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
+                "[[resourceId('Microsoft.Web/connections', variables('CiscoUmbrellaManagementAPIConnectionName'))]"
+              ],
+              "properties": {
+                "state": "Enabled",
+                "definition": {
+                  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                  "actions": {
+                    "Append_to_array_variable": {
+                      "inputs": {
+                        "name": "dest_lists_array",
+                        "value": {
+                          "title": "Ignore",
+                          "value": 0
+                        }
+                      },
+                      "runAfter": {
+                        "Initialize_variable_dest_lists_array": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "AppendToArrayVariable"
+                    },
+                    "Entities_-_Get_IPs": {
+                      "inputs": {
+                        "body": "@triggerBody()?['object']?['properties']?['relatedEntities']",
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                          }
+                        },
+                        "method": "post",
+                        "path": "/entities/ip"
+                      },
+                      "runAfter": {
+                        "Append_to_array_variable": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "ApiConnection"
+                    },
+                    "For_each_IP": {
+                      "actions": {
+                        "Add_IP_to_destination_list": {
+                          "actions": {
+                            "Add_list_of_destinations_to_destination_list": {
+                              "inputs": {
+                                "body": [
+                                  {
+                                    "destination": "@{outputs('Get_IP')}"
+                                  }
+                                ],
+                                "host": {
+                                  "connection": {
+                                    "name": "@parameters('$connections')['ciscoumbrellamanagement']['connectionId']"
+                                  }
+                                },
+                                "method": "post",
+                                "path": "/v1/organizations/@{encodeURIComponent(variables('organization_id'))}/destinationlists/@{encodeURIComponent(body('Post_adaptive_card_and_wait_for_a_response')['data']['action_choices'])}/destinations"
+                              },
+                              "type": "ApiConnection"
+                            },
+                            "Compose": {
+                              "inputs": "@body('Filter_array')[0]['title']",
+                              "runAfter": {
+                                "Filter_array": [
+                                  "Succeeded"
+                                ]
+                              },
+                              "type": "Compose"
+                            },
+                            "Filter_array": {
+                              "inputs": {
+                                "from": "@variables('dest_lists_array')",
+                                "where": "@equals(string(item()['value']), body('Post_adaptive_card_and_wait_for_a_response')['data']['action_choices'])"
+                              },
+                              "runAfter": {
+                                "Set_variable_3": [
+                                  "Skipped"
+                                ]
+                              },
+                              "type": "Query"
+                            },
+                            "Set_variable": {
+                              "inputs": {
+                                "name": "action_message",
+                                "value": "IP @{outputs('Get_IP')} added to \"@{outputs('Compose')}\" destination list."
+                              },
+                              "runAfter": {
+                                "Compose": [
+                                  "Succeeded"
+                                ]
+                              },
+                              "type": "SetVariable"
+                            },
+                            "Set_variable_3": {
+                              "inputs": {
+                                "name": "action_message",
+                                "value": "IP @{outputs('Get_IP')} was not added to \"\" destination lists due to Csico Umbrella API error."
+                              },
+                              "runAfter": {
+                                "Add_list_of_destinations_to_destination_list": [
+                                  "TimedOut",
+                                  "Failed"
+                                ]
+                              },
+                              "type": "SetVariable"
+                            }
+                          },
+                          "expression": {
+                            "and": [
+                              {
+                                "not": {
+                                  "equals": [
+                                    "@body('Post_adaptive_card_and_wait_for_a_response')?['data']",
+                                    "@null"
+                                  ]
+                                }
+                              },
+                              {
+                                "not": {
+                                  "equals": [
+                                    "@body('Post_adaptive_card_and_wait_for_a_response')?['data']?['action_choices']",
+                                    "@'0'"
+                                  ]
+                                }
+                              },
+                              {
+                                "contains": [
+                                  "@body('Post_adaptive_card_and_wait_for_a_response')?['data']",
+                                  "action_choices"
+                                ]
+                              }
+                            ]
+                          },
+                          "runAfter": {
+                            "Post_adaptive_card_and_wait_for_a_response": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "If"
+                        },
+                        "Add_comment_to_incident_(V3)": {
+                          "inputs": {
+                            "body": {
+                              "incidentArmId": "@triggerBody()?['object']?['id']",
+                              "message": "<p>@{outputs('Get_Cisco_logo')}<strong>CiscoUmbrella-AddIpToDestinationList</strong><br>\nActions taken:<br>\n@{variables('action_message')}<br>\n@{variables('status_message')}<br>\n@{variables('severity_message')}</p>"
+                            },
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                              }
+                            },
+                            "method": "post",
+                            "path": "/Incidents/Comment"
+                          },
+                          "runAfter": {
+                            "Get_Cisco_logo": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "ApiConnection"
+                        },
+                        "Create_body_for_adaptive_card": {
+                          "inputs": {
+                            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                            "actions": [
+                              {
+                                "id": "btnSubmit",
+                                "title": "Submit",
+                                "type": "Action.Submit"
+                              },
+                              {
+                                "id": "btnIgnore",
+                                "title": "Ignore",
+                                "type": "Action.Submit"
+                              }
+                            ],
+                            "body": [
+                              {
+                                "size": "large",
+                                "text": "Suspicious IP - Azure Sentinel",
+                                "type": "TextBlock",
+                                "weight": "bolder",
+                                "wrap": true
+                              },
+                              {
+                                "text": " Incident No : @{triggerBody()?['object']?['properties']?['incidentNumber']}  ",
+                                "type": "TextBlock",
+                                "weight": "Bolder",
+                                "wrap": true
+                              },
+                              {
+                                "text": "@{triggerBody()?['object']?['properties']?['description']}",
+                                "type": "TextBlock",
+                                "wrap": true
+                              },
+                              {
+                                "text": "For more details check the incident:",
+                                "type": "TextBlock",
+                                "weight": "Bolder",
+                                "wrap": true
+                              },
+                              {
+                                "text": "[[Click here to view the Incident](@{triggerBody()?['object']?['properties']?['incidentUrl']})",
+                                "type": "TextBlock",
+                                "wrap": true
+                              },
+                              {
+                                "id": "PollQuestionAction",
+                                "text": "Select the Cisco Umbrella destination list to add IP @{item()['address']} to.",
+                                "type": "TextBlock"
+                              },
+                              {
+                                "choices": "@variables('dest_lists_array')",
+                                "id": "action_choices",
+                                "placeholder": "Select from these choices",
+                                "style": "compact",
+                                "type": "Input.ChoiceSet"
+                              },
+                              {
+                                "id": "PollQuestionSeverity",
+                                "text": "Select incident severity",
+                                "type": "TextBlock"
+                              },
+                              {
+                                "choices": [
+                                  {
+                                    "title": "High",
+                                    "value": "high"
+                                  },
+                                  {
+                                    "title": "Medium",
+                                    "value": "medium"
+                                  },
+                                  {
+                                    "title": "Low",
+                                    "value": "low"
+                                  },
+                                  {
+                                    "title": "Informational",
+                                    "value": "informational"
+                                  }
+                                ],
+                                "id": "severity_choices",
+                                "placeholder": "Select from these choices",
+                                "style": "compact",
+                                "type": "Input.ChoiceSet"
+                              },
+                              {
+                                "id": "PollQuestionStatus",
+                                "text": "Select incident status",
+                                "type": "TextBlock"
+                              },
+                              {
+                                "choices": [
+                                  {
+                                    "title": "New",
+                                    "value": "new"
+                                  },
+                                  {
+                                    "title": "Active",
+                                    "value": "active"
+                                  },
+                                  {
+                                    "title": "Closed: True Positive - suspicious activity",
+                                    "value": "close_tp"
+                                  },
+                                  {
+                                    "title": "Closed: Benign Positive - suspicious but expected",
+                                    "value": "close_bp"
+                                  },
+                                  {
+                                    "title": "Closed: False Positive - incorrect alert logic",
+                                    "value": "close_fp_incorrect_logic"
+                                  },
+                                  {
+                                    "title": "Closed: False Positive - inaccurate data",
+                                    "value": "close_fp_inaccurate_data"
+                                  },
+                                  {
+                                    "title": "Closed: Undetermined",
+                                    "value": "close_undetermined"
+                                  }
+                                ],
+                                "id": "status_choices",
+                                "placeholder": "Select from these choices",
+                                "style": "compact",
+                                "type": "Input.ChoiceSet"
+                              }
+                            ],
+                            "type": "AdaptiveCard",
+                            "version": "1.0"
+                          },
+                          "type": "Compose"
+                        },
+                        "Get_Cisco_logo": {
+                          "inputs": "<img src=\"https://github.com/socprime/Azure-Sentinel/raw/master/Solutions/CiscoUmbrella/Playbooks/cisco-logo.png\"  width=\"32\" height=\"32\">",
+                          "runAfter": {
+                            "Update_status": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "Compose"
+                        },
+                        "Get_IP": {
+                          "inputs": "@item()['address']",
+                          "runAfter": {
+                            "Set_variable_16": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "Compose"
+                        },
+                        "Post_adaptive_card_and_wait_for_a_response": {
+                          "inputs": {
+                            "body": {
+                              "body": {
+                                "messageBody": "@{outputs('Create_body_for_adaptive_card')}",
+                                "recipient": {
+                                  "channelId": "@variables('TeamsChannelId')",
+                                  "groupId": "@variables('TeamsGroupId')"
+                                },
+                                "updateMessage": "Thanks for your response!"
+                              },
+                              "notificationUrl": "@{listCallbackUrl()}"
+                            },
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['teams']['connectionId']"
+                              }
+                            },
+                            "path": "/v1.0/teams/conversation/gatherinput/poster/Flow bot/location/@{encodeURIComponent('Channel')}/$subscriptions"
+                          },
+                          "runAfter": {
+                            "Get_IP": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "ApiConnectionWebhook"
+                        },
+                        "Set_variable_14": {
+                          "inputs": {
+                            "name": "action_message",
+                            "value": "\"\""
+                          },
+                          "runAfter": {
+                            "Create_body_for_adaptive_card": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "SetVariable"
+                        },
+                        "Set_variable_15": {
+                          "inputs": {
+                            "name": "severity_message",
+                            "value": "\"\""
+                          },
+                          "runAfter": {
+                            "Set_variable_14": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "SetVariable"
+                        },
+                        "Set_variable_16": {
+                          "inputs": {
+                            "name": "status_message",
+                            "value": "\"\""
+                          },
+                          "runAfter": {
+                            "Set_variable_15": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "SetVariable"
+                        },
+                        "Update_severity": {
+                          "actions": {
+                            "Switch": {
+                              "cases": {
+                                "high_severity": {
+                                  "actions": {
+                                    "Set_variable_2": {
+                                      "inputs": {
+                                        "name": "severity_message",
+                                        "value": "Incident severity was changed to \"High\"."
+                                      },
+                                      "runAfter": {
+                                        "Update_incident_high_severity": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "type": "SetVariable"
+                                    },
+                                    "Update_incident_high_severity": {
+                                      "inputs": {
+                                        "body": {
+                                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                                          "severity": "High"
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                          }
+                                        },
+                                        "method": "put",
+                                        "path": "/Incidents"
+                                      },
+                                      "type": "ApiConnection"
+                                    }
+                                  },
+                                  "case": "high"
+                                },
+                                "informational_severity": {
+                                  "actions": {
+                                    "Set_variable_4": {
+                                      "inputs": {
+                                        "name": "severity_message",
+                                        "value": "Incident severity was changed to \"Informational\"."
+                                      },
+                                      "runAfter": {
+                                        "Update_incident_informational_severity": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "type": "SetVariable"
+                                    },
+                                    "Update_incident_informational_severity": {
+                                      "inputs": {
+                                        "body": {
+                                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                                          "severity": "Informational"
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                          }
+                                        },
+                                        "method": "put",
+                                        "path": "/Incidents"
+                                      },
+                                      "type": "ApiConnection"
+                                    }
+                                  },
+                                  "case": "informational"
+                                },
+                                "low_severity": {
+                                  "actions": {
+                                    "Set_variable_5": {
+                                      "inputs": {
+                                        "name": "severity_message",
+                                        "value": "Incident severity was changed to \"Low\"."
+                                      },
+                                      "runAfter": {
+                                        "Update_incident_low_severity": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "type": "SetVariable"
+                                    },
+                                    "Update_incident_low_severity": {
+                                      "inputs": {
+                                        "body": {
+                                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                                          "severity": "Low"
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                          }
+                                        },
+                                        "method": "put",
+                                        "path": "/Incidents"
+                                      },
+                                      "type": "ApiConnection"
+                                    }
+                                  },
+                                  "case": "low"
+                                },
+                                "medium_severity": {
+                                  "actions": {
+                                    "Set_variable_6": {
+                                      "inputs": {
+                                        "name": "severity_message",
+                                        "value": "Incident severity was changed to \"Medium\"."
+                                      },
+                                      "runAfter": {
+                                        "Update_incident_medium_severity": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "type": "SetVariable"
+                                    },
+                                    "Update_incident_medium_severity": {
+                                      "inputs": {
+                                        "body": {
+                                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                                          "severity": "Medium"
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                          }
+                                        },
+                                        "method": "put",
+                                        "path": "/Incidents"
+                                      },
+                                      "type": "ApiConnection"
+                                    }
+                                  },
+                                  "case": "medium"
+                                }
+                              },
+                              "expression": "@body('Post_adaptive_card_and_wait_for_a_response')['data']['severity_choices']",
+                              "type": "Switch"
+                            }
+                          },
+                          "expression": {
+                            "and": [
+                              {
+                                "not": {
+                                  "equals": [
+                                    "@body('Post_adaptive_card_and_wait_for_a_response')?['data']",
+                                    "@null"
+                                  ]
+                                }
+                              },
+                              {
+                                "contains": [
+                                  "@body('Post_adaptive_card_and_wait_for_a_response')?['data']",
+                                  "severity_choices"
+                                ]
+                              }
+                            ]
+                          },
+                          "runAfter": {
+                            "Add_IP_to_destination_list": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "If"
+                        },
+                        "Update_status": {
+                          "actions": {
+                            "Switch_2": {
+                              "cases": {
+                                "Case": {
+                                  "actions": {
+                                    "Set_variable_7": {
+                                      "inputs": {
+                                        "name": "status_message",
+                                        "value": "Incident status was changed to \"New\"."
+                                      },
+                                      "runAfter": {
+                                        "Update_incident": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "type": "SetVariable"
+                                    },
+                                    "Update_incident": {
+                                      "inputs": {
+                                        "body": {
+                                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                                          "status": "New"
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                          }
+                                        },
+                                        "method": "put",
+                                        "path": "/Incidents"
+                                      },
+                                      "type": "ApiConnection"
+                                    }
+                                  },
+                                  "case": "new"
+                                },
+                                "Case_2": {
+                                  "actions": {
+                                    "Set_variable_8": {
+                                      "inputs": {
+                                        "name": "status_message",
+                                        "value": "Incident status was changed to \"Active\"."
+                                      },
+                                      "runAfter": {
+                                        "Update_incident_2": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "type": "SetVariable"
+                                    },
+                                    "Update_incident_2": {
+                                      "inputs": {
+                                        "body": {
+                                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                                          "status": "Active"
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                          }
+                                        },
+                                        "method": "put",
+                                        "path": "/Incidents"
+                                      },
+                                      "type": "ApiConnection"
+                                    }
+                                  },
+                                  "case": "active"
+                                },
+                                "Case_3": {
+                                  "actions": {
+                                    "Set_variable_9": {
+                                      "inputs": {
+                                        "name": "status_message",
+                                        "value": "Incident status was changed to \"Closed: True Positive - suspicious activity\"."
+                                      },
+                                      "runAfter": {
+                                        "Update_incident_3": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "type": "SetVariable"
+                                    },
+                                    "Update_incident_3": {
+                                      "inputs": {
+                                        "body": {
+                                          "classification": {
+                                            "ClassificationAndReason": "TruePositive - SuspiciousActivity"
+                                          },
+                                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                                          "status": "Closed"
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                          }
+                                        },
+                                        "method": "put",
+                                        "path": "/Incidents"
+                                      },
+                                      "type": "ApiConnection"
+                                    }
+                                  },
+                                  "case": "close_tp"
+                                },
+                                "Case_4": {
+                                  "actions": {
+                                    "Set_variable_10": {
+                                      "inputs": {
+                                        "name": "status_message",
+                                        "value": "Incident status was changed to \"Closed: Benign Positive - suspicious but expected\"."
+                                      },
+                                      "runAfter": {
+                                        "Update_incident_4": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "type": "SetVariable"
+                                    },
+                                    "Update_incident_4": {
+                                      "inputs": {
+                                        "body": {
+                                          "classification": {
+                                            "ClassificationAndReason": "BenignPositive - SuspiciousButExpected"
+                                          },
+                                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                                          "status": "Closed"
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                          }
+                                        },
+                                        "method": "put",
+                                        "path": "/Incidents"
+                                      },
+                                      "type": "ApiConnection"
+                                    }
+                                  },
+                                  "case": "close_bp"
+                                },
+                                "Case_5": {
+                                  "actions": {
+                                    "Set_variable_11": {
+                                      "inputs": {
+                                        "name": "status_message",
+                                        "value": "Incident status was changed to \"Closed: False Positive - incorrect alert logic\"."
+                                      },
+                                      "runAfter": {
+                                        "Update_incident_5": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "type": "SetVariable"
+                                    },
+                                    "Update_incident_5": {
+                                      "inputs": {
+                                        "body": {
+                                          "classification": {
+                                            "ClassificationAndReason": "FalsePositive - IncorrectAlertLogic"
+                                          },
+                                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                                          "status": "Closed"
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                          }
+                                        },
+                                        "method": "put",
+                                        "path": "/Incidents"
+                                      },
+                                      "type": "ApiConnection"
+                                    }
+                                  },
+                                  "case": "close_fp_incorrect_logic"
+                                },
+                                "Case_6": {
+                                  "actions": {
+                                    "Set_variable_12": {
+                                      "inputs": {
+                                        "name": "status_message",
+                                        "value": "Incident status was changed to \"Closed: False Positive - inaccurate data\"."
+                                      },
+                                      "runAfter": {
+                                        "Update_incident_6": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "type": "SetVariable"
+                                    },
+                                    "Update_incident_6": {
+                                      "inputs": {
+                                        "body": {
+                                          "classification": {
+                                            "ClassificationAndReason": "FalsePositive - InaccurateData"
+                                          },
+                                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                                          "status": "Closed"
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                          }
+                                        },
+                                        "method": "put",
+                                        "path": "/Incidents"
+                                      },
+                                      "type": "ApiConnection"
+                                    }
+                                  },
+                                  "case": "close_fp_inaccurate_data"
+                                },
+                                "Case_7": {
+                                  "actions": {
+                                    "Set_variable_13": {
+                                      "inputs": {
+                                        "name": "status_message",
+                                        "value": "Incident status was changed to \"Closed: Undetermined\"."
+                                      },
+                                      "runAfter": {
+                                        "Update_incident_7": [
+                                          "Succeeded"
+                                        ]
+                                      },
+                                      "type": "SetVariable"
+                                    },
+                                    "Update_incident_7": {
+                                      "inputs": {
+                                        "body": {
+                                          "classification": {
+                                            "ClassificationAndReason": "Undetermined"
+                                          },
+                                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                                          "status": "Closed"
+                                        },
+                                        "host": {
+                                          "connection": {
+                                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                                          }
+                                        },
+                                        "method": "put",
+                                        "path": "/Incidents"
+                                      },
+                                      "type": "ApiConnection"
+                                    }
+                                  },
+                                  "case": "close_undetermined"
+                                }
+                              },
+                              "expression": "@body('Post_adaptive_card_and_wait_for_a_response')['data']['status_choices']",
+                              "type": "Switch"
+                            }
+                          },
+                          "expression": {
+                            "and": [
+                              {
+                                "not": {
+                                  "equals": [
+                                    "@body('Post_adaptive_card_and_wait_for_a_response')?['data']",
+                                    "@null"
+                                  ]
+                                }
+                              },
+                              {
+                                "contains": [
+                                  "@body('Post_adaptive_card_and_wait_for_a_response')?['data']",
+                                  "status_choices"
+                                ]
+                              }
+                            ]
+                          },
+                          "runAfter": {
+                            "Update_severity": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "If"
+                        }
+                      },
+                      "foreach": "@body('Entities_-_Get_IPs')?['IPs']",
+                      "runAfter": {
+                        "Entities_-_Get_IPs": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "Foreach"
+                    },
+                    "Get_list_of_destinations_lists_for_Teams_adaptive_card": {
+                      "inputs": {
+                        "from": "@body('Retrieve_all_destination_lists')?['data']",
+                        "select": {
+                          "title": "@item()['name']",
+                          "value": "@item()['id']"
+                        }
+                      },
+                      "runAfter": {
+                        "Retrieve_all_destination_lists": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "Select"
+                    },
+                    "Initialize_variable_TeamsChannelId": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "TeamsChannelId",
+                            "type": "string",
+                            "value": "[[parameters('TeamsChannelId')]"
+                          }
+                        ]
+                      },
+                      "runAfter": {
+                        "Initialize_variable_TeamsGroupId": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    },
+                    "Initialize_variable_TeamsGroupId": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "TeamsGroupId",
+                            "type": "string",
+                            "value": "[[parameters('TeamsGroupId')]"
+                          }
+                        ]
+                      },
+                      "runAfter": {
+                        "Initialize_variable_organization_id": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    },
+                    "Initialize_variable_action_message": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "action_message",
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "runAfter": {
+                        "Initialize_variable_TeamsChannelId": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    },
+                    "Initialize_variable_dest_lists_array": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "dest_lists_array",
+                            "type": "array",
+                            "value": "@body('Get_list_of_destinations_lists_for_Teams_adaptive_card')"
+                          }
+                        ]
+                      },
+                      "runAfter": {
+                        "Get_list_of_destinations_lists_for_Teams_adaptive_card": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    },
+                    "Initialize_variable_organization_id": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "organization_id",
+                            "type": "integer",
+                            "value": "[[parameters('CiscoUmbrellaOrganizationId')]"
+                          }
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    },
+                    "Initialize_variable_severity_message": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "severity_message",
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "runAfter": {
+                        "Initialize_variable_action_message": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    },
+                    "Initialize_variable_status_message": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "status_message",
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "runAfter": {
+                        "Initialize_variable_severity_message": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    },
+                    "Retrieve_all_destination_lists": {
+                      "inputs": {
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['ciscoumbrellamanagement']['connectionId']"
+                          }
+                        },
+                        "method": "get",
+                        "path": "/v1/organizations/@{encodeURIComponent(variables('organization_id'))}/destinationlists"
+                      },
+                      "runAfter": {
+                        "Initialize_variable_status_message": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "ApiConnection"
+                    }
+                  },
+                  "contentVersion": "1.0.0.0",
+                  "parameters": {
+                    "$connections": {
+                      "type": "Object"
+                    }
+                  },
+                  "triggers": {
+                    "When_Azure_Sentinel_incident_creation_rule_was_triggered": {
+                      "inputs": {
+                        "body": {
+                          "callback_url": "@{listCallbackUrl()}"
+                        },
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                          }
+                        },
+                        "path": "/incident-creation"
+                      },
+                      "type": "ApiConnectionWebhook"
+                    }
+                  }
+                },
+                "parameters": {
+                  "$connections": {
+                    "value": {
+                      "azuresentinel": {
+                        "connectionName": "[[variables('AzureSentinelConnectionName')]",
+                        "connectionId": "[[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
+                        "id": "[[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Web/locations/',variables('workspace-location-inline'),'/managedApis/azuresentinel')]"
+                      },
+                      "teams": {
+                        "connectionName": "[[variables('TeamsConnectionName')]",
+                        "connectionId": "[[resourceId('Microsoft.Web/connections', variables('TeamsConnectionName'))]",
+                        "id": "[[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Web/locations/',variables('workspace-location-inline'),'/managedApis/teams')]"
+                      },
+                      "ciscoumbrellamanagement": {
+                        "connectionId": "[[resourceId('Microsoft.Web/connections', variables('CiscoUmbrellaManagementAPIConnectionName'))]",
+                        "connectionName": "[[variables('CiscoUmbrellaManagementAPIConnectionName')]",
+                        "id": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', variables('customApis_ciscoumbrellamanagement_name'))]"
+                      }
+                    }
+                  }
+                }
+              },
+              "tags": {
+                "hidden-SentinelWorkspaceId": "[[variables('workspaceResourceId')]"
+              }
+            },
+            {
+              "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
+              "apiVersion": "2022-01-01-preview",
+              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId6'),'/'))))]",
+              "properties": {
+                "parentId": "[variables('playbookId6')]",
+                "contentId": "[variables('_playbookContentId6')]",
+                "kind": "Playbook",
+                "version": "[variables('playbookVersion6')]",
+                "source": {
+                  "kind": "Solution",
+                  "name": "CiscoUmbrella",
+                  "sourceId": "[variables('_solutionId')]"
+                },
+                "author": {
+                  "name": "Microsoft",
+                  "email": "support@microsoft.com"
+                },
+                "support": {
+                  "tier": "Microsoft",
+                  "name": "Microsoft Corporation",
+                  "email": "support@microsoft.com",
+                  "link": "https://support.microsoft.com/"
+                },
+                "dependencies": {
+                  "criteria": [
+                    {
+                      "kind": "LogicAppsCustomConnector",
+                      "contentId": "[variables('_CiscoUmbrellaManagementAPIConnector')]",
                       "version": "[variables('playbookVersion2')]"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs",
+      "apiVersion": "2021-05-01",
+      "name": "[variables('playbookTemplateSpecName7')]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "Playbook"
+      },
+      "properties": {
+        "description": "CiscoUmbrella-AssignPolicyToIdentity playbook",
+        "displayName": "CiscoUmbrella-AssignPolicyToIdentity playbook"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs/versions",
+      "apiVersion": "2021-05-01",
+      "name": "[concat(variables('playbookTemplateSpecName7'),'/',variables('playbookVersion7'))]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "Playbook"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName7'))]"
+      ],
+      "properties": {
+        "description": "CiscoUmbrella-AssignPolicyToIdentity Playbook with template version 2.0.0",
+        "mainTemplate": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "[variables('playbookVersion7')]",
+          "metadata": null,
+          "parameters": {
+            "PlaybookName": {
+              "defaultValue": "CiscoUmbrella-AssignPolicyToIdentity",
+              "type": "String"
+            },
+            "PolicyId": {
+              "defaultValue": "",
+              "type": "String"
+            }
+          },
+          "variables": {
+            "AzureSentinelConnectionName": "[[concat('azuresentinel-', parameters('PlaybookName'))]",
+            "CiscoUmbrellaNetworkDeviceManagementAPIConnectionName": "[[concat('ciscoumbrellanetworkdevice-connection-', parameters('PlaybookName'))]",
+            "customApis_ciscoumbrellanetworkdevicemanagement_name": "CiscoUmbrellaNetworkDeviceManagementAPI",
+            "connection-1": "[[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', variables('workspace-location-inline'), '/managedApis/azuresentinel')]",
+            "_connection-1": "[[variables('connection-1')]",
+            "connection-2": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', variables('customApis_ciscoumbrellanetworkdevicemanagement_name'))]",
+            "_connection-2": "[[variables('connection-2')]",
+            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
+            "workspace-name": "[parameters('workspace')]",
+            "workspaceResourceId": "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/connections",
+              "apiVersion": "2016-06-01",
+              "name": "[[variables('AzureSentinelConnectionName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "properties": {
+                "displayName": "[[variables('AzureSentinelConnectionName')]",
+                "api": {
+                  "id": "[[variables('_connection-1')]"
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Web/connections",
+              "apiVersion": "2016-06-01",
+              "name": "[[variables('CiscoUmbrellaNetworkDeviceManagementAPIConnectionName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "kind": "V1",
+              "properties": {
+                "displayName": "[[variables('CiscoUmbrellaNetworkDeviceManagementAPIConnectionName')]",
+                "api": {
+                  "id": "[[variables('_connection-2')]"
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Logic/workflows",
+              "apiVersion": "2017-07-01",
+              "name": "[[parameters('PlaybookName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "dependsOn": [
+                "[[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
+                "[[resourceId('Microsoft.Web/connections', variables('CiscoUmbrellaNetworkDeviceManagementAPIConnectionName'))]"
+              ],
+              "properties": {
+                "state": "Enabled",
+                "definition": {
+                  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                  "actions": {
+                    "Add_comment_to_incident_(V3)": {
+                      "inputs": {
+                        "body": {
+                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                          "message": "<p><strong></strong><strong>@{outputs('Create_logo')}</strong><strong> CiscoUmbrella-AssignPolicyToIdentity</strong><br>\nThe following origin ids were assigned to policy @{variables('policyId')} for organization @{variables('organizationId')}:<br>\n@{body('Create_HTML_table_with_updated_origin_IDs')}<br>\nThe following origin ids were not assigned because of errors:<br>\n@{body('Create_HTML_table_with_not_updated_origin_IDs')}</p>"
+                        },
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                          }
+                        },
+                        "method": "post",
+                        "path": "/Incidents/Comment"
+                      },
+                      "runAfter": {
+                        "Create_logo": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "ApiConnection"
+                    },
+                    "Create_HTML_table_with_not_updated_origin_IDs": {
+                      "inputs": {
+                        "columns": [
+                          {
+                            "header": "originId",
+                            "value": "@item()"
+                          }
+                        ],
+                        "format": "HTML",
+                        "from": "@variables('not_updated_oridinIds_array')"
+                      },
+                      "runAfter": {
+                        "Create_HTML_table_with_updated_origin_IDs": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "Table"
+                    },
+                    "Create_HTML_table_with_updated_origin_IDs": {
+                      "inputs": {
+                        "columns": [
+                          {
+                            "header": "originId",
+                            "value": "@item()"
+                          }
+                        ],
+                        "format": "HTML",
+                        "from": "@variables('updated_oridinIds_array')"
+                      },
+                      "runAfter": {
+                        "For_each_originId_assign_policy_to_originId": [
+                          "Succeeded",
+                          "Failed",
+                          "Skipped",
+                          "TimedOut"
+                        ]
+                      },
+                      "type": "Table"
+                    },
+                    "Create_logo": {
+                      "inputs": "<img src=\"https://github.com/Azure/Azure-Sentinel/raw/master/Solutions/CiscoUmbrella/Playbooks/cisco-logo.png\"  width=\"32\" height=\"32\">",
+                      "runAfter": {
+                        "Create_HTML_table_with_not_updated_origin_IDs": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "Compose"
+                    },
+                    "For_each_alert_in_incident": {
+                      "actions": {
+                        "For_each_originId": {
+                          "actions": {
+                            "Add_unique_originId_to_OriginId_array": {
+                              "actions": {
+                                "Append_to_array_variable": {
+                                  "inputs": {
+                                    "name": "originId_array",
+                                    "value": "@items('For_each_originId')"
+                                  },
+                                  "type": "AppendToArrayVariable"
+                                }
+                              },
+                              "expression": {
+                                "and": [
+                                  {
+                                    "not": {
+                                      "contains": [
+                                        "@variables('originId_array')",
+                                        "@items('For_each_originId')"
+                                      ]
+                                    }
+                                  }
+                                ]
+                              },
+                              "type": "If"
+                            }
+                          },
+                          "foreach": "@body('Parse_alert_custom_details')?['originId']",
+                          "runAfter": {
+                            "Parse_alert_custom_details": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "Foreach"
+                        },
+                        "Parse_alert_custom_details": {
+                          "inputs": {
+                            "content": "@items('For_each_alert_in_incident')?['properties']?['additionalData']?['Custom Details']",
+                            "schema": {
+                              "properties": {
+                                "originId": {
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "type": "array"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "type": "ParseJson"
+                        }
+                      },
+                      "foreach": "@triggerBody()?['object']?['properties']?['Alerts']",
+                      "runAfter": {
+                        "Set_value_for_organizationId_variable": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "Foreach"
+                    },
+                    "For_each_originId_assign_policy_to_originId": {
+                      "actions": {
+                        "Append_originId_to_not_updated_originIds_array_variable_in_case_of_error": {
+                          "inputs": {
+                            "name": "not_updated_oridinIds_array",
+                            "value": "@items('For_each_originId_assign_policy_to_originId')"
+                          },
+                          "runAfter": {
+                            "Assign_a_policy_to_an_identity": [
+                              "Failed",
+                              "TimedOut"
+                            ]
+                          },
+                          "type": "AppendToArrayVariable"
+                        },
+                        "Append_originId_to_updated_originIds_array_variable": {
+                          "inputs": {
+                            "name": "updated_oridinIds_array",
+                            "value": "@items('For_each_originId_assign_policy_to_originId')"
+                          },
+                          "runAfter": {
+                            "Append_originId_to_not_updated_originIds_array_variable_in_case_of_error": [
+                              "Skipped"
+                            ]
+                          },
+                          "type": "AppendToArrayVariable"
+                        },
+                        "Assign_a_policy_to_an_identity": {
+                          "inputs": {
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['ciscoumbrellanetworkdevicemanagement']['connectionId']"
+                              }
+                            },
+                            "method": "put",
+                            "path": "/v1/organizations/@{encodeURIComponent(variables('organizationId'))}/policies/@{encodeURIComponent(variables('policyId'))}/identities/@{encodeURIComponent(items('For_each_originId_assign_policy_to_originId'))}"
+                          },
+                          "type": "ApiConnection"
+                        }
+                      },
+                      "foreach": "@variables('originId_array')",
+                      "runAfter": {
+                        "For_each_alert_in_incident": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "Foreach"
+                    },
+                    "Get_organization_id": {
+                      "inputs": {
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['ciscoumbrellanetworkdevicemanagement']['connectionId']"
+                          }
+                        },
+                        "method": "get",
+                        "path": "/v1/organizations"
+                      },
+                      "runAfter": {
+                        "Initialize_variable_not_updated_oridinIds_array": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "ApiConnection"
+                    },
+                    "Initialize_variable_not_updated_oridinIds_array": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "not_updated_oridinIds_array",
+                            "type": "array"
+                          }
+                        ]
+                      },
+                      "runAfter": {
+                        "Initialize_variable_updated_oridinIds_array": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    },
+                    "Initialize_variable_organizationId": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "organizationId",
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    },
+                    "Initialize_variable_originId_array": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "originId_array",
+                            "type": "array"
+                          }
+                        ]
+                      },
+                      "runAfter": {
+                        "Initialize_variable_policyId": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    },
+                    "Initialize_variable_policyId": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "policyId",
+                            "type": "string",
+                            "value": "[[parameters('PolicyId')]"
+                          }
+                        ]
+                      },
+                      "runAfter": {
+                        "Initialize_variable_organizationId": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    },
+                    "Initialize_variable_updated_oridinIds_array": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "updated_oridinIds_array",
+                            "type": "array"
+                          }
+                        ]
+                      },
+                      "runAfter": {
+                        "Initialize_variable_originId_array": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    },
+                    "Set_value_for_organizationId_variable": {
+                      "inputs": {
+                        "name": "organizationId",
+                        "value": "@{body('Get_organization_id')[0]['organizationId']}"
+                      },
+                      "runAfter": {
+                        "Get_organization_id": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "SetVariable"
+                    }
+                  },
+                  "contentVersion": "1.0.0.0",
+                  "parameters": {
+                    "$connections": {
+                      "type": "Object"
+                    }
+                  },
+                  "triggers": {
+                    "When_Azure_Sentinel_incident_creation_rule_was_triggered": {
+                      "inputs": {
+                        "body": {
+                          "callback_url": "@{listCallbackUrl()}"
+                        },
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                          }
+                        },
+                        "path": "/incident-creation"
+                      },
+                      "type": "ApiConnectionWebhook"
+                    }
+                  }
+                },
+                "parameters": {
+                  "$connections": {
+                    "value": {
+                      "azuresentinel": {
+                        "connectionName": "[[variables('AzureSentinelConnectionName')]",
+                        "connectionId": "[[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
+                        "id": "[[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Web/locations/',variables('workspace-location-inline'),'/managedApis/azuresentinel')]"
+                      },
+                      "ciscoumbrellanetworkdevicemanagement": {
+                        "connectionId": "[[resourceId('Microsoft.Web/connections', variables('CiscoUmbrellaNetworkDeviceManagementAPIConnectionName'))]",
+                        "connectionName": "[[variables('CiscoUmbrellaNetworkDeviceManagementAPIConnectionName')]",
+                        "id": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', variables('customApis_ciscoumbrellanetworkdevicemanagement_name'))]"
+                      }
+                    }
+                  }
+                }
+              },
+              "tags": {
+                "hidden-SentinelWorkspaceId": "[[variables('workspaceResourceId')]"
+              }
+            },
+            {
+              "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
+              "apiVersion": "2022-01-01-preview",
+              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId7'),'/'))))]",
+              "properties": {
+                "parentId": "[variables('playbookId7')]",
+                "contentId": "[variables('_playbookContentId7')]",
+                "kind": "Playbook",
+                "version": "[variables('playbookVersion7')]",
+                "source": {
+                  "kind": "Solution",
+                  "name": "CiscoUmbrella",
+                  "sourceId": "[variables('_solutionId')]"
+                },
+                "author": {
+                  "name": "Microsoft",
+                  "email": "support@microsoft.com"
+                },
+                "support": {
+                  "tier": "Microsoft",
+                  "name": "Microsoft Corporation",
+                  "email": "support@microsoft.com",
+                  "link": "https://support.microsoft.com/"
+                },
+                "dependencies": {
+                  "criteria": [
+                    {
+                      "kind": "LogicAppsCustomConnector",
+                      "contentId": "[variables('_CiscoUmbrellaNetworkDeviceManagementAPIConnector')]",
+                      "version": "[variables('playbookVersion1')]"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs",
+      "apiVersion": "2021-05-01",
+      "name": "[variables('playbookTemplateSpecName8')]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "Playbook"
+      },
+      "properties": {
+        "description": "CiscoUmbrella-BlockDomain playbook",
+        "displayName": "CiscoUmbrella-BlockDomain playbook"
+      }
+    },
+    {
+      "type": "Microsoft.Resources/templateSpecs/versions",
+      "apiVersion": "2021-05-01",
+      "name": "[concat(variables('playbookTemplateSpecName8'),'/',variables('playbookVersion8'))]",
+      "location": "[parameters('workspace-location')]",
+      "tags": {
+        "hidden-sentinelWorkspaceId": "[variables('workspaceResourceId')]",
+        "hidden-sentinelContentType": "Playbook"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/templateSpecs', variables('playbookTemplateSpecName8'))]"
+      ],
+      "properties": {
+        "description": "CiscoUmbrella-BlockDomain Playbook with template version 2.0.0",
+        "mainTemplate": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "[variables('playbookVersion8')]",
+          "metadata": null,
+          "parameters": {
+            "PlaybookName": {
+              "defaultValue": "CiscoUmbrella-BlockDomain",
+              "type": "String"
+            }
+          },
+          "variables": {
+            "AzureSentinelConnectionName": "[[concat('azuresentinel-', parameters('PlaybookName'))]",
+            "CiscoUmbrellaEnforcementAPIConnectionName": "[[concat('ciscoumbrellaenforcement-connection-', parameters('PlaybookName'))]",
+            "customApis_ciscoumbrellaenforcement_name": "CiscoUmbrellaEnforcementAPI",
+            "connection-1": "[[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', variables('workspace-location-inline'), '/managedApis/azuresentinel')]",
+            "_connection-1": "[[variables('connection-1')]",
+            "connection-2": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', variables('customApis_ciscoumbrellaenforcement_name'))]",
+            "_connection-2": "[[variables('connection-2')]",
+            "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
+            "workspace-name": "[parameters('workspace')]",
+            "workspaceResourceId": "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/connections",
+              "apiVersion": "2016-06-01",
+              "name": "[[variables('AzureSentinelConnectionName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "properties": {
+                "displayName": "[[variables('AzureSentinelConnectionName')]",
+                "api": {
+                  "id": "[[variables('_connection-1')]"
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Web/connections",
+              "apiVersion": "2016-06-01",
+              "name": "[[variables('CiscoUmbrellaEnforcementAPIConnectionName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "kind": "V1",
+              "properties": {
+                "displayName": "[[variables('CiscoUmbrellaEnforcementAPIConnectionName')]",
+                "api": {
+                  "id": "[[variables('_connection-2')]"
+                }
+              }
+            },
+            {
+              "type": "Microsoft.Logic/workflows",
+              "apiVersion": "2017-07-01",
+              "name": "[[parameters('PlaybookName')]",
+              "location": "[[variables('workspace-location-inline')]",
+              "dependsOn": [
+                "[[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
+                "[[resourceId('Microsoft.Web/connections', variables('CiscoUmbrellaEnforcementAPIConnectionName'))]"
+              ],
+              "properties": {
+                "state": "Enabled",
+                "definition": {
+                  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                  "actions": {
+                    "Add_comment_to_incident_(V3)": {
+                      "inputs": {
+                        "body": {
+                          "incidentArmId": "@triggerBody()?['object']?['id']",
+                          "message": "<p>@{outputs('Create_logo')}CiscoUmbrella-BlockDomain<br>\nThe following domains have been added to Cisco Umbrella block destination list:<br>\n@{body('Create_HTML_table')}</p>"
+                        },
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                          }
+                        },
+                        "method": "post",
+                        "path": "/Incidents/Comment"
+                      },
+                      "runAfter": {
+                        "Create_logo": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "ApiConnection"
+                    },
+                    "Create_HTML_table": {
+                      "inputs": {
+                        "columns": [
+                          {
+                            "header": "Domain",
+                            "value": "@item()"
+                          }
+                        ],
+                        "format": "HTML",
+                        "from": "@variables('blocked_domains')"
+                      },
+                      "runAfter": {
+                        "For_each_URL": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "Table"
+                    },
+                    "Create_logo": {
+                      "inputs": "<img src=\"https://github.com/Azure/Azure-Sentinel/raw/master/Solutions/CiscoUmbrella/Playbooks/cisco-logo.png\"  width=\"32\" height=\"32\">",
+                      "runAfter": {
+                        "Create_HTML_table": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "Compose"
+                    },
+                    "Entities_-_Get_URLs": {
+                      "inputs": {
+                        "body": "@triggerBody()?['object']?['properties']?['relatedEntities']",
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                          }
+                        },
+                        "method": "post",
+                        "path": "/entities/url"
+                      },
+                      "runAfter": {
+                        "Initialize_variable_blocked_domains": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "ApiConnection"
+                    },
+                    "For_each_URL": {
+                      "actions": {
+                        "Append_domain_to_blocked_domains_variable": {
+                          "inputs": {
+                            "name": "blocked_domains",
+                            "value": "@outputs('Get_Domain_from_URL')"
+                          },
+                          "runAfter": {
+                            "Block_domain": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "AppendToArrayVariable"
+                        },
+                        "Block_domain": {
+                          "inputs": {
+                            "body": [
+                              {
+                                "alertTime": "@{utcNow()}",
+                                "deviceId": "azuresentinel",
+                                "deviceVersion": "13.7a",
+                                "dstDomain": "@{outputs('Get_Domain_from_URL')}",
+                                "dstUrl": "@{outputs('Get_Domain_from_URL')}",
+                                "eventTime": "@{utcNow()}",
+                                "protocolVersion": "1.0a",
+                                "providerName": "Security Platform"
+                              }
+                            ],
+                            "headers": {
+                              "Accept": "application/json"
+                            },
+                            "host": {
+                              "connection": {
+                                "name": "@parameters('$connections')['ciscoumbrellaenforcement']['connectionId']"
+                              }
+                            },
+                            "method": "post",
+                            "path": "/1.0/events"
+                          },
+                          "runAfter": {
+                            "Get_Domain_from_URL": [
+                              "Succeeded"
+                            ]
+                          },
+                          "type": "ApiConnection"
+                        },
+                        "Get_Domain_from_URL": {
+                          "inputs": "@split(replace(replace(items('For_each_URL')?['Url'],'http://',''), 'https://', ''), '/')[0]",
+                          "type": "Compose"
+                        }
+                      },
+                      "foreach": "@body('Entities_-_Get_URLs')?['URLs']",
+                      "runAfter": {
+                        "Entities_-_Get_URLs": [
+                          "Succeeded"
+                        ]
+                      },
+                      "type": "Foreach"
+                    },
+                    "Initialize_variable_blocked_domains": {
+                      "inputs": {
+                        "variables": [
+                          {
+                            "name": "blocked_domains",
+                            "type": "array"
+                          }
+                        ]
+                      },
+                      "type": "InitializeVariable"
+                    }
+                  },
+                  "contentVersion": "1.0.0.0",
+                  "parameters": {
+                    "$connections": {
+                      "type": "Object"
+                    }
+                  },
+                  "triggers": {
+                    "When_Azure_Sentinel_incident_creation_rule_was_triggered": {
+                      "inputs": {
+                        "body": {
+                          "callback_url": "@{listCallbackUrl()}"
+                        },
+                        "host": {
+                          "connection": {
+                            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                          }
+                        },
+                        "path": "/incident-creation"
+                      },
+                      "type": "ApiConnectionWebhook"
+                    }
+                  }
+                },
+                "parameters": {
+                  "$connections": {
+                    "value": {
+                      "azuresentinel": {
+                        "connectionName": "[[variables('AzureSentinelConnectionName')]",
+                        "connectionId": "[[resourceId('Microsoft.Web/connections', variables('AzureSentinelConnectionName'))]",
+                        "id": "[[concat('/subscriptions/',subscription().subscriptionId, '/providers/Microsoft.Web/locations/',variables('workspace-location-inline'),'/managedApis/azuresentinel')]"
+                      },
+                      "ciscoumbrellaenforcement": {
+                        "connectionId": "[[resourceId('Microsoft.Web/connections', variables('CiscoUmbrellaEnforcementAPIConnectionName'))]",
+                        "connectionName": "[[variables('CiscoUmbrellaEnforcementAPIConnectionName')]",
+                        "id": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', variables('customApis_ciscoumbrellaenforcement_name'))]"
+                      }
+                    }
+                  }
+                }
+              },
+              "tags": {
+                "hidden-SentinelWorkspaceId": "[[variables('workspaceResourceId')]"
+              }
+            },
+            {
+              "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
+              "apiVersion": "2022-01-01-preview",
+              "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId8'),'/'))))]",
+              "properties": {
+                "parentId": "[variables('playbookId8')]",
+                "contentId": "[variables('_playbookContentId8')]",
+                "kind": "Playbook",
+                "version": "[variables('playbookVersion8')]",
+                "source": {
+                  "kind": "Solution",
+                  "name": "CiscoUmbrella",
+                  "sourceId": "[variables('_solutionId')]"
+                },
+                "author": {
+                  "name": "Microsoft",
+                  "email": "support@microsoft.com"
+                },
+                "support": {
+                  "tier": "Microsoft",
+                  "name": "Microsoft Corporation",
+                  "email": "support@microsoft.com",
+                  "link": "https://support.microsoft.com/"
+                },
+                "dependencies": {
+                  "criteria": [
+                    {
+                      "kind": "LogicAppsCustomConnector",
+                      "contentId": "[variables('_CiscoUmbrellaEnforcementAPIConnector')]",
+                      "version": "[variables('playbookVersion4')]"
                     }
                   ]
                 }
@@ -1218,13 +4338,38 @@
             },
             {
               "kind": "LogicAppsCustomConnector",
-              "contentId": "[variables('_CiscoUmbrellaInvestigateAPIConnector')]",
+              "contentId": "[variables('_CiscoUmbrellaManagementAPIConnector')]",
               "version": "[variables('playbookVersion2')]"
+            },
+            {
+              "kind": "LogicAppsCustomConnector",
+              "contentId": "[variables('_CiscoUmbrellaInvestigateAPIConnector')]",
+              "version": "[variables('playbookVersion3')]"
+            },
+            {
+              "kind": "LogicAppsCustomConnector",
+              "contentId": "[variables('_CiscoUmbrellaEnforcementAPIConnector')]",
+              "version": "[variables('playbookVersion4')]"
             },
             {
               "kind": "Playbook",
               "contentId": "[variables('_CiscoUmbrella-GetDomainInfo')]",
-              "version": "[variables('playbookVersion3')]"
+              "version": "[variables('playbookVersion5')]"
+            },
+            {
+              "kind": "Playbook",
+              "contentId": "[variables('_CiscoUmbrella-AddIpToDestinationList')]",
+              "version": "[variables('playbookVersion6')]"
+            },
+            {
+              "kind": "Playbook",
+              "contentId": "[variables('_CiscoUmbrella-AssignPolicyToIdentity')]",
+              "version": "[variables('playbookVersion7')]"
+            },
+            {
+              "kind": "Playbook",
+              "contentId": "[variables('_CiscoUmbrella-BlockDomain')]",
+              "version": "[variables('playbookVersion8')]"
             }
           ]
         },
