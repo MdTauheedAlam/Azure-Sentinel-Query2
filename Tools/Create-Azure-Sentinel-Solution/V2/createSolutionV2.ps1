@@ -950,6 +950,12 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                             $playbookVariables | Add-Member -NotePropertyName "workspaceResourceId" -NotePropertyValue "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
                             $playbookResources = $playbookResources + $playbookMetadata;
 
+                            $playbookMetadata = [PSCustomObject]@{};
+                            foreach($var in $playbookData.metadata.PsObject.Properties)
+                            {
+                                $playbookMetadata | Add-Member -NotePropertyName $var.Name -NotePropertyValue $var.Value;
+                            }
+
                             # Add templateSpecs/versions resource to hold actual content
                             $playbookTemplateSpecContent = [PSCustomObject]@{
                                 type       = "Microsoft.Resources/templateSpecs/versions";
@@ -968,12 +974,16 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                     mainTemplate = [PSCustomObject]@{
                                         '$schema'      = "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#";
                                         contentVersion = "[variables('playbookVersion$playbookCounter')]";
-                                        metadata       = $playbookData.Metadata;
                                         parameters     = $playbookData.parameters;
                                         variables      = $playbookVariables;
                                         resources      = $playbookResources;
                                     }
                                 }
+                            }
+
+                            if ($playbookMetadata.Count -gt 1) {
+                                Write-Host "creating metadata for playbook"
+                                $playbookTemplateSpecContent | Add-Member -NotePropertyName 'metadata' -NotePropertyValue $playbookMetadata;
                             }
 
                             $baseMainTemplate.resources += $playbookTemplateSpecContent;

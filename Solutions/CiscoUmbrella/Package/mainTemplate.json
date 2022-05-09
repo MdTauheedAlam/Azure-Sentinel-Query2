@@ -125,7 +125,6 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion1')]",
-          "metadata": null,
           "parameters": {},
           "variables": {
             "customApis_CiscoUmbrellaNetworkDeviceManagementAPI_name": "CiscoUmbrellaNetworkDeviceManagementAPI",
@@ -439,7 +438,6 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion2')]",
-          "metadata": null,
           "parameters": {},
           "variables": {
             "customApis_CiscoUmbrellaManagementAPI_name": "CiscoUmbrellaManagementAPI",
@@ -1247,7 +1245,6 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion3')]",
-          "metadata": null,
           "parameters": {},
           "variables": {
             "customApis_CiscoUmbrellaInvestigateAPIConnector_name": "CiscoUmbrellaInvestigateAPI",
@@ -1704,7 +1701,6 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion4')]",
-          "metadata": null,
           "parameters": {},
           "variables": {
             "customApis_CiscoUmbrellaEnforcementAPI_name": "CiscoUmbrellaEnforcementAPI",
@@ -2067,7 +2063,6 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion5')]",
-          "metadata": null,
           "parameters": {
             "PlaybookName": {
               "defaultValue": "CiscoUmbrella-GetDomainInfo",
@@ -2387,7 +2382,6 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion6')]",
-          "metadata": null,
           "parameters": {
             "PlaybookName": {
               "defaultValue": "CiscoUmbrella-AddIpToDestinationList",
@@ -3569,7 +3563,6 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion7')]",
-          "metadata": null,
           "parameters": {
             "PlaybookName": {
               "defaultValue": "CiscoUmbrella-AssignPolicyToIdentity",
@@ -4032,7 +4025,6 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion8')]",
-          "metadata": null,
           "parameters": {
             "PlaybookName": {
               "defaultValue": "CiscoUmbrella-BlockDomain",
@@ -4342,32 +4334,6 @@
         "mainTemplate": {
           "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "[variables('playbookVersion9')]",
-          "metadata": {
-            "title": "Advanced SNOW Teams Integration Playbook",
-            "description": "This playbook showcases an example of triggering an incident within a targeted Teams channel and opening up a ticket within Service Now. Additionally The playbook will also list playbooks that can be initiated from teams using an adaptive card and callbacks that will take action upon certain entities identified in the incident.",
-            "prerequisites": [
-              "1. ServiceNow Instance URL, Username, and password.",
-              "2. Access and authorization to enable API connectors",
-              "3. Teams Group ID and Alert Channel ID where the messages are to be posted in."
-            ],
-            "lastUpdateTime": "2021-06-29T10:00:00Z",
-            "entities": [
-              "Account",
-              "Url",
-              "Host"
-            ],
-            "tags": [
-              "Sync",
-              "Notification",
-              "Teams Response"
-            ],
-            "support": {
-              "tier": "community"
-            },
-            "author": {
-              "name": "Jing Nghik"
-            }
-          },
           "parameters": {
             "PlaybookName": {
               "defaultValue": "SNOW-Teams-Integration",
