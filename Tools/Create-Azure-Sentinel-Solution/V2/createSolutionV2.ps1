@@ -1023,7 +1023,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                             if (!$playbookMetadata.releaseNotes -and $playbookTemplateSpecContent.metadata) {
                                 Write-Host "adding default release notes"
                                 $releaseNotes = [PSCustomObject]@{
-                                    version = "1.0";
+                                    version = $playbookVersion;
                                     title      = "[variables('blanks')]";
                                     notes      = @("Initial version");
                                 }
