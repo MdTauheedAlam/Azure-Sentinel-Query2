@@ -672,6 +672,40 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                             $outputStr
                         }
 
+                        function removeBlanksRecursively($resourceObj) {
+                            if ($resourceObj.GetType() -ne [System.DateTime]) {
+                                foreach ($prop in $resourceObj.PsObject.Properties) {
+                                    $key = $prop.Name
+                                    if ($prop.Value -is [System.String]) {
+                                        #Write-Host "its a string $resourceObj.$key"
+                                        if($resourceObj.$key -eq "")
+                                        {
+                                            $resourceObj.$key = "[variables('blanks')]";
+                                        }
+                                    }
+                                    elseif ($prop.Value -is [System.Array]) {
+                                        foreach ($item in $prop.Value) {
+                                            $itemIndex = $prop.Value.IndexOf($item)
+                                            if ($null -ne $itemIndex) {
+                                                if ($item -is [System.String]) {
+                                                    $resourceObj.$key[$itemIndex] = $item
+                                                }
+                                                elseif ($item -is [System.Management.Automation.PSCustomObject]) {
+                                                    $resourceObj.$key[$itemIndex] = $(removeBlanksRecursively $item)
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        if (($prop.Value -isnot [System.Int32]) -and ($prop.Value -isnot [System.Int64])) {
+                                            $resourceObj.$key = $(removeBlanksRecursively $resourceObj.$key)
+                                        }
+                                    }
+                                }
+                            }
+                            $resourceObj
+                        }
+
                         function addInternalSuffixRecursively($resourceObj) {
                             if ($resourceObj.GetType() -ne [System.DateTime]) {
                                 foreach ($prop in $resourceObj.PsObject.Properties) {
@@ -852,6 +886,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                             $playbookResource = $(removePropertiesRecursively $playbookResource)
                             # $playbookResource =  $(replaceVarsRecursively $playbookResource)
                             $playbookResource =  $(addInternalSuffixRecursively $playbookResource)
+                            $playbookResource =  $(removeBlanksRecursively $playbookResource)
                             $playbookResources += $playbookResource;
                             $connectionCounter += 1
                         }
@@ -989,10 +1024,13 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                 Write-Host "adding default release notes"
                                 $releaseNotes = [PSCustomObject]@{
                                     version = "1.0";
-                                    title      = '';
+                                    title      = "[variables('blanks')]";
                                     notes      = @("Initial version");
                                 }
                                 $playbookTemplateSpecContent.metadata | Add-Member -NotePropertyName 'releaseNotes' -NotePropertyValue $releaseNotes;
+                                if (!$baseMainTemplate.variables.blanks) {
+                                    $baseMainTemplate.variables | Add-Member -NotePropertyName "blanks" -NotePropertyValue "[replace('b', 'b', '')]"
+                                }
                             }
 
                             $baseMainTemplate.resources += $playbookTemplateSpecContent;
@@ -1005,6 +1043,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                         if ($azureManagementUrlExists) {
                             $baseMainTemplate.variables | Add-Member -NotePropertyName "azureManagementUrl" -NotePropertyValue $azureManagementUrl
                         }
+
                         $playbookCounter += 1
                     }
                     elseif ($objectKeyLowercase -eq "data connectors") {

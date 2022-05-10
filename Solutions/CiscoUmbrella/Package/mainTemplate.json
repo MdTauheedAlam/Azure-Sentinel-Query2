@@ -91,7 +91,8 @@
     "playbookContentId9": "Advanced-SNOW-Teams-Integration",
     "_playbookContentId9": "[variables('playbookContentId9')]",
     "playbookId9": "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId9'))]",
-    "playbookTemplateSpecName9": "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId9'))]"
+    "playbookTemplateSpecName9": "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId9'))]",
+    "blanks": "[replace('b', 'b', '')]"
   },
   "resources": [
     {
@@ -665,7 +666,7 @@
                             "in": "path",
                             "required": true,
                             "type": "integer",
-                            "description": "",
+                            "description": "[variables('blanks')]",
                             "format": "int32"
                           }
                         ]
@@ -798,7 +799,7 @@
                                       },
                                       "comment": {
                                         "type": "string",
-                                        "description": "",
+                                        "description": "[variables('blanks')]",
                                         "title": "comment"
                                       }
                                     },
@@ -830,7 +831,7 @@
                                 },
                                 "name": {
                                   "type": "string",
-                                  "description": "",
+                                  "description": "[variables('blanks')]",
                                   "title": "name"
                                 }
                               },
@@ -1872,7 +1873,7 @@
                             "required": false,
                             "type": "integer",
                             "default": 200,
-                            "description": ""
+                            "description": "[variables('blanks')]"
                           }
                         ]
                       },
@@ -5516,7 +5517,7 @@
         },
         "releaseNotes": {
           "version": "1.0",
-          "title": "",
+          "title": "[variables('blanks')]",
           "notes": [
             "Initial version"
           ]
