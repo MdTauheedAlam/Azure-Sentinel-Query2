@@ -1018,7 +1018,12 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
 
                             if (@($playbookMetadata.PsObject.Properties).Count -gt 0) {
                                 Write-Host "creating metadata for playbook"
-                                $playbookTemplateSpecContent | Add-Member -NotePropertyName 'metadata' -NotePropertyValue $playbookMetadata;
+                                $playbookTemplateSpecContent | Add-Member -NotePropertyName "metadata" -NotePropertyValue ([PSCustomObject]@{});
+                                foreach($var in $playbookMetadata.PsObject.Properties) {
+                                    if ($var.Name -ne "author" -and $var.Name -ne "lastUpdateTime" -and $var.Name -ne "support" -and $var.Name -ne "prerequisitesDeployTemplateFilehor") {
+                                        $playbookTemplateSpecContent.metadata | Add-Member -NotePropertyName $var.Name -NotePropertyValue $var.Value;
+                                    }
+                                }
                             }
                             if (!$playbookMetadata.releaseNotes -and $playbookTemplateSpecContent.metadata) {
                                 Write-Host "adding default release notes"
