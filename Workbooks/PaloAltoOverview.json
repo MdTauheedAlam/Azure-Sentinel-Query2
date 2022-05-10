@@ -550,7 +550,7 @@
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
-        "query": "CommonSecurityLog\r\n| where DeviceProduct has 'PAN-OS' \r\n| where DeviceVendor =~ 'Palo Alto Networks' \r\n| where \"{Destination_IP:lable}\"==\"All\" or DestinationIP in ({Destination_IP}) \r\n| where \"{Source_IP:lable}\" == \"All\" or SourceIP in ({Source_IP})\r\n| where Activity =~ 'TRAFFIC' \r\n| where DeviceEventClassID =~ 'end' \r\n| extend Reason = coalesce(extract(';reason=(.*?);',1,AdditionalExtensions),Reason)\r\n| summarize ReasonCount= count() by  Reason, TimeGenerated  \r\n",
+        "query": "CommonSecurityLog\r\n| where DeviceProduct has 'PAN-OS' \r\n| where DeviceVendor =~ 'Palo Alto Networks' \r\n| where \"{Destination_IP:lable}\"==\"All\" or DestinationIP in ({Destination_IP}) \r\n| where \"{Source_IP:lable}\" == \"All\" or SourceIP in ({Source_IP})\r\n| where Activity =~ 'TRAFFIC' \r\n| where DeviceEventClassID =~ 'end' \r\n| extend Reason = coalesce(\r\n                            column_ifexists(\"Reason\", \"\"),\r\n                            extract(';reason=(.*?);',1,AdditionalExtensions),\r\n                            \"\"\r\n                        )\r\n| summarize ReasonCount= count() by  Reason, TimeGenerated  \r\n",
         "size": 0,
         "title": "Reasons for session ending, by time",
         "timeContextFromParameter": "TimeRange",
@@ -1110,7 +1110,7 @@
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
-        "query": "//Palo Alto File Category By Action Summary\r\nCommonSecurityLog\r\n| where DeviceProduct has 'PAN-OS' \r\n| where DeviceVendor =~ 'Palo Alto Networks' \r\n| where Activity =~ 'THREAT'\r\n| where \"{Destination_IP:lable}\"==\"All\" or DestinationIP in ({Destination_IP}) \r\n| where \"{Source_IP:lable}\" == \"All\" or SourceIP in ({Source_IP})\r\n| where DeviceEventClassID =~ 'file' \r\n| extend PACategory= coalesce(extract(';cat=(.*?);',1,AdditionalExtensions),DeviceEventCategory)\r\n| summarize CategoryCount=count() by PACategory\r\n| sort by CategoryCount",
+        "query": "//Palo Alto File Category By Action Summary\r\nCommonSecurityLog\r\n| where DeviceProduct has 'PAN-OS' \r\n| where DeviceVendor =~ 'Palo Alto Networks' \r\n| where Activity =~ 'THREAT'\r\n| where \"{Destination_IP:lable}\"==\"All\" or DestinationIP in ({Destination_IP}) \r\n| where \"{Source_IP:lable}\" == \"All\" or SourceIP in ({Source_IP})\r\n| where DeviceEventClassID =~ 'file' \r\n| extend PACategory= coalesce(\r\n                            column_ifexists(\"DeviceEventCategory\", \"\"),\r\n                            extract(';cat=(.*?)($|;)',1,AdditionalExtensions),\r\n                            \"\"\r\n                        )\r\n| summarize CategoryCount=count() by PACategory\r\n| sort by CategoryCount",
         "size": 0,
         "title": "Summary of Palo Alto file categories, by activity",
         "timeContextFromParameter": "TimeRange",
@@ -1204,7 +1204,7 @@
     }
   ],
   "fallbackResourceIds": [
-    "/subscriptions/da1d49de-3a74-4024-a9be-8c6a2921bea4/resourcegroups/rg-ado/providers/microsoft.operationalinsights/workspaces/adosample1808"
+    "/subscriptions/4383ac89-7cd1-48c1-8061-b0b3c5ccfd97/resourcegroups/cattesting/providers/microsoft.operationalinsights/workspaces/cat-loganalytics"
   ],
   "fromTemplateId": "sentinel-UserWorkbook",
   "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"

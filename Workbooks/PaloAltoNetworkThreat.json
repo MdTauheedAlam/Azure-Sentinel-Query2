@@ -368,7 +368,7 @@
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
-        "query": "CommonSecurityLog\r\n| where DeviceProduct has 'PAN-OS'\r\n| where DeviceVendor =~ 'Palo Alto Networks'\r\n| where DeviceEventClassID =~ 'vulnerability' \r\n| extend ThreatId = coalesce(extract('cat=([^;]+)',1,AdditionalExtensions),DeviceEventCategory)\r\n| summarize Amount=count() by ThreatId, LogSeverity\r\n| top 20 by Amount",
+        "query": "CommonSecurityLog\r\n| where DeviceProduct has 'PAN-OS'\r\n| where DeviceVendor =~ 'Palo Alto Networks'\r\n| where DeviceEventClassID =~ 'vulnerability' \r\n| extend ThreatId = coalesce(\r\n                            column_ifexists(\"DeviceEventCategory\", \"\"),\r\n                            extract('cat=([^;]+)',1,AdditionalExtensions),\r\n                            \"\"\r\n                        )\r\n| summarize Amount=count() by ThreatId, LogSeverity\r\n| top 20 by Amount",
         "size": 0,
         "title": "Top vulnerability events",
         "timeContextFromParameter": "TimeRange",
@@ -438,7 +438,7 @@
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
-        "query": "CommonSecurityLog\r\n| where DeviceProduct has 'PAN-OS'\r\n| where DeviceVendor =~ 'Palo Alto Networks'\r\n//| where DeviceEventClassID =~ 'correlation' \r\n| extend ThreatId = coalesce(extract('cat=([^;]+)',1,AdditionalExtensions),DeviceEventCategory)\r\n| extend ThreatCategory = extract('PanOSThreatCategory=([^;]+)',1, AdditionalExtensions)\r\n| summarize Amount=count() by ThreatId, ThreatCategory, LogSeverity\r\n| top 20 by Amount",
+        "query": "CommonSecurityLog\r\n| where DeviceProduct has 'PAN-OS'\r\n| where DeviceVendor =~ 'Palo Alto Networks'\r\n//| where DeviceEventClassID =~ 'correlation' \r\n| extend ThreatId = coalesce(\r\n                            column_ifexists(\"DeviceEventCategory\", \"\"),\r\n                            extract('cat=([^;]+)',1,AdditionalExtensions),\r\n                            \"\"\r\n                        )\r\n| extend ThreatCategory = extract('PanOSThreatCategory=([^;]+)',1, AdditionalExtensions)\r\n| summarize Amount=count() by ThreatId, ThreatCategory, LogSeverity\r\n| top 20 by Amount",
         "size": 0,
         "title": "Top correlation events",
         "timeContextFromParameter": "TimeRange",
@@ -470,7 +470,7 @@
     }
   ],
   "fallbackResourceIds": [
-    "/subscriptions/da1d49de-3a74-4024-a9be-8c6a2921bea4/resourcegroups/rg-ado/providers/microsoft.operationalinsights/workspaces/adosample1808"
+    "/subscriptions/4383ac89-7cd1-48c1-8061-b0b3c5ccfd97/resourcegroups/cattesting/providers/microsoft.operationalinsights/workspaces/cat-loganalytics"
   ],
   "fromTemplateId": "sentinel-UserWorkbook",
   "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
