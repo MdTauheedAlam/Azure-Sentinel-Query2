@@ -981,9 +981,18 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                 }
                             }
 
-                            if ($playbookMetadata.Count -gt 1) {
+                            if (@($playbookMetadata.PsObject.Properties).Count -gt 0) {
                                 Write-Host "creating metadata for playbook"
                                 $playbookTemplateSpecContent | Add-Member -NotePropertyName 'metadata' -NotePropertyValue $playbookMetadata;
+                            }
+                            if (!$playbookMetadata.releaseNotes -and $playbookTemplateSpecContent.metadata) {
+                                Write-Host "adding default release notes"
+                                $releaseNotes = [PSCustomObject]@{
+                                    version = "1.0";
+                                    title      = '';
+                                    notes      = @("Initial version");
+                                }
+                                $playbookTemplateSpecContent.metadata | Add-Member -NotePropertyName 'releaseNotes' -NotePropertyValue $releaseNotes;
                             }
 
                             $baseMainTemplate.resources += $playbookTemplateSpecContent;
