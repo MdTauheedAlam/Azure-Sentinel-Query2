@@ -494,7 +494,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "//union CommonSecurityLog\n//| extend Source = strcat(Sour.ceHostName,\" \", \"(\" ,SourceIP, \")\"),Destination= strcat(DestinationHostName,\" \", \"(\" ,DestinationIP, \")\")\n//| summarize TimesAlerted=count() by SourceHostName //, //avg(DeviceCustomNumber1) by SourceHostName\n//| top 10 by TimesAlerted\n//| sort by TimesAlerted desc\n\nunion CommonSecurityLog\n| where DeviceVendor == \"Arista Networks\" and DeviceProduct == \"Awake Security\"\n| extend DeviceCustomNumber1 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber1)\n| summarize \n    MaxDeviceRiskScore=max(DeviceCustomNumber1),UniqueDeviceTypeCount=dcount(DeviceCustomString4),\n    TimesAlerted=count() by SourceHostName=coalesce(SourceHostName,\"Unknown\")\n//| where UniqueDeviceTypeCount<2\n| top 10 by case(\"{SortBy}\"==\"Count\",TimesAlerted,MaxDeviceRiskScore)\n",
+              "query": "//union CommonSecurityLog\n//| extend Source = strcat(Sour.ceHostName,\" \", \"(\" ,SourceIP, \")\"),Destination= strcat(DestinationHostName,\" \", \"(\" ,DestinationIP, \")\")\n//| summarize TimesAlerted=count() by SourceHostName //, //avg(DeviceCustomNumber1) by SourceHostName\n//| top 10 by TimesAlerted\n//| sort by TimesAlerted desc\n\nunion CommonSecurityLog\n| where DeviceVendor == \"Arista Networks\" and DeviceProduct == \"Awake Security\"\n| extend DeviceCustomNumber1 = coalesce(column_ifexists(\"FieldDeviceCustomNumber1\", int(null)),DeviceCustomNumber1)\n| summarize \n    MaxDeviceRiskScore=max(DeviceCustomNumber1),UniqueDeviceTypeCount=dcount(DeviceCustomString4),\n    TimesAlerted=count() by SourceHostName=coalesce(SourceHostName,\"Unknown\")\n//| where UniqueDeviceTypeCount<2\n| top 10 by case(\"{SortBy}\"==\"Count\",TimesAlerted,MaxDeviceRiskScore)\n",
               "size": 0,
               "timeContextFromParameter": "TimeRange",
               "queryType": 0,
@@ -633,7 +633,7 @@
     }
   ],
   "fallbackResourceIds": [
-    "/subscriptions/f70efef4-6505-4727-acd8-9d0b3bc0b80e/resourcegroups/test_infrastructure/providers/microsoft.operationalinsights/workspaces/sentinel-test-workspace"
+    "/subscriptions/4383ac89-7cd1-48c1-8061-b0b3c5ccfd97/resourcegroups/ankisentinelrg/providers/microsoft.operationalinsights/workspaces/ankilognalyticsws"
   ],
   "fromTemplateId": "sentinel-UserWorkbook",
   "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"

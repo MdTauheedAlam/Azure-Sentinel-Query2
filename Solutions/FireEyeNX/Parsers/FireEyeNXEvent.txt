@@ -5,11 +5,10 @@
 // Reference : Using functions in Azure monitor log queries : https://docs.microsoft.com/azure/azure-monitor/log-query/functions
 CommonSecurityLog
 | where DeviceVendor =~ 'FireEye'
-|extend DeviceCustomNumber1 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber1),
-        DeviceCustomNumber2 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber2),
-        DeviceCustomNumber3 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber3),
-        ExternalID = coalesce(ExternalID,ExtID)
-
+|extend DeviceCustomNumber1 = coalesce(column_ifexists("FieldDeviceCustomNumber1", int(null)),DeviceCustomNumber1),
+		DeviceCustomNumber2 = coalesce(column_ifexists("FieldDeviceCustomNumber2", int(null)),DeviceCustomNumber2),
+		DeviceCustomNumber3 = coalesce(column_ifexists("FieldDeviceCustomNumber3", int(null)),DeviceCustomNumber3),
+        ExternalID = coalesce(column_ifexists("ExtID", ""),tostring(ExternalID))
 | extend packed = pack(DeviceCustomNumber1Label, DeviceCustomNumber1
                      , DeviceCustomNumber2Label, DeviceCustomNumber2
                      , DeviceCustomNumber3Label, DeviceCustomNumber3
@@ -38,11 +37,11 @@ CommonSecurityLog
                 , Id=ExternalID
                 , SrcDvcHostname=SourceHostName
                 , SrcMacAddr=SourceMACAddress
-                , ThreatName=anomaly
-                , OsInfo=osinfo
-                , Malware=sname
-                , Vlan=vlan
-                , IncidentUrl=link
+                //, ThreatName=anomaly
+                //, OsInfo=osinfo
+                //, Malware=sname
+                //, Vlan=vlan
+                //, IncidentUrl=link
 | extend EventType=Activity
 | extend EventTimeIngested=todatetime(ReceiptTime)
 | project-away Activity
@@ -65,6 +64,6 @@ CommonSecurityLog
             , DeviceCustomString5Label
             , DeviceCustomString6
             , DeviceCustomString6Label
-			, FieldDeviceCustomNumber1
-			, FieldDeviceCustomNumber2
 			, FieldDeviceCustomNumber3
+            , FieldDeviceCustomNumber2
+            , FieldDeviceCustomNumber1

@@ -9,9 +9,9 @@ CommonSecurityLog
 | extend EventProduct = 'Cortex Data Lake'
 | extend EventSchemaVersion = 0.2
 | extend EventCount = 1
-| extend DeviceCustomNumber1 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber1),
-         DeviceCustomNumber2 = coalesce(DeviceCustomNumber2,FieldDeviceCustomNumber2),
-         DeviceCustomNumber3 = coalesce(DeviceCustomNumber3,FieldDeviceCustomNumber3)
+| extend DeviceCustomNumber1 = coalesce(column_ifexists("FieldDeviceCustomNumber1", int(null)),DeviceCustomNumber1),
+         DeviceCustomNumber2 = coalesce(column_ifexists("FieldDeviceCustomNumber2", int(null)),DeviceCustomNumber2),
+         DeviceCustomNumber3 = coalesce(column_ifexists("FieldDeviceCustomNumber3", int(null)),DeviceCustomNumber3)
 | extend packed = pack(DeviceCustomNumber1Label, DeviceCustomNumber1
                      , DeviceCustomNumber2Label, DeviceCustomNumber2
                      , DeviceCustomNumber3Label, DeviceCustomNumber3
@@ -76,11 +76,11 @@ CommonSecurityLog
                 , SrcBytes=SentBytes
 | extend EventTimeIngested = todatetime(ReceiptTime)
 | extend EventStartTime=todatetime(start)
-| extend EventStartTime = coalesce(EventStartTime,StartTime)
+| extend EventStartTime = coalesce(column_ifexists("StartTime",datetime(null)),EventStartTime)
 | extend EventEndTime=todatetime(end)
-| extend EventEndTime = coalesce(EventEndTime,EndTime)
+| extend EventEndTime = coalesce(column_ifexists("EventEndTime",datetime(null)),EndTime)
+| extend cat = coalesce(column_ifexists("DeviceEventCategory",""),cat)
 | extend EventType=cat
-| extend EventType =coalesce(EventType,DeviceEventCategory)
 | extend SrcNatIpAddr=case(isempty(SourceIP), SourceTranslatedAddress, 
                             pack_array(SourceTranslatedAddress,SourceIP))
 | extend DstNatIpAddr=case(isempty(DestinationIP), DestinationTranslatedAddress,
