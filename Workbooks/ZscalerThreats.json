@@ -379,7 +379,7 @@
       "type": 3,
       "content": {
         "version": "KqlItem/1.0",
-        "query": "CommonSecurityLog\r\n| where DeviceProduct == \"NSSWeblog\"\r\n| extend DeviceCustomNumber1 = coalesce(DeviceCustomNumber1,FieldDeviceCustomNumber1)\r\n| where DeviceCustomNumber1 != 0\r\n| where DeviceEventClassID !contains \"Allow\" \r\n| where DeviceCustomString4 !=\"None\"\r\n| where RequestMethod == \"GET\"  or  RequestMethod == \"POST\"\r\n| extend replaced= iif ( RequestMethod==\"GET\" , replace('GET', 'Inbound Threats', RequestMethod) , replace('POST', 'Outbound Threats', RequestMethod))\r\n| summarize count() by  replaced\r\n",
+        "query": "CommonSecurityLog\r\n| where DeviceProduct == \"NSSWeblog\"\r\n| extend DeviceCustomNumber1 = coalesce(column_ifexists(\"FieldDeviceCustomNumber1\", int(null)),DeviceCustomNumber1)\r\n| where DeviceCustomNumber1 != 0\r\n| where DeviceEventClassID !contains \"Allow\" \r\n| where DeviceCustomString4 !=\"None\"\r\n| where RequestMethod == \"GET\"  or  RequestMethod == \"POST\"\r\n| extend replaced= iif ( RequestMethod==\"GET\" , replace('GET', 'Inbound Threats', RequestMethod) , replace('POST', 'Outbound Threats', RequestMethod))\r\n| summarize count() by  replaced\r\n",
         "size": 0,
         "title": "Inbound and outbound blocked threats",
         "timeContextFromParameter": "TimeRange",
@@ -530,7 +530,7 @@
     }
   ],
   "fallbackResourceIds": [
-    "/subscriptions/f70efef4-6505-4727-acd8-9d0b3bc0b80e/resourcegroups/test_infrastructure/providers/microsoft.operationalinsights/workspaces/sentinel-test-workspace"
+    "/subscriptions/4383ac89-7cd1-48c1-8061-b0b3c5ccfd97/resourcegroups/ankisentinelrg/providers/microsoft.operationalinsights/workspaces/ankilognalyticsws"
   ],
   "fromTemplateId": "sentinel-UserWorkbook",
   "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"

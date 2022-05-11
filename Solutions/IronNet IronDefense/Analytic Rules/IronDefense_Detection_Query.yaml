@@ -18,6 +18,7 @@ query: |
   | where DeviceProduct == "IronDefense"
   | summarize arg_max(TimeGenerated, *) by DeviceCustomString4, DeviceCustomString2
   | extend Category = extract(@'cat=([^;]+)(\;|$)', 1, AdditionalExtensions)
+  | extend Category = coalesce(column_ifexists("DeviceEventCategory",""),Category)	
   | extend Subcategory = extract(@'subcat=([^;]+)(\;|$)', 1, AdditionalExtensions)
   | extend AlertDescription = strcat(Category, ': ', Subcategory)
   | extend Status = tostring(DeviceCustomString2)
