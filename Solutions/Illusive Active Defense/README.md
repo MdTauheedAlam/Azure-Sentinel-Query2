@@ -396,7 +396,7 @@ The analytic rule instructs Azure Sentinel to search for information of interest
     ```markdown
         CommonSecurityLog
           | where DeviceProduct == "illusive"
-          | extend DeviceCustomNumber2 = coalesce(column_ifexists("FieldDeviceCustomNumber2", long(null)), DeviceCustomNumber2),
+          | extend DeviceCustomNumber2 = coalesce(column_ifexists("FieldDeviceCustomNumber2", long(null)), DeviceCustomNumber2, long(null)),
           | summarize arg_max(TimeGenerated, *) by DeviceCustomNumber2, AdditionalExtensions, TimeGenerated
           | extend Category = coalesce(column_ifexists("DeviceEventCategory", ""), extract(@'cat=([^;]+)(\;|$)', 1, AdditionalExtensions), ""), HasForensics = extract(@'cs7=([^;]+)(\;|$)', 1, AdditionalExtensions)
           | where Category == "illusive:alerts"
