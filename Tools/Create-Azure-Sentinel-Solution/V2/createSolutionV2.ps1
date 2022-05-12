@@ -819,6 +819,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                         $playbookResources = @();
                         $playbookVersion = '1.0';
                         $logicAppsPlaybookId = '';
+                        $customConnectorContentId = '';
                         foreach ($playbookResource in $playbookData.resources) {
                             if ($playbookResource.type -eq "Microsoft.Web/connections") {
                                 if ($playbookResource.properties -and $playbookResource.properties.api -and $playbookResource.properties.api.id) {
@@ -828,14 +829,10 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
 
                                         foreach ($templateVar in $($playbookData.parameters).PSObject.Properties) {
                                             if ($templateVar.Name -eq $connectionKey) {
-                                                $temaplteName = $templateVar.Name
-                                                $varName = "playbook$playbookCounter-$temaplteName"
-                                                # $baseMainTemplate.variables | Add-Member -NotePropertyName $varName -NotePropertyValue $templateVar.Value
-                                                # $baseMainTemplate.variables | Add-Member -NotePropertyName "_$varName" -NotePropertyValue "[variables('$varName')]"
                                                 $playbookDependencies += [PSCustomObject] @{
                                                     kind = "LogicAppsCustomConnector";
-                                                    contentId = "[variables('_"+$templateVar.Value.defaultValue+"Connector')]" #"[variables('_$varName')]"#$templateVar.Value;
-                                                    version = $customConnectorsList[$templateVar.Value.defaultValue+'Connector']
+                                                    contentId = $customConnectorsList[$templateVar.Value.defaultValue].id;
+                                                    version = $customConnectorsList[$templateVar.Value.defaultValue].version;
                                                 }
                                             }
                                         }
@@ -880,6 +877,9 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                 $playbookVersion = $playbookResource.tags.'hidden-SentinelTemplateVersion' ? $playbookResource.tags.'hidden-SentinelTemplateVersion' : $playbookVersion;
                             } elseif ($contentToImport.TemplateSpec -and $playbookResource.type -eq "Microsoft.Web/customApis") {
                                 $logicAppsPlaybookId = $playbookResource.name.Replace("parameters('","").Replace("'","").Replace(")","").Replace("]","").Replace("[","");
+                                $customConnectorContentId = $playbookData.parameters.$logicAppsPlaybookId.defaultValue
+                                Write-Host $customConnectorContentId;
+                                Write-Host $logicAppsPlaybookId;
                             }
 
                             
@@ -932,7 +932,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
 
                             if ($IsLogicAppsCustomConnector) {
                                 # $customApi = $fileName.Replace("Connector", "")
-                                $customConnectorsList.add($fileName, "[variables('playbookVersion$playbookCounter')]");
+                                $customConnectorsList.add($customConnectorContentId, @{ id="[variables('_$filename')]"; version="[variables('playbookVersion$playbookCounter')]"});
                             }
 
                             $playbookMetadata = [PSCustomObject]@{
@@ -1022,7 +1022,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                 Write-Host "creating metadata for playbook"
                                 $playbookTemplateSpecContent.properties.mainTemplate | Add-Member -NotePropertyName "metadata" -NotePropertyValue ([PSCustomObject]@{});
                                 foreach($var in $playbookMetadata.PsObject.Properties) {
-                                    if ($var.Name -ne "author" -and $var.Name -ne "support" -and $var.Name -ne "prerequisitesDeployTemplateFilehor") {
+                                    if ($var.Name -ne "author" -and $var.Name -ne "support" -and $var.Name -ne "prerequisitesDeployTemplateFile") {
                                         $playbookTemplateSpecContent.properties.mainTemplate.metadata | Add-Member -NotePropertyName $var.Name -NotePropertyValue $var.Value;
                                     }
                                 }
