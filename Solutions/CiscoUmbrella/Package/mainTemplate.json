@@ -136,7 +136,7 @@
             "_operationId-AssignPolicyToIdentity": "[[variables('operationId-AssignPolicyToIdentity')]",
             "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
             "playbookContentId": "CiscoUmbrellaNetworkDeviceManagementAPIConnector",
-            "playbookId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+            "playbookId": "[[resourceId('Microsoft.Web/customApis', parameters('customApis_CiscoUmbrellaNetworkDeviceManagementAPI_name'))]",
             "workspace-name": "[parameters('workspace')]",
             "workspaceResourceId": "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
           },
@@ -378,9 +378,9 @@
             {
               "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
               "apiVersion": "2022-01-01-preview",
-              "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookContentId')),'/'))))]",
+              "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(variables('playbookId'),'/'))))]",
               "properties": {
-                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+                "parentId": "[[variables('playbookId')]",
                 "contentId": "[variables('_playbookContentId1')]",
                 "kind": "LogicAppsCustomConnector",
                 "version": "[variables('playbookVersion1')]",
@@ -457,7 +457,7 @@
             "_operationId-DeleteDestinations": "[[variables('operationId-DeleteDestinations')]",
             "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
             "playbookContentId": "CiscoUmbrellaManagementAPIConnector",
-            "playbookId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+            "playbookId": "[[resourceId('Microsoft.Web/customApis', parameters('customApis_CiscoUmbrellaManagementAPI_name'))]",
             "workspace-name": "[parameters('workspace')]",
             "workspaceResourceId": "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
           },
@@ -1189,9 +1189,9 @@
             {
               "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
               "apiVersion": "2022-01-01-preview",
-              "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookContentId')),'/'))))]",
+              "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(variables('playbookId'),'/'))))]",
               "properties": {
-                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+                "parentId": "[[variables('playbookId')]",
                 "contentId": "[variables('_playbookContentId2')]",
                 "kind": "LogicAppsCustomConnector",
                 "version": "[variables('playbookVersion2')]",
@@ -1266,7 +1266,7 @@
             "_operationId-GetRelatedDomains": "[[variables('operationId-GetRelatedDomains')]",
             "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
             "playbookContentId": "CiscoUmbrellaInvestigateAPIConnector",
-            "playbookId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+            "playbookId": "[[resourceId('Microsoft.Web/customApis', parameters('customApis_CiscoUmbrellaInvestigateAPIConnector_name'))]",
             "workspace-name": "[parameters('workspace')]",
             "workspaceResourceId": "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
           },
@@ -1649,9 +1649,9 @@
             {
               "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
               "apiVersion": "2022-01-01-preview",
-              "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookContentId')),'/'))))]",
+              "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(variables('playbookId'),'/'))))]",
               "properties": {
-                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+                "parentId": "[[variables('playbookId')]",
                 "contentId": "[variables('_playbookContentId3')]",
                 "kind": "LogicAppsCustomConnector",
                 "version": "[variables('playbookVersion3')]",
@@ -1724,7 +1724,7 @@
             "_operationId-DeleteDomainById": "[[variables('operationId-DeleteDomainById')]",
             "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
             "playbookContentId": "CiscoUmbrellaEnforcementAPIConnector",
-            "playbookId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+            "playbookId": "[[resourceId('Microsoft.Web/customApis', parameters('customApis_CiscoUmbrellaEnforcementAPI_name'))]",
             "workspace-name": "[parameters('workspace')]",
             "workspaceResourceId": "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
           },
@@ -2015,9 +2015,9 @@
             {
               "type": "Microsoft.OperationalInsights/workspaces/providers/metadata",
               "apiVersion": "2022-01-01-preview",
-              "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookContentId')),'/'))))]",
+              "name": "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(variables('playbookId'),'/'))))]",
               "properties": {
-                "parentId": "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]",
+                "parentId": "[[variables('playbookId')]",
                 "contentId": "[variables('_playbookContentId4')]",
                 "kind": "LogicAppsCustomConnector",
                 "version": "[variables('playbookVersion4')]",
@@ -2088,7 +2088,7 @@
             "CiscoUmbrellaInvestigateAPIConnectionName": "[[concat('ciscoumbrellainvestigate-connection-', parameters('PlaybookName'))]",
             "connection-1": "[[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', variables('workspace-location-inline'), '/managedApis/azuresentinel')]",
             "_connection-1": "[[variables('connection-1')]",
-            "connection-2": "[[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', parameters('customApis_ciscoumbrellainvestigate_name'))]",
+            "connection-2": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', parameters('customApis_ciscoumbrellainvestigate_name'))]",
             "_connection-2": "[[variables('connection-2')]",
             "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
             "workspace-name": "[parameters('workspace')]",
@@ -2459,7 +2459,7 @@
             "CiscoUmbrellaManagementAPIConnectionName": "[[concat('ciscoumbrellamanagement-connection-', parameters('PlaybookName'))]",
             "connection-1": "[[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', variables('workspace-location-inline'), '/managedApis/azuresentinel')]",
             "_connection-1": "[[variables('connection-1')]",
-            "connection-2": "[[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', parameters('customApis_ciscoumbrellamanagement_name'))]",
+            "connection-2": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', parameters('customApis_ciscoumbrellamanagement_name'))]",
             "_connection-2": "[[variables('connection-2')]",
             "connection-3": "[[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', variables('workspace-location-inline'), '/managedApis/teams')]",
             "_connection-3": "[[variables('connection-3')]",
@@ -3652,7 +3652,7 @@
             "CiscoUmbrellaNetworkDeviceManagementAPIConnectionName": "[[concat('ciscoumbrellanetworkdevice-connection-', parameters('PlaybookName'))]",
             "connection-1": "[[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', variables('workspace-location-inline'), '/managedApis/azuresentinel')]",
             "_connection-1": "[[variables('connection-1')]",
-            "connection-2": "[[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', parameters('customApis_ciscoumbrellanetworkdevicemanagement_name'))]",
+            "connection-2": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', parameters('customApis_ciscoumbrellanetworkdevicemanagement_name'))]",
             "_connection-2": "[[variables('connection-2')]",
             "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
             "workspace-name": "[parameters('workspace')]",
@@ -4140,7 +4140,7 @@
             "CiscoUmbrellaEnforcementAPIConnectionName": "[[concat('ciscoumbrellaenforcement-connection-', parameters('PlaybookName'))]",
             "connection-1": "[[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', variables('workspace-location-inline'), '/managedApis/azuresentinel')]",
             "_connection-1": "[[variables('connection-1')]",
-            "connection-2": "[[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', parameters('customApis_ciscoumbrellaenforcement_name'))]",
+            "connection-2": "[[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/customApis/', parameters('customApis_ciscoumbrellaenforcement_name'))]",
             "_connection-2": "[[variables('connection-2')]",
             "workspace-location-inline": "[concat('[resourceGroup().locatio', 'n]')]",
             "workspace-name": "[parameters('workspace')]",

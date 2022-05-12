@@ -818,6 +818,7 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                         $playbookDependencies = @();
                         $playbookResources = @();
                         $playbookVersion = '1.0';
+                        $logicAppsPlaybookId = '';
                         foreach ($playbookResource in $playbookData.resources) {
                             if ($playbookResource.type -eq "Microsoft.Web/connections") {
                                 if ($playbookResource.properties -and $playbookResource.properties.api -and $playbookResource.properties.api.id) {
@@ -856,10 +857,6 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                         $connectionVar = $connectionVar.Replace("resourceGroup().location", "variables('workspace-location-inline')")
 
                                     }
-                                    if($contentToImport.TemplateSpec -and ($connectionVar.StartsWith("[") -and $connectionVar.Contains("parameters(") -and !$connectionVar.contains("parameters('workspace-location')")))
-                                    {
-                                        $connectionVar = "[" + $connectionVar;
-                                    }
                                     $foundConnection = getConnectionVariableName $connectionVar
                                     if ($foundConnection) {
                                         $playbookResource.properties.api.id = "[variables('_$foundConnection')]"
@@ -881,7 +878,11 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                 }
                                 $playbookResource.tags | Add-Member -NotePropertyName "hidden-SentinelWorkspaceId" -NotePropertyValue "[variables('workspaceResourceId')]";
                                 $playbookVersion = $playbookResource.tags.'hidden-SentinelTemplateVersion' ? $playbookResource.tags.'hidden-SentinelTemplateVersion' : $playbookVersion;
+                            } elseif ($contentToImport.TemplateSpec -and $playbookResource.type -eq "Microsoft.Web/customApis") {
+                                $logicAppsPlaybookId = $playbookResource.name.Replace("parameters('","").Replace("'","").Replace(")","").Replace("]","").Replace("[","");
                             }
+
+                            
                             $playbookResource =  $playbookResource # $(replaceVarsRecursively $playbookResource)
                             $playbookResource = $(removePropertiesRecursively $playbookResource)
                             # $playbookResource =  $(replaceVarsRecursively $playbookResource)
@@ -937,9 +938,9 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                             $playbookMetadata = [PSCustomObject]@{
                                 type       = "Microsoft.OperationalInsights/workspaces/providers/metadata";
                                 apiVersion = "2022-01-01-preview";
-                                name       = $IsLogicAppsCustomConnector ? "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(resourceId('Microsoft.Web/customApis', variables('playbookContentId')),'/'))))]" : "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId$playbookCounter'),'/'))))]";
+                                name       = $IsLogicAppsCustomConnector ? "[[concat(variables('workspace-name'),'/Microsoft.SecurityInsights/',concat('LogicAppsCustomConnector-', last(split(variables('playbookId'),'/'))))]" : "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',concat('Playbook-', last(split(variables('playbookId$playbookCounter'),'/'))))]";
                                 properties = [PSCustomObject]@{
-                                    parentId  = $IsLogicAppsCustomConnector ? "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]" : "[variables('playbookId$playbookCounter')]"
+                                    parentId  = $IsLogicAppsCustomConnector ? "[[variables('playbookId')]" : "[variables('playbookId$playbookCounter')]"
                                     contentId = "[variables('_playbookContentId$playbookCounter')]";
                                     kind      = $IsLogicAppsCustomConnector ? "LogicAppsCustomConnector" : "Playbook";
                                     version   = "[variables('playbookVersion$playbookCounter')]";
@@ -979,7 +980,8 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                             $playbookVariables | Add-Member -NotePropertyName "workspace-location-inline" -NotePropertyValue "[concat('[resourceGroup().locatio', 'n]')]";
                             if ($IsLogicAppsCustomConnector) {
                                 $playbookVariables | Add-Member -NotePropertyName "playbookContentId" -NotePropertyValue $fileName;
-                                $playbookVariables | Add-Member -NotePropertyName "playbookId" -NotePropertyValue "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]"
+                                # $playbookVariables | Add-Member -NotePropertyName "playbookId" -NotePropertyValue "[[resourceId('Microsoft.Web/customApis', variables('playbookContentId'))]"
+                                $playbookVariables | Add-Member -NotePropertyName "playbookId" -NotePropertyValue "[[resourceId('Microsoft.Web/customApis', parameters('$logicAppsPlaybookId'))]"
                             }
                             $playbookVariables | Add-Member -NotePropertyName "workspace-name" -NotePropertyValue "[parameters('workspace')]"
                             $playbookVariables | Add-Member -NotePropertyName "workspaceResourceId" -NotePropertyValue "[[resourceId('microsoft.OperationalInsights/Workspaces', variables('workspace-name'))]"
