@@ -1026,6 +1026,9 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                         $playbookTemplateSpecContent.properties.mainTemplate.metadata | Add-Member -NotePropertyName $var.Name -NotePropertyValue $var.Value;
                                     }
                                 }
+                                if (!$playbookTemplateSpecContent.properties.mainTemplate.metadata.'lastUpdateTime') {
+                                    $playbookTemplateSpecContent.properties.mainTemplate.metadata | Add-Member -NotePropertyName "lastUpdateTime" -NotePropertyValue "2021-06-29T10:00:00.000Z";
+                                }
                             }
                             if (!$playbookMetadata.releaseNotes -and $playbookTemplateSpecContent.properties.mainTemplate.metadata) {
                                 Write-Host "adding default release notes"
