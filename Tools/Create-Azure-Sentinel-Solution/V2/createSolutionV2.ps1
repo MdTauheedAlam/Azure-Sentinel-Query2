@@ -823,9 +823,9 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                 if ($playbookResource.properties -and $playbookResource.properties.api -and $playbookResource.properties.api.id) {
                                     if ($playbookResource.properties.api.id.Contains("/providers/Microsoft.Web/customApis/")) {
                                         $splits = $playbookResource.properties.api.id.Split(',');
-                                        $connectionKey = $splits[-1].Trim().Replace("variables('","").Replace("'","").Replace(")","").Replace("]","");
+                                        $connectionKey = $splits[-1].Trim().Replace("parameters('","").Replace("'","").Replace(")","").Replace("]","");
 
-                                        foreach ($templateVar in $($playbookData.variables).PSObject.Properties) {
+                                        foreach ($templateVar in $($playbookData.parameters).PSObject.Properties) {
                                             if ($templateVar.Name -eq $connectionKey) {
                                                 $temaplteName = $templateVar.Name
                                                 $varName = "playbook$playbookCounter-$temaplteName"
@@ -833,8 +833,8 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
                                                 # $baseMainTemplate.variables | Add-Member -NotePropertyName "_$varName" -NotePropertyValue "[variables('$varName')]"
                                                 $playbookDependencies += [PSCustomObject] @{
                                                     kind = "LogicAppsCustomConnector";
-                                                    contentId = "[variables('_"+$templateVar.Value+"Connector')]" #"[variables('_$varName')]"#$templateVar.Value;
-                                                    version = $customConnectorsList[$templateVar.Value+'Connector']
+                                                    contentId = "[variables('_"+$templateVar.Value.defaultValue+"Connector')]" #"[variables('_$varName')]"#$templateVar.Value;
+                                                    version = $customConnectorsList[$templateVar.Value.defaultValue+'Connector']
                                                 }
                                             }
                                         }
@@ -1018,21 +1018,21 @@ foreach ($inputFile in $(Get-ChildItem $path)) {
 
                             if (@($playbookMetadata.PsObject.Properties).Count -gt 0) {
                                 Write-Host "creating metadata for playbook"
-                                $playbookTemplateSpecContent | Add-Member -NotePropertyName "metadata" -NotePropertyValue ([PSCustomObject]@{});
+                                $playbookTemplateSpecContent.properties.mainTemplate | Add-Member -NotePropertyName "metadata" -NotePropertyValue ([PSCustomObject]@{});
                                 foreach($var in $playbookMetadata.PsObject.Properties) {
-                                    if ($var.Name -ne "author" -and $var.Name -ne "lastUpdateTime" -and $var.Name -ne "support" -and $var.Name -ne "prerequisitesDeployTemplateFilehor") {
-                                        $playbookTemplateSpecContent.metadata | Add-Member -NotePropertyName $var.Name -NotePropertyValue $var.Value;
+                                    if ($var.Name -ne "author" -and $var.Name -ne "support" -and $var.Name -ne "prerequisitesDeployTemplateFilehor") {
+                                        $playbookTemplateSpecContent.properties.mainTemplate.metadata | Add-Member -NotePropertyName $var.Name -NotePropertyValue $var.Value;
                                     }
                                 }
                             }
-                            if (!$playbookMetadata.releaseNotes -and $playbookTemplateSpecContent.metadata) {
+                            if (!$playbookMetadata.releaseNotes -and $playbookTemplateSpecContent.properties.mainTemplate.metadata) {
                                 Write-Host "adding default release notes"
                                 $releaseNotes = [PSCustomObject]@{
                                     version = $playbookVersion;
                                     title      = "[variables('blanks')]";
                                     notes      = @("Initial version");
                                 }
-                                $playbookTemplateSpecContent.metadata | Add-Member -NotePropertyName 'releaseNotes' -NotePropertyValue $releaseNotes;
+                                $playbookTemplateSpecContent.properties.mainTemplate.metadata | Add-Member -NotePropertyName 'releaseNotes' -NotePropertyValue $releaseNotes;
                                 if (!$baseMainTemplate.variables.blanks) {
                                     $baseMainTemplate.variables | Add-Member -NotePropertyName "blanks" -NotePropertyValue "[replace('b', 'b', '')]"
                                 }

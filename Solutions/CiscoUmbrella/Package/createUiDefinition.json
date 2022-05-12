@@ -6,7 +6,7 @@
     "config": {
       "isWizard": false,
       "basics": {
-        "description": "<img src=\"https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Logos/cisco-logo-72px.svg\" width=\"75px\" height=\"75px\">\n\n**Note:** _There may be [known issues](https://aka.ms/sentinelsolutionsknownissues) pertaining to this Solution, please refer to them before installing._\n\nThe [Cisco Umbrella](https://umbrella.cisco.com/) solution for Microsoft Sentinel enables you to ingest [Cisco Umbrella events](https://docs.umbrella.com/deployment-umbrella/docs/log-formats-and-versioning) stored in Amazon S3 into Microsoft Sentinel using the Amazon S3 REST API.\n\n  **Underlying Microsoft Technologies used:**\n\nThis solution takes a dependency on the following technologies, and some of these dependencies either may be in [Preview](https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/) state or might result in additional ingestion or operational costs:\n  a. [Azure Monitor HTTP Data Collector API](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-collector-api)\n  b. [Azure Functions](https://azure.microsoft.com/en-us/services/functions/#overview)  \n\n**Playbooks:** 9\n\n[Learn more about Microsoft Sentinel](https://aka.ms/azuresentinel) | [Learn more about Solutions](https://aka.ms/azuresentinelsolutionsdoc)",
+        "description": "<img src=\"https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Logos/cisco-logo-72px.svg\" width=\"75px\" height=\"75px\">\n\n**Note:** _There may be [known issues](https://aka.ms/sentinelsolutionsknownissues) pertaining to this Solution, please refer to them before installing._\n\nThe [Cisco Umbrella](https://umbrella.cisco.com/) solution for Microsoft Sentinel enables you to ingest [Cisco Umbrella events](https://docs.umbrella.com/deployment-umbrella/docs/log-formats-and-versioning) stored in Amazon S3 into Microsoft Sentinel using the Amazon S3 REST API.\n\n  **Underlying Microsoft Technologies used:**\n\nThis solution takes a dependency on the following technologies, and some of these dependencies either may be in [Preview](https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/) state or might result in additional ingestion or operational costs:\n  a. [Azure Monitor HTTP Data Collector API](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-collector-api)\n  b. [Azure Functions](https://azure.microsoft.com/en-us/services/functions/#overview)  \n\n**Playbooks:** 8\n\n[Learn more about Microsoft Sentinel](https://aka.ms/azuresentinel) | [Learn more about Solutions](https://aka.ms/azuresentinelsolutionsdoc)",
         "subscription": {
           "resourceProviders": [
             "Microsoft.OperationsManagement/solutions",
@@ -88,6 +88,18 @@
                 "options": {
                   "text": "This playbook ingests events from CiscoUmbrella into Log Analytics using the API."
                 }
+              },
+              {
+                "name": "customApis_CiscoUmbrellaNetworkDeviceManagementAPI_name",
+                "type": "Microsoft.Common.TextBox",
+                "label": "custom Apis_ Cisco Umbrella Network Device Management A P I_name",
+                "defaultValue": "CiscoUmbrellaNetworkDeviceManagementAPI",
+                "toolTip": "Please enter custom Apis_ Cisco Umbrella Network Device Management A P I_name",
+                "constraints": {
+                  "required": true,
+                  "regex": "[a-z0-9A-Z]{1,256}$",
+                  "validationMessage": "Please enter the custom Apis_ Cisco Umbrella Network Device Management A P I_name"
+                }
               }
             ]
           },
@@ -101,6 +113,18 @@
                 "type": "Microsoft.Common.TextBlock",
                 "options": {
                   "text": "This playbook ingests events from CiscoUmbrella into Log Analytics using the API."
+                }
+              },
+              {
+                "name": "customApis_CiscoUmbrellaManagementAPI_name",
+                "type": "Microsoft.Common.TextBox",
+                "label": "custom Apis_ Cisco Umbrella Management A P I_name",
+                "defaultValue": "CiscoUmbrellaManagementAPI",
+                "toolTip": "Please enter custom Apis_ Cisco Umbrella Management A P I_name",
+                "constraints": {
+                  "required": true,
+                  "regex": "[a-z0-9A-Z]{1,256}$",
+                  "validationMessage": "Please enter the custom Apis_ Cisco Umbrella Management A P I_name"
                 }
               }
             ]
@@ -116,6 +140,18 @@
                 "options": {
                   "text": "This playbook ingests events from CiscoUmbrella into Log Analytics using the API."
                 }
+              },
+              {
+                "name": "customApis_CiscoUmbrellaInvestigateAPIConnector_name",
+                "type": "Microsoft.Common.TextBox",
+                "label": "custom Apis_ Cisco Umbrella Investigate A P I Connector_name",
+                "defaultValue": "CiscoUmbrellaInvestigateAPI",
+                "toolTip": "Please enter custom Apis_ Cisco Umbrella Investigate A P I Connector_name",
+                "constraints": {
+                  "required": true,
+                  "regex": "[a-z0-9A-Z]{1,256}$",
+                  "validationMessage": "Please enter the custom Apis_ Cisco Umbrella Investigate A P I Connector_name"
+                }
               }
             ]
           },
@@ -129,6 +165,18 @@
                 "type": "Microsoft.Common.TextBlock",
                 "options": {
                   "text": "This playbook ingests events from CiscoUmbrella into Log Analytics using the API."
+                }
+              },
+              {
+                "name": "customApis_CiscoUmbrellaEnforcementAPI_name",
+                "type": "Microsoft.Common.TextBox",
+                "label": "custom Apis_ Cisco Umbrella Enforcement A P I_name",
+                "defaultValue": "CiscoUmbrellaEnforcementAPI",
+                "toolTip": "Please enter custom Apis_ Cisco Umbrella Enforcement A P I_name",
+                "constraints": {
+                  "required": true,
+                  "regex": "[a-z0-9A-Z]{1,256}$",
+                  "validationMessage": "Please enter the custom Apis_ Cisco Umbrella Enforcement A P I_name"
                 }
               }
             ]
@@ -155,6 +203,18 @@
                   "required": true,
                   "regex": "[a-z0-9A-Z]{1,256}$",
                   "validationMessage": "Please enter a playbook resource name"
+                }
+              },
+              {
+                "name": "customApis_ciscoumbrellainvestigate_name",
+                "type": "Microsoft.Common.TextBox",
+                "label": "custom Apis_ciscoumbrellainvestigate_name",
+                "defaultValue": "CiscoUmbrellaInvestigateAPI",
+                "toolTip": "Please enter custom Apis_ciscoumbrellainvestigate_name",
+                "constraints": {
+                  "required": true,
+                  "regex": "[a-z0-9A-Z]{1,256}$",
+                  "validationMessage": "Please enter the custom Apis_ciscoumbrellainvestigate_name"
                 }
               }
             ]
@@ -218,6 +278,18 @@
                   "regex": "[a-z0-9A-Z]{1,256}$",
                   "validationMessage": "Please enter the Teams Channel Id"
                 }
+              },
+              {
+                "name": "customApis_ciscoumbrellamanagement_name",
+                "type": "Microsoft.Common.TextBox",
+                "label": "custom Apis_ciscoumbrellamanagement_name",
+                "defaultValue": "CiscoUmbrellaManagementAPI",
+                "toolTip": "Please enter custom Apis_ciscoumbrellamanagement_name",
+                "constraints": {
+                  "required": true,
+                  "regex": "[a-z0-9A-Z]{1,256}$",
+                  "validationMessage": "Please enter the custom Apis_ciscoumbrellamanagement_name"
+                }
               }
             ]
           },
@@ -256,6 +328,18 @@
                   "regex": "[a-z0-9A-Z]{1,256}$",
                   "validationMessage": "Please enter the Policy Id"
                 }
+              },
+              {
+                "name": "customApis_ciscoumbrellanetworkdevicemanagement_name",
+                "type": "Microsoft.Common.TextBox",
+                "label": "custom Apis_ciscoumbrellanetworkdevicemanagement_name",
+                "defaultValue": "CiscoUmbrellaNetworkDeviceManagementAPI",
+                "toolTip": "Please enter custom Apis_ciscoumbrellanetworkdevicemanagement_name",
+                "constraints": {
+                  "required": true,
+                  "regex": "[a-z0-9A-Z]{1,256}$",
+                  "validationMessage": "Please enter the custom Apis_ciscoumbrellanetworkdevicemanagement_name"
+                }
               }
             ]
           },
@@ -282,67 +366,17 @@
                   "regex": "[a-z0-9A-Z]{1,256}$",
                   "validationMessage": "Please enter a playbook resource name"
                 }
-              }
-            ]
-          },
-          {
-            "name": "playbook9",
-            "type": "Microsoft.Common.Section",
-            "label": "SNOW-Teams-Integration",
-            "elements": [
-              {
-                "name": "playbook9-text",
-                "type": "Microsoft.Common.TextBlock",
-                "options": {
-                  "text": "This playbook ingests events from CiscoUmbrella into Log Analytics using the API."
-                }
               },
               {
-                "name": "PlaybookName",
+                "name": "customApis_ciscoumbrellaenforcement_name",
                 "type": "Microsoft.Common.TextBox",
-                "label": "Playbook Name",
-                "defaultValue": "SNOW-Teams-Integration",
-                "toolTip": "Resource name for the logic app playbook.  No spaces are allowed",
+                "label": "custom Apis_ciscoumbrellaenforcement_name",
+                "defaultValue": "CiscoUmbrellaEnforcementAPI",
+                "toolTip": "Please enter custom Apis_ciscoumbrellaenforcement_name",
                 "constraints": {
                   "required": true,
                   "regex": "[a-z0-9A-Z]{1,256}$",
-                  "validationMessage": "Please enter a playbook resource name"
-                }
-              },
-              {
-                "name": "TeamsGroupId",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Teams Group Id",
-                "defaultValue": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
-                "toolTip": "Please enter Teams Group Id",
-                "constraints": {
-                  "required": true,
-                  "regex": "[a-z0-9A-Z]{1,256}$",
-                  "validationMessage": "Please enter the Teams Group Id"
-                }
-              },
-              {
-                "name": "AlertChannelId",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Alert Channel Id",
-                "defaultValue": "xx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@thread.skype",
-                "toolTip": "Please enter Alert Channel Id",
-                "constraints": {
-                  "required": true,
-                  "regex": "[a-z0-9A-Z]{1,256}$",
-                  "validationMessage": "Please enter the Alert Channel Id"
-                }
-              },
-              {
-                "name": "InvestigationChannelId",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Investigation Channel Id",
-                "defaultValue": "xx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@thread.skype",
-                "toolTip": "Please enter Investigation Channel Id",
-                "constraints": {
-                  "required": true,
-                  "regex": "[a-z0-9A-Z]{1,256}$",
-                  "validationMessage": "Please enter the Investigation Channel Id"
+                  "validationMessage": "Please enter the custom Apis_ciscoumbrellaenforcement_name"
                 }
               }
             ]
