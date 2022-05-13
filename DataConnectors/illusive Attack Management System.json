@@ -11,14 +11,14 @@
         }
     ],
     "sampleQueries": [
-        {
-            "description" : "Number of Incidents in in the last 30 days in which Trigger Type is found",
-            "query": "union CommonSecurityLog | where (DeviceEventClassID == \"illusive:login\" or DeviceEventClassID == \"illusive:access\" or DeviceEventClassID == \"illusive:suspicious\")| where Message !contains \"hasForensics\" | where TimeGenerated > ago(30d) | summarize by DestinationServiceName ,DeviceCustomNumber2 | summarize incident_count=count() by DestinationServiceName"
-        },
-		{
-            "description" : "Top 10 alerting hosts in the last 30 days",
-            "query": "union CommonSecurityLog | where (DeviceEventClassID == \"illusive:login\" or DeviceEventClassID == \"illusive:access\" or DeviceEventClassID == \"illusive:suspicious\")| where Message !contains \"hasForensics\" | where TimeGenerated > ago(30d) | summarize by AlertingHost=iff(SourceHostName != \"\" and SourceHostName != \"Failed to obtain\", SourceHostName, SourceIP)   ,DeviceCustomNumber2 | where AlertingHost != \"\" and AlertingHost != \"Failed to obtain\" | summarize incident_count=count() by AlertingHost | order by incident_count | limit 10"
-        }
+      {
+        "description": "Number of Incidents in in the last 30 days in which Trigger Type is found",
+        "query": "union CommonSecurityLog\r\n| where (DeviceEventClassID == \"illusive:login\" or DeviceEventClassID == \"illusive:access\" or DeviceEventClassID == \"illusive:suspicious\")\r\n| where Message !contains \"hasForensics\" \r\n| where TimeGenerated > ago(30d) \r\n| extend DeviceCustomNumber2 = coalesce(column_ifexists(\"FieldDeviceCustomNumber2\", long(null)), DeviceCustomNumber2, long(null))\r\n| summarize by DestinationServiceName, DeviceCustomNumber2 \r\n| summarize incident_count=count() by DestinationServiceName"
+      },
+      {
+        "description": "Top 10 alerting hosts in the last 30 days",
+        "query": "union CommonSecurityLog \r\n| where (DeviceEventClassID == \"illusive:login\" or DeviceEventClassID == \"illusive:access\" or DeviceEventClassID == \"illusive:suspicious\")\r\n| where Message !contains \"hasForensics\" \r\n| where TimeGenerated > ago(30d) \r\n| extend DeviceCustomNumber2 = coalesce(column_ifexists(\"FieldDeviceCustomNumber2\", long(null)), DeviceCustomNumber2, long(null))  \r\n| summarize by AlertingHost=iff(SourceHostName != \"\" and SourceHostName != \"Failed to obtain\", SourceHostName, SourceIP)   ,DeviceCustomNumber2 \r\n| where AlertingHost != \"\" and AlertingHost != \"Failed to obtain\" \r\n| summarize incident_count=count() by AlertingHost \r\n| order by incident_count \r\n| limit 10"
+      }
     ],
     "dataTypes": [
         {
