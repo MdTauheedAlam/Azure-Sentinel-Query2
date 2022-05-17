@@ -37,7 +37,7 @@
     "playbookVersion1": "1.0",
     "playbookContentId1": "OktaCustomConnector",
     "_playbookContentId1": "[variables('playbookContentId1')]",
-    "playbookTemplateSpecName1": "[concat(parameters('workspace'),'-lc-',variables('_playbookContentId1'))]",
+    "playbookTemplateSpecName1": "[concat(parameters('workspace'),'-lc-',uniquestring(variables('_playbookContentId1')))]",
     "workspaceResourceId": "[resourceId('microsoft.OperationalInsights/Workspaces', parameters('workspace'))]",
     "blanks": "[replace('b', 'b', '')]",
     "Okta-EnrichIncidentWithUserDetails": "Okta-EnrichIncidentWithUserDetails",
