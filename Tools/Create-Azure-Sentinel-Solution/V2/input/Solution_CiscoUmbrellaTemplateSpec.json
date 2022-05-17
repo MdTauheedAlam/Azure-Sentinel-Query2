@@ -1,5 +1,5 @@
 {
-  "Name": "Okta Single Sign-On",
+  "Name": "CiscoUmbrella",
   "Author": "Microsoft - support@microsoft.com",
   "Logo": "<img src=\"https://raw.githubusercontent.com/Azure/Azure-Sentinel/master/Logos/cisco-logo-72px.svg\" width=\"75px\" height=\"75px\">",
   "Description": "The [Cisco Umbrella](https://umbrella.cisco.com/) solution for Microsoft Sentinel enables you to ingest [Cisco Umbrella events](https://docs.umbrella.com/deployment-umbrella/docs/log-formats-and-versioning) stored in Amazon S3 into Microsoft Sentinel using the Amazon S3 REST API.
@@ -12,18 +12,18 @@
   "HuntingQueryBladeDescription": "This solution installs the following hunting queries. After installing the solution, run these hunting queries to hunt for threats in Manage solution view",
   "PlaybooksBladeDescription": "This solution installs the following Playbook templates. After installing the solution, playbooks can be managed in the Manage solution view. ",
   "Playbooks": [
-    // "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaNetworkDeviceManagementAPIConnector/azuredeploy.json",
-    // "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaManagementAPIConnector/azuredeploy.json",
-    // "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaInvestigateAPIConnector/azuredeploy.json",
-    // "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaEnforcementAPIConnector/azuredeploy.json",
-    // "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-GetDomainInfo/azuredeploy.json",
-    // "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-AddIpToDestinationList/azuredeploy.json",
-    // "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-AssignPolicyToIdentity/azuredeploy.json",
-    // "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-BlockDomain/azuredeploy.json"
-    "Solutions/Okta Single Sign-On/Playbooks/OktaCustomConnector/azuredeploy.json",
-    "Solutions/Okta Single Sign-On/Playbooks/OktaPlaybooks/Okta-EnrichIncidentWithUserDetails/azuredeploy.json",
-    "Solutions/Okta Single Sign-On/Playbooks/OktaPlaybooks/Okta-PromptUser/azuredeploy.json",
-    "Solutions/Okta Single Sign-On/Playbooks/OktaPlaybooks/Okta-ResponseFromTeams/azuredeploy.json"
+    "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaNetworkDeviceManagementAPIConnector/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaManagementAPIConnector/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaInvestigateAPIConnector/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/CiscoUmbrellaEnforcementAPIConnector/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-GetDomainInfo/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-AddIpToDestinationList/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-AssignPolicyToIdentity/azuredeploy.json",
+    "Solutions/CiscoUmbrella/Playbooks/Playbooks/CiscoUmbrella-BlockDomain/azuredeploy.json"
+    // "Solutions/Okta Single Sign-On/Playbooks/OktaCustomConnector/azuredeploy.json",
+    // "Solutions/Okta Single Sign-On/Playbooks/OktaPlaybooks/Okta-EnrichIncidentWithUserDetails/azuredeploy.json",
+    // "Solutions/Okta Single Sign-On/Playbooks/OktaPlaybooks/Okta-PromptUser/azuredeploy.json",
+    // "Solutions/Okta Single Sign-On/Playbooks/OktaPlaybooks/Okta-ResponseFromTeams/azuredeploy.json"
   ],
   "BasePath": "C:\\users\\robencha\\Azure-Sentinel",
   "Version": "2.0.0",

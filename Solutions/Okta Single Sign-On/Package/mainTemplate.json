@@ -37,7 +37,7 @@
     "playbookVersion1": "1.0",
     "playbookContentId1": "OktaCustomConnector",
     "_playbookContentId1": "[variables('playbookContentId1')]",
-    "playbookTemplateSpecName1": "[concat(parameters('workspace'),'-LogicAppsCustomConnector-',variables('_playbookContentId1'))]",
+    "playbookTemplateSpecName1": "[concat(parameters('workspace'),'-lc-',variables('_playbookContentId1'))]",
     "workspaceResourceId": "[resourceId('microsoft.OperationalInsights/Workspaces', parameters('workspace'))]",
     "blanks": "[replace('b', 'b', '')]",
     "Okta-EnrichIncidentWithUserDetails": "Okta-EnrichIncidentWithUserDetails",
@@ -46,21 +46,21 @@
     "playbookContentId2": "Okta-EnrichIncidentWithUserDetails",
     "_playbookContentId2": "[variables('playbookContentId2')]",
     "playbookId2": "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId2'))]",
-    "playbookTemplateSpecName2": "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId2'))]",
+    "playbookTemplateSpecName2": "[concat(parameters('workspace'),'-pl-',variables('_playbookContentId2'))]",
     "Okta-PromptUser": "Okta-PromptUser",
     "_Okta-PromptUser": "[variables('Okta-PromptUser')]",
     "playbookVersion3": "1.0",
     "playbookContentId3": "Okta-PromptUser",
     "_playbookContentId3": "[variables('playbookContentId3')]",
     "playbookId3": "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId3'))]",
-    "playbookTemplateSpecName3": "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId3'))]",
+    "playbookTemplateSpecName3": "[concat(parameters('workspace'),'-pl-',variables('_playbookContentId3'))]",
     "Okta-ResponseFromTeams": "Okta-ResponseFromTeams",
     "_Okta-ResponseFromTeams": "[variables('Okta-ResponseFromTeams')]",
     "playbookVersion4": "1.0",
     "playbookContentId4": "Okta-ResponseFromTeams",
     "_playbookContentId4": "[variables('playbookContentId4')]",
     "playbookId4": "[resourceId('Microsoft.Logic/workflows', variables('playbookContentId4'))]",
-    "playbookTemplateSpecName4": "[concat(parameters('workspace'),'-Playbook-',variables('_playbookContentId4'))]"
+    "playbookTemplateSpecName4": "[concat(parameters('workspace'),'-pl-',variables('_playbookContentId4'))]"
   },
   "resources": [
     {
