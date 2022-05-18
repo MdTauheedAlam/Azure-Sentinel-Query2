@@ -1,9 +1,9 @@
 // USAGE:
-// 1. Open Log Analytics/Azure Sentinel Logs blade. Copy the query below and paste into the Logs query window. 
-// 2. In the query window, on the second line of the query, enter the hostname(s) of your Cisco WSA device(s) and any other unique identifiers for the logstream. 
+// 1. Open Log Analytics/Azure Sentinel Logs blade. Copy the query below and paste into the Logs query window.
+// 2. In the query window, on the second line of the query, enter the hostname(s) of your Cisco WSA device(s) and any other unique identifiers for the logstream.
 //    For example: | where Computer in ("server1", "server2")
 // 3. Click the Save button above the query. A pane will appear on the right, select "as Function" from the drop down. Enter a Function Name.
-//    It is recommended to name the Function Alias, as CiscoWSAEvent 
+//    It is recommended to name the Function Alias, as CiscoWSAEvent
 // 4. Kusto Functions can typically take up to 15 minutes to activate. You can then use function alias from any other queries (e.g. CiscoWSAEvent | take 10).
 // Reference : Using functions in Azure monitor log queries : https://docs.microsoft.com/azure/azure-monitor/log-query/functions
 // **** Access Logs (non-w3c format) ****
@@ -20,8 +20,9 @@ Syslog
 | extend EventVendor = 'Cisco'
 | extend EventProduct = 'Web Security Appliance'
 | extend EventType = 'Access Log'
-| extend EventFields = split(SyslogMessage, ' ')
-| extend ScanningVerdictFields = iif(LogType == "Squid Logs", parse_csv(tostring(extract(@'<(.*?)>', 1, SyslogMessage))), dynamic(""))
+| extend TrimmedSyslogMessage = iif(SyslogMessage startswith "Info: ", trim_start("Info: ", SyslogMessage), SyslogMessage)
+| extend EventFields = split(TrimmedSyslogMessage, ' ')
+| extend ScanningVerdictFields = iif(LogType == "Squid Logs", parse_csv(tostring(extract(@'<(.*?)>', 1, TrimmedSyslogMessage))), dynamic(""))
 | extend EventStartTime = case(LogType has "Squid Logs", unixtime_seconds_todatetime(todouble(EventFields[0])),
 						  LogType has "W3C Logs", todatetime(strcat(EventFields[0], ' ', EventFields[1])), datetime(null))
 | extend Latency = case(LogType has "Squid Logs", toint(EventFields[1]),
@@ -159,6 +160,7 @@ Syslog
 };
 cisco_wsa_access_logs
 | project-away SyslogMessage
+			 , TrimmedSyslogMessage
              , EventFields
              , ScanningVerdictFields
 			 , LogType
