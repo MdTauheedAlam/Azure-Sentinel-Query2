@@ -41,8 +41,7 @@
 	"Playbooks/Playbooks/CiscoUmbrella-AddIpToDestinationList/azuredeploy.json",
 	"Playbooks/Playbooks/CiscoUmbrella-AssignPolicyToIdentity/azuredeploy.json",
 	"Playbooks/Playbooks/CiscoUmbrella-BlockDomain/azuredeploy.json",
-	"Playbooks/Playbooks/CiscoUmbrella-GetDomainInfo/azuredeploy.json",
-	"Playbooks/azuredeploy.json"
+	"Playbooks/Playbooks/CiscoUmbrella-GetDomainInfo/azuredeploy.json"
 	],
   "Workbooks": [
     "Workbooks/CiscoUmbrella.json"
