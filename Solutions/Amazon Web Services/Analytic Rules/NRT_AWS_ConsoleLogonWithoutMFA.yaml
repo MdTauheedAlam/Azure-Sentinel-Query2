@@ -6,8 +6,12 @@ description: |
   This is done by looking at the eventName ConsoleLogin and if the AdditionalEventData field indicates MFA was NOT used
   and the ResponseElements field indicates NOT a Failure. Thereby indicating that a non-MFA login was successful.'
 severity: Low
+status : Available
 requiredDataConnectors:
   - connectorId: AWS
+    dataTypes:
+      - AWSCloudTrail
+  - connectorId: AWSS3
     dataTypes:
       - AWSCloudTrail
 tactics:
