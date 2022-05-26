@@ -46,7 +46,7 @@
     }
   },
   "variables": {
-    "solutionId": "azuresentinel.azure-sentinel-solution-amazonwebservices-preview",
+    "solutionId": "azuresentinel.azure-sentinel-solution-amazonwebservices",
     "_solutionId": "[variables('solutionId')]",
     "email": "support@microsoft.com",
     "_email": "[variables('email')]",
