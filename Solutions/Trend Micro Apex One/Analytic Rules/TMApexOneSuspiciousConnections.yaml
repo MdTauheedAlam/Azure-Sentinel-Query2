@@ -3,6 +3,7 @@ name: ApexOne - Suspicious connections
 description: |
   'Detects suspicious connections.'
 severity: High
+status: Available
 requiredDataConnectors:
   - connectorId: TrendMicroApexOne
     dataTypes:
