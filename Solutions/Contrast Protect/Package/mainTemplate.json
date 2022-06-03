@@ -38,7 +38,7 @@
     }
   },
   "variables": {
-    "solutionId": "azure-sentinel.azure-sentinel-solution-isvtesting5-preview",
+    "solutionId": "contrast_security.contrast_protect_azure_sentinel_solution",
     "_solutionId": "[variables('solutionId')]",
     "workspaceResourceId": "[resourceId('microsoft.OperationalInsights/Workspaces', parameters('workspace'))]",
     "uiConfigId1": "ContrastProtect",
