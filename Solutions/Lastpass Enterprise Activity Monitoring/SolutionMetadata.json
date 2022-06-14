@@ -1,8 +1,7 @@
 {
-	"publisherId": "thecollectiveconsultingbv1584980370320",
-	"offerId": "microsoft-sentinel-solution-lastpass",
-	"firstPublishDate": "2021-10-20",
-	"lastPublishDate": "2022-01-12",
+	"publisherId": "azuresentinel",
+	"offerId": "azure-sentinel-solution-isvtesting15",
+	"firstPublishDate": "2022-06-01",
 	"providers": ["LastPass"],
 	"categories": {
 		"domains" : ["Application"],
