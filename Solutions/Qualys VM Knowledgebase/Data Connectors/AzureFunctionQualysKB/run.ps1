@@ -217,6 +217,7 @@ function QualysKB {
             Write-Host "Number of Objects processed : " $objs.Length
 
         # Logout of the Session
+        Write-Host "INFO : Request details after logs are processed. Headers : $($hdrs) Uri : $($Uri) Websession : $($sess)"
         Invoke-RestMethod -Headers $hdrs -Uri "$base/session/" -Method Post -Body "action=logout" -WebSession $sess
 
         # Iterate through each vulnerabilty obj in the $objs array, covert it to JSON and POST it to the Log Analytics API individually
@@ -255,6 +256,7 @@ function QualysKB {
     }
     else {
          # Logout of the Session
+         Write-Host "INFO : Request details when zero vulnerability logs are returned. Headers : $($hdrs) Uri : $($base)/session/ Websession : $($sess)"
         Invoke-RestMethod -Headers $hdrs -Uri "$base/session/" -Method Post -Body "action=logout" -WebSession $sess
         $endInterval = $endTime.ToString("yyyy-MM-ddTHH:mm:ssZ")
         # UpdateCheckpointTime -CheckpointFile $checkPointFile -LastSuccessfulTime $endTime
