@@ -161,6 +161,7 @@ class InsightVMAPI:
                     raise err
 
     async def _make_http_request(self, method: str, url: str, params: Optional[dict], headers: Optional[dict], body: Optional[str]) -> Optional[dict]:
+        logging.info(f'API url {url} . params {params}')
         async with self.session.request(method=method, url=url, headers=headers, params=params, data=body) as response:
             response_body = await response.text()
             if not response.ok:
