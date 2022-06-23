@@ -133,12 +133,12 @@ function QualysKB {
         throw "Qualys KB: Invalid Log Analytics Uri."
     }
 
-    # Validate Uri
-    $UriValidation = UrlValidation -Uri $Uri
-    if($null -eq $UriValidation){
-        Write-Output "ERROR: Invalid URI format detected. Validated URI format before next execution. Function exiting..."
-        exit
-    }
+    # # Validate Uri
+    # $UriValidation = UrlValidation -Uri $Uri
+    # if($null -eq $UriValidation){
+    #     Write-Output "ERROR: Invalid URI format detected. Validated URI format before next execution. Function exiting..."
+    #     exit
+    # }
 
     # If filter parameters are defined, add a "&" prefix
     if($filterparameters -ne ""){

@@ -1,0 +1,124 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "author": "Eli Forbes - v-eliforbes@microsoft.com",
+    "comments": "Solution template for Check Point"
+  },
+  "parameters": {
+    "location": {
+        "type": "string",
+        "minLength": 1,
+        "defaultValue": "[resourceGroup().location]",
+        "metadata": {
+            "description": "Not used, but needed to pass arm-ttk test `Location-Should-Not-Be-Hardcoded`.  We instead use the `workspace-location` which is derived from the LA workspace"
+        }
+    },
+    "baseName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name use as base-template to named the resources deployed in Azure."
+      }
+    },
+    "CheckPointManagementServer": {
+      "type": "string",
+      "defaultValue": "https://10.0.0.1/web_api/",
+      "metadata": {
+        "description": "Check Point Management Server IP Address"
+      }
+    },
+    "StorageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Storage Account Name"
+      }
+    },
+    "Check Point API Key": {
+      "defaultValue": "api-key",
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "Check Point Management Server API Key"
+      }
+    }
+  },
+  "variables": {
+    "logicAppName": "cp-add-host-to-group"
+  },
+  "resources": [
+    {
+      "name": "CheckPointConnectorProxy",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-08-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/chkp-jguo/Azure-Sentinel/master/Solutions/Check%20Point/CheckPointConnector/deployCP_proxy.json"
+        },
+        "parameters": {
+          "baseName": {
+            "value": "[parameters('baseName')]"
+          },
+          "CheckPointManagementServer": {
+            "value": "[parameters('CheckPointManagementServer')]"
+          },
+          "StorageAccountName": {
+            "value": "[parameters('StorageAccountName')]"
+          }
+        },
+        "variables": {
+          "workspace-location": "[parameters('location')]"
+        }
+      }
+    },
+    {
+      "name": "CheckPointConnector",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'CheckPointConnectorProxy')]"
+      ],
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-08-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/chkp-jguo/Azure-Sentinel/master/Solutions/Check%20Point/CheckPointConnector/deployCP_connector.json"
+        },
+        "parameters": {
+          "baseName": {
+            "value": "[parameters('baseName')]"
+          },
+          "CheckPointManagementServer": {
+            "value": "[parameters('CheckPointManagementServer')]"
+          },
+          "StorageAccountName": {
+            "value": "[parameters('StorageAccountName')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "cp-add-objects-to-group",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'CheckPointConnectorProxy')]",
+        "[resourceId('Microsoft.Resources/deployments', 'CheckPointConnector')]"
+      ],
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-08-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/chkp-jguo/Azure-Sentinel/master/Solutions/Check%20Point/Playbooks/add-host-to-group/deployCPplaybook.json"
+        },
+        "parameters": {
+          "Playbook Name": {
+            "Value": "[variables('logicAppName')]"
+          },
+          "Check Point API Key": {
+            "Value": "[parameters('Check Point API Key')]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
