@@ -60,7 +60,7 @@
             "name": "dataconnectors1-text",
             "type": "Microsoft.Common.TextBlock",
             "options": {
-              "text": "This solution installs the data connector for ingesting Lastpass logs into Microsoft Sentinel, using Codeless Connector Platform and Native Sentinel Polling. After installing the solution, configure and enable this data connector by following guidance in Manage solution view."
+              "text": "This Solution installs the data connector for Lastpass Enterprise Activity Monitoring. You can get Lastpass Enterprise Activity Monitoring custom log data in your Microsoft Sentinel workspace. Configure and enable this data connector in the Data Connector gallery after this Solution deploys. This data connector creates custom log table(s)  in your Microsoft Sentinel / Azure Log Analytics workspace."
             }
           },
           {
@@ -88,7 +88,7 @@
             "name": "workbooks-text",
             "type": "Microsoft.Common.TextBlock",
             "options": {
-              "text": "This solution installs workbook(s) to help you gain insights into the telemetry collected in Microsoft Sentinel. After installing the solution, start using the workbook in Manage solution view."
+              "text": "This Microsoft Sentinel Solution installs workbooks. Workbooks provide a flexible canvas for data monitoring, analysis, and the creation of rich visual reports within the Azure portal. They allow you to tap into one or many data sources from Microsoft Sentinel and combine them into unified interactive experiences."
             }
           },
           {
@@ -210,7 +210,7 @@
             "name": "huntingqueries-text",
             "type": "Microsoft.Common.TextBlock",
             "options": {
-              "text": "This solution installs the following hunting queries. After installing the solution, run these hunting queries to hunt for threats in Manage solution view."
+              "text": "This solution installs the following hunting queries. After installing the solution, run these hunting queries to hunt for threats in Manage solution view. "
             }
           },
           {
@@ -296,7 +296,7 @@
                 "name": "watchlist1-text",
                 "type": "Microsoft.Common.TextBlock",
                 "options": {
-                  "text": "Used to maintain list of high sensitive accounts in LastPass"
+                  "text": "[parameters('watchlistdescription')]"
                 }
               }
             ]

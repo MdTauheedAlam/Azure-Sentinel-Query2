@@ -258,10 +258,10 @@
                 "status": "Available",
                 "requiredDataConnectors": [
                   {
+                    "connectorId": "LastPass",
                     "dataTypes": [
                       "LastPassNativePoller_CL"
-                    ],
-                    "connectorId": "LastPass"
+                    ]
                   }
                 ],
                 "tactics": [
@@ -269,22 +269,22 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Account",
                     "fieldMappings": [
                       {
                         "columnName": "AccountCustomEntity",
                         "identifier": "Name"
                       }
-                    ],
-                    "entityType": "Account"
+                    ]
                   },
                   {
+                    "entityType": "IP",
                     "fieldMappings": [
                       {
                         "columnName": "IPCustomEntity",
                         "identifier": "Address"
                       }
-                    ],
-                    "entityType": "IP"
+                    ]
                   }
                 ],
                 "eventGroupingSettings": {
@@ -378,16 +378,16 @@
                 "status": "Available",
                 "requiredDataConnectors": [
                   {
+                    "connectorId": "LastPass",
                     "dataTypes": [
                       "LastPassNativePoller_CL"
-                    ],
-                    "connectorId": "LastPass"
+                    ]
                   },
                   {
+                    "connectorId": "AzureActiveDirectory",
                     "dataTypes": [
                       "SigninLogs"
-                    ],
-                    "connectorId": "AzureActiveDirectory"
+                    ]
                   }
                 ],
                 "tactics": [
@@ -395,22 +395,22 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Account",
                     "fieldMappings": [
                       {
                         "columnName": "AccountCustomEntity",
                         "identifier": "Name"
                       }
-                    ],
-                    "entityType": "Account"
+                    ]
                   },
                   {
+                    "entityType": "IP",
                     "fieldMappings": [
                       {
                         "columnName": "IPCustomEntity",
                         "identifier": "Address"
                       }
-                    ],
-                    "entityType": "IP"
+                    ]
                   }
                 ],
                 "eventGroupingSettings": {
@@ -504,10 +504,10 @@
                 "status": "Available",
                 "requiredDataConnectors": [
                   {
+                    "connectorId": "LastPass",
                     "dataTypes": [
                       "LastPassNativePoller_CL"
-                    ],
-                    "connectorId": "LastPass"
+                    ]
                   }
                 ],
                 "tactics": [
@@ -516,31 +516,31 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Account",
                     "fieldMappings": [
                       {
                         "columnName": "AccountCustomEntity",
                         "identifier": "Name"
                       }
-                    ],
-                    "entityType": "Account"
+                    ]
                   },
                   {
+                    "entityType": "IP",
                     "fieldMappings": [
                       {
                         "columnName": "IPCustomEntity",
                         "identifier": "Address"
                       }
-                    ],
-                    "entityType": "IP"
+                    ]
                   },
                   {
+                    "entityType": "URL",
                     "fieldMappings": [
                       {
                         "columnName": "URLCustomEntity",
                         "identifier": "Url"
                       }
-                    ],
-                    "entityType": "URL"
+                    ]
                   }
                 ],
                 "eventGroupingSettings": {
@@ -634,16 +634,16 @@
                 "status": "Available",
                 "requiredDataConnectors": [
                   {
+                    "connectorId": "LastPass",
                     "dataTypes": [
                       "LastPassNativePoller_CL"
-                    ],
-                    "connectorId": "LastPass"
+                    ]
                   },
                   {
+                    "connectorId": "ThreatIntelligence",
                     "dataTypes": [
                       "ThreatIntelligenceIndicator"
-                    ],
-                    "connectorId": "ThreatIntelligence"
+                    ]
                   }
                 ],
                 "tactics": [
@@ -651,31 +651,31 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Account",
                     "fieldMappings": [
                       {
                         "columnName": "AccountCustomEntity",
                         "identifier": "Name"
                       }
-                    ],
-                    "entityType": "Account"
+                    ]
                   },
                   {
+                    "entityType": "IP",
                     "fieldMappings": [
                       {
                         "columnName": "IPCustomEntity",
                         "identifier": "Address"
                       }
-                    ],
-                    "entityType": "IP"
+                    ]
                   },
                   {
+                    "entityType": "URL",
                     "fieldMappings": [
                       {
                         "columnName": "URLCustomEntity",
                         "identifier": "Url"
                       }
-                    ],
-                    "entityType": "URL"
+                    ]
                   }
                 ],
                 "eventGroupingSettings": {
@@ -769,10 +769,10 @@
                 "status": "Available",
                 "requiredDataConnectors": [
                   {
+                    "connectorId": "LastPass",
                     "dataTypes": [
                       "LastPassNativePoller_CL"
-                    ],
-                    "connectorId": "LastPass"
+                    ]
                   }
                 ],
                 "tactics": [
@@ -780,22 +780,22 @@
                 ],
                 "entityMappings": [
                   {
+                    "entityType": "Account",
                     "fieldMappings": [
                       {
                         "columnName": "AccountCustomEntity",
                         "identifier": "Name"
                       }
-                    ],
-                    "entityType": "Account"
+                    ]
                   },
                   {
+                    "entityType": "IP",
                     "fieldMappings": [
                       {
                         "columnName": "IPCustomEntity",
                         "identifier": "Address"
                       }
-                    ],
-                    "entityType": "IP"
+                    ]
                   }
                 ],
                 "eventGroupingSettings": {
