@@ -46,7 +46,7 @@
     }
   },
   "variables": {
-    "solutionId": "azuresentinel.azure-sentinel-solution-isvtesting15",
+    "solutionId": "azuresentinel.azure-sentinel-solution-isvtesting2-preview",
     "_solutionId": "[variables('solutionId')]",
     "email": "thijs.lecomte@thecollective.eu",
     "_email": "[variables('email')]",
