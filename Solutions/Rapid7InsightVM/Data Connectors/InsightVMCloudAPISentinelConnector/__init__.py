@@ -163,7 +163,7 @@ class InsightVMAPI:
     async def _make_http_request(self, method: str, url: str, params: Optional[dict], headers: Optional[dict], body: Optional[str]) -> Optional[dict]:
         async with self.session.request(method=method, url=url, headers=headers, params=params, data=body) as response:
             response_body = await response.text()
-            logging.info(f'Url fired : {response.links} with {body}.')
+            logging.info(f'Url fired : {response.links.text()} with {body}.')
             if not response.ok:
                 raise Exception("Error during making request to InsightVM API. Response code: {}. Response body: {}".format(response.status, response_body))
             return json.loads(response_body)
