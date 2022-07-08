@@ -14,8 +14,8 @@ from .sentinel_connector_async import AzureSentinelConnectorAsync
 from .state_manager_async import StateManagerAsync
 
 
-logging.getLogger('azure.core.pipeline.policies.http_logging_policy').setLevel(logging.ERROR)
-logging.getLogger('charset_normalizer').setLevel(logging.ERROR)
+logging.getLogger('azure.core.pipeline.policies.http_logging_policy').setLevel(logging.INFO)
+logging.getLogger('charset_normalizer').setLevel(logging.INFO)
 
 
 INSIGHTVM_APIKEY = os.environ['InsightVMAPIKey']
@@ -50,6 +50,7 @@ async def main(mytimer: func.TimerRequest):
             sentinel = AzureSentinelConnectorAsync(session=session_sentinel, log_analytics_uri=LOG_ANALYTICS_URI, workspace_id=WORKSPACE_ID, shared_key=SHARED_KEY)
             state_manager = StateManagerAsync(connection_string=AZURE_WEB_JOBS_STORAGE_CONNECTION_STRING, file_path='rapid7_last_scan_date')
             last_scan_date = await state_manager.get_last_date_from_storage()
+            logging.info(f'last scan date retrieved from storage : {last_scan_date}')
             async for assets in api.get_assets(last_scan_end=last_scan_date):
                 last_processed_date = await process_assets(assets=assets, api=api, sentinel=sentinel, state_manager=state_manager)
                 state_manager.remember_last_date(last_processed_date)
@@ -94,6 +95,7 @@ class InsightVMAPI:
             }
         else:
             payload = None
+        logging.info(f'payload sent to get the assets {payload}')
         res = await self._make_api_request(method=method, endpoint=endpoint, params=params, payload=payload)
         res = res if res else {}
         return res
