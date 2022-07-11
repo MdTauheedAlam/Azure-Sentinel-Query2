@@ -46,7 +46,7 @@
     }
   },
   "variables": {
-    "solutionId": "azuresentinel.azure-sentinel-solution-isvtesting2-preview",
+    "solutionId": "thecollectiveconsultingbv1584980370320.microsoft-sentinel-solution-lastpass",
     "_solutionId": "[variables('solutionId')]",
     "email": "thijs.lecomte@thecollective.eu",
     "_email": "[variables('email')]",
@@ -1325,7 +1325,6 @@
       }
     },
     {
-      "id": "[variables('_uiConfigId1')]",
       "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/',variables('_dataConnectorContentId1'))]",
       "apiVersion": "2021-03-01-preview",
       "type": "Microsoft.OperationalInsights/workspaces/providers/dataConnectors",
@@ -1452,7 +1451,7 @@
       "properties": {
         "displayName": "Last Pass High Sensitive Passwords",
         "source": "LastPass.csv",
-        "description": "[parameters('watchlistdescription')]",
+        "description": "Used to maintain list of high sensitive accounts in LastPass",
         "provider": "Custom",
         "isDeleted": false,
         "defaultDuration": "P1000Y",
