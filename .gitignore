@@ -336,3 +336,4 @@ Hunting Queries/DeployedQueries.json
 
 #Mac OSx
 .DS_Store
+/Solutions/Rapid7InsightVM/Data Connectors/.python_packages/lib/site-packages

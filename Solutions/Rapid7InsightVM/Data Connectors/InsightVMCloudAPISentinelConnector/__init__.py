@@ -14,8 +14,8 @@ from .sentinel_connector_async import AzureSentinelConnectorAsync
 from .state_manager_async import StateManagerAsync
 
 
-logging.getLogger('azure.core.pipeline.policies.http_logging_policy').setLevel(logging.INFO)
-logging.getLogger('charset_normalizer').setLevel(logging.INFO)
+logging.getLogger('azure.core.pipeline.policies.http_logging_policy').setLevel(logging.ERROR)
+logging.getLogger('charset_normalizer').setLevel(logging.ERROR)
 
 
 INSIGHTVM_APIKEY = os.environ['InsightVMAPIKey']
@@ -230,6 +230,7 @@ def get_last_scan_date_from_assets(assets: List[dict]) -> Optional[datetime.date
     dates = []
     for asset in assets:
         try:
+            logging.info(f"Asset Id {asset.get('id')}, Asset IP {asset.get('ip')}, Asset last scan end date time {asset.get('last_scan_end')}, Total vulnerabilities {asset.get('total_vulnerabilities')}")
             date = parse_date(asset.get('last_scan_end'))
         except Exception:
             date = None
