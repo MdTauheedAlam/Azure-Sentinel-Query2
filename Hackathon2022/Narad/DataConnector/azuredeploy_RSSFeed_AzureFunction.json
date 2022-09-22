@@ -16,7 +16,7 @@
             "type": "securestring",
             "defaultValue": "<workspaceKey>"
         },
-        "RSSFeedURL": {
+        "ThreatFeedURL": {
             "type": "string",
             "defaultValue": "<RSS Feed URL>"
         }
@@ -148,7 +148,7 @@
                         "logAnalyticsUri": "[variables('LogAnaltyicsUri')]",
                         "WorkspaceID": "[parameters('WorkspaceID')]",
                         "WorkspaceKey": "[parameters('WorkspaceKey')]",
-                        "RSSFeedURL": "[parameters('RSSFeedURL')]",
+                        "RSSFeedURL": "[parameters('ThreatFeedURL')]",
                         "WEBSITE_RUN_FROM_PACKAGE": "https://github.com/Azure/Azure-Sentinel/blob/origin/users/rahul/project-narada/Hackathon2022/Narad/DataConnector/RSSFeedDataConnector.zip?raw=true"
                     }
                 }
